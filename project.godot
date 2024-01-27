@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="SpaceSurivor"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+run/main_scene="res://scenes/maps/test_scene.tscn"
+config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [dotnet]

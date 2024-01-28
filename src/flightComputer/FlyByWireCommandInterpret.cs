@@ -62,7 +62,7 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             return currentVelocity;
         }
         return Vector2.Zero;
-
+        /**
         float returnXValue = Lerp(0, velocityMax, shipBasedMovement.X * -1f);
         float returnYValue = Lerp(0, velocityMax, shipBasedMovement.Y * -1f);
         if (Math.Abs(returnXValue) < rotationMinThreshold)
@@ -74,6 +74,7 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             returnYValue = returnYValue > 0 ? velocityMax : -velocityMax;
         }
         return new Vector2(returnXValue, returnYValue);
+        */
     }
 
     public override float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)

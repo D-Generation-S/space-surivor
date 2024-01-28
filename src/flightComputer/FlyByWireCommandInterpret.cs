@@ -8,20 +8,14 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     
     [Export]
     private float rotationMinThreshold = 0.000001f;
-
     
     [Export]
     private float velocityMax = 15;
 
     [Export]
-    private float velocityMinThreshold = 0.000001f;
-
-    [Export]
     private float rotationDifference = 0.001f;
 
     private float targetShipRotation;
-
-    private float targetShipVelocity;
 
     public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {

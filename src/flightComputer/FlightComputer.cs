@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -23,12 +24,19 @@ public partial class FlightComputer : Node
 
     public void ComputerSetup()
     {
-        activeFlightCommandInterpret.SetupInterpret(entityMovement.Velocity, entityMovement.GetRotationVelocity(), entityMovement.Rotation);
+        activeFlightCommandInterpret.SetupInterpret(entityMovement.Velocity, entityMovement.GetRotationVelocity(), GetEntityRotation());
+    }
+
+    private float GetEntityRotation()
+    {
+        float rotation = entityMovement.Rotation;
+        rotation = rotation < 0 ? (float)(Math.PI * 2 + rotation) : rotation;
+        return rotation;
     }
 
     public void NoRotationCommands()
     {
-        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(entityMovement.Velocity, entityMovement.GetRotationVelocity(), entityMovement.Rotation);
+        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(entityMovement.Velocity, entityMovement.GetRotationVelocity(), GetEntityRotation());
         entityMovement.InputRotation(computedRotation);
     }
 
@@ -36,7 +44,7 @@ public partial class FlightComputer : Node
     {
         Vector2 computedVelocity = activeFlightCommandInterpret.IdleBaseVelocity(entityMovement.Velocity,
                                                                                  entityMovement.GetRotationVelocity(),
-                                                                                 entityMovement.Rotation);
+                                                                                 GetEntityRotation());
         entityMovement.InputVelocity(computedVelocity);
     }
 
@@ -45,7 +53,7 @@ public partial class FlightComputer : Node
         Vector2 computedVector = activeFlightCommandInterpret.InterpretBaseVelocity(commandedVelocity,
                                                                                     entityMovement.Velocity,
                                                                                     entityMovement.GetRotationVelocity(),
-                                                                                    entityMovement.Rotation);
+                                                                                    GetEntityRotation());
         entityMovement.InputVelocity(computedVector);
     }
 
@@ -54,7 +62,7 @@ public partial class FlightComputer : Node
         float computedRotation = activeFlightCommandInterpret.InterpretRotation(commandedRotation,
                                                                                 entityMovement.Velocity,
                                                                                 entityMovement.GetRotationVelocity(),
-                                                                                entityMovement.Rotation);
+                                                                                GetEntityRotation());
         entityMovement.InputRotation(computedRotation);
     }
 

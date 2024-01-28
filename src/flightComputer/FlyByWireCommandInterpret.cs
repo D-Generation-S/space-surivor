@@ -77,10 +77,6 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             return 0;
         }
         targetShipRotation = currentShipRotation;
-        if (targetShipRotation > 2.985)
-        {
-            targetShipRotation = 2.985f;
-        }
         return base.InterpretRotation(commandedRotation, currentVelocity, rotationVelocity, currentShipRotation);
     }
 

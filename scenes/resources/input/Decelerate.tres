@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ControlConfiguration" load_steps=2 format=3 uid="uid://d1mktk4vl5273"]
+
+[ext_resource type="Script" path="res://src/resources/ControlConfiguration.cs" id="1_778ig"]
+
+[resource]
+script = ExtResource("1_778ig")
+inputName = "decelerate"

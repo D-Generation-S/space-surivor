@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -9,6 +8,8 @@ public partial class FlightComputer : Node
 
     private FlightCommandInterpret activeFlightCommandInterpret;
 
+    private int currentCommandInterpretIndex;
+
     private EntityMovement entityMovement;
 
     public override void _Ready()
@@ -16,31 +17,62 @@ public partial class FlightComputer : Node
         entityMovement = GetParent().GetParent<EntityMovement>();
         flightCommandModes = GetChildren().OfType<FlightCommandInterpret>().ToList();
         activeFlightCommandInterpret = flightCommandModes.FirstOrDefault();
+        ComputerSetup();
+        currentCommandInterpretIndex = 0;
+    }
+
+    public void ComputerSetup()
+    {
+        activeFlightCommandInterpret.SetupInterpret(entityMovement.Velocity, entityMovement.GetRotationVelocity(), entityMovement.Rotation);
     }
 
     public void NoRotationCommands()
     {
-        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(entityMovement.Velocity, entityMovement.GetRotationVelocity());
+        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(entityMovement.Velocity, entityMovement.GetRotationVelocity(), entityMovement.Rotation);
         entityMovement.InputRotation(computedRotation);
     }
 
     public void NoVelocityCommands()
     {
-        Vector2 computedVelocity = activeFlightCommandInterpret.IdleBaseVelocity(entityMovement.Velocity, entityMovement.GetRotationVelocity());
+        Vector2 computedVelocity = activeFlightCommandInterpret.IdleBaseVelocity(entityMovement.Velocity,
+                                                                                 entityMovement.GetRotationVelocity(),
+                                                                                 entityMovement.Rotation);
         entityMovement.InputVelocity(computedVelocity);
     }
 
     public void CommandBaseFlightVector(Vector2 commandedVelocity)
     {
-        Vector2 computedVector = activeFlightCommandInterpret.InterpretBaseVelocity(commandedVelocity, entityMovement.Velocity, entityMovement.GetRotationVelocity());
+        Vector2 computedVector = activeFlightCommandInterpret.InterpretBaseVelocity(commandedVelocity,
+                                                                                    entityMovement.Velocity,
+                                                                                    entityMovement.GetRotationVelocity(),
+                                                                                    entityMovement.Rotation);
         entityMovement.InputVelocity(computedVector);
     }
 
     public void CommandRotation(float commandedRotation)
     {
-        float computedRotation = activeFlightCommandInterpret.InterpretRotation(commandedRotation, entityMovement.Velocity, entityMovement.GetRotationVelocity());
+        float computedRotation = activeFlightCommandInterpret.InterpretRotation(commandedRotation,
+                                                                                entityMovement.Velocity,
+                                                                                entityMovement.GetRotationVelocity(),
+                                                                                entityMovement.Rotation);
         entityMovement.InputRotation(computedRotation);
     }
+
+	public void SwitchToNextModeInterpret()
+	{   
+        currentCommandInterpretIndex++;
+        currentCommandInterpretIndex = currentCommandInterpretIndex > flightCommandModes.Count - 1? 0 : currentCommandInterpretIndex;
+        activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
+        ComputerSetup();
+	}
+
+	public void SwitchToPreviousModeInterpret()
+	{
+        currentCommandInterpretIndex--;
+        currentCommandInterpretIndex = currentCommandInterpretIndex < 0? flightCommandModes.Count - 1 : currentCommandInterpretIndex;
+        activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
+        ComputerSetup();
+	}
 
     public List<FlightCommandInterpret> GetComputerModes()
     {

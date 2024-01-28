@@ -4,8 +4,8 @@ using Godot;
 
 public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 {
-    [Export]
-    private float rotationMax = 15;
+    [Export(PropertyHint.Range,"0.01745, 0.01745")]
+    private float rotationMax = 0.01745f;
     
     [Export]
     private float rotationMinThreshold = 0.000001f;
@@ -17,32 +17,52 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     [Export]
     private float velocityMinThreshold = 0.000001f;
 
-    public override float IdleBaseRotation(Vector2 currentVelocity, float currentRotation)
+    [Export]
+    private float rotationDifference = 0.001f;
+
+    private float targetShipRotation;
+
+    private float targetShipVelocity;
+
+    public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
-        if (currentRotation == 0)
+        targetShipRotation = currentShipRotation;
+    }
+
+    public override float IdleBaseRotation(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
+    {
+        var diff = targetShipRotation - currentShipRotation;
+        var absoluteDiff = Math.Abs(diff);
+        if ((diff < rotationDifference && diff > -rotationDifference) || absoluteDiff < 0.1f)
         {
             return 0;
         }
-        float absoluteRotation = Math.Abs(currentRotation);
-        float speedValue = Lerp(0, rotationMax, absoluteRotation);
-        float direction = currentRotation < 0 ? -1f : 1f;
-        float returnValue = speedValue * -direction;
-        if (Math.Abs(returnValue) < rotationMinThreshold)
+        
+        var clamped = Math.Clamp(absoluteDiff, 0, 1);
+        float direction = diff < 0 ? -1f : 1f;
+        if (diff > 1)
         {
-            returnValue = returnValue > 0 ? rotationMinThreshold : -rotationMinThreshold;
+            return direction;
         }
-        return returnValue;
+        float targetTurnRate = Lerp(0, rotationMax, clamped) * direction;
+        float turnDifference = targetTurnRate - currentRotationVelocity;
+
+        float percentage = Math.Clamp(Math.Abs(turnDifference / targetTurnRate), 0, 1);
+        direction = turnDifference > 0 ? 1f : -1f;
+        return Lerp(0, 1, percentage) * direction;
     }
 
-    public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotation)
+    public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
-        return Vector2.Zero;
-        Vector2 shipBasedMovement = currentVelocity.Rotated(currentRotation);
+        Vector2 direction = currentVelocity.Normalized().Rotated(currentShipRotation);
+        Vector2 shipBasedMovement = currentVelocity.Rotated(currentRotationVelocity);
 
         if (currentVelocity == Vector2.Zero)
         {
             return currentVelocity;
         }
+        return Vector2.Zero;
+
         float returnXValue = Lerp(0, velocityMax, shipBasedMovement.X * -1f);
         float returnYValue = Lerp(0, velocityMax, shipBasedMovement.Y * -1f);
         if (Math.Abs(returnXValue) < rotationMinThreshold)
@@ -54,6 +74,20 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             returnYValue = returnYValue > 0 ? velocityMax : -velocityMax;
         }
         return new Vector2(returnXValue, returnYValue);
+    }
+
+    public override float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
+    {
+        if(commandedRotation == 0)
+        {
+            return 0;
+        }
+        targetShipRotation = currentShipRotation;
+        if (targetShipRotation > 2.985)
+        {
+            targetShipRotation = 2.985f;
+        }
+        return base.InterpretRotation(commandedRotation, currentVelocity, rotationVelocity, currentShipRotation);
     }
 
     float Lerp(float firstFloat, float secondFloat, float by)

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -20,6 +18,14 @@ public partial class PlayerInputController : Node
 	[ExportGroup("Base Movement")]
 	[Export]
 	private ControlConfiguration strafeRight;
+
+	[ExportGroup("Flight Computer")]
+	[Export]
+	private ControlConfiguration nextFlightComputerMode;
+
+	[ExportGroup("Flight Computer")]
+	[Export]
+	private ControlConfiguration previousFlightComputerMode;
 
 	[ExportGroup("Rotation Control")]
 	[Export]
@@ -50,6 +56,16 @@ public partial class PlayerInputController : Node
 		if (commandedVelocity == Vector2.Zero)
 		{
 			flightComputer.NoVelocityCommands();
+		}
+
+		if (Input.IsActionPressed(nextFlightComputerMode.GetInputName()))
+		{
+			flightComputer.SwitchToNextModeInterpret();
+		}
+
+		if (Input.IsActionPressed(previousFlightComputerMode.GetInputName()))
+		{
+			flightComputer.SwitchToPreviousModeInterpret();
 		}
 
 

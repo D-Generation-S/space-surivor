@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=21 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -10,8 +10,10 @@
 [ext_resource type="Resource" uid="uid://b5wn5p3ch6fvx" path="res://scenes/resources/input/StrafeLeft.tres" id="5_2dowe"]
 [ext_resource type="Script" path="res://src/control/ChangeParticleStatus.cs" id="5_apxo6"]
 [ext_resource type="Resource" uid="uid://cmxx6205ec7d2" path="res://scenes/resources/input/StrafeRight.tres" id="6_wyvvr"]
+[ext_resource type="Resource" uid="uid://bfvt8ctfoxaaa" path="res://scenes/resources/input/next_flight_computer_mode.tres" id="7_252av"]
 [ext_resource type="Resource" uid="uid://c50fxuwgeaw5o" path="res://scenes/resources/input/RotateLeft.tres" id="7_hdevr"]
 [ext_resource type="Resource" uid="uid://ba2cu52xels6c" path="res://scenes/resources/input/RotateRight.tres" id="8_bkhpr"]
+[ext_resource type="Resource" uid="uid://bptqhbhvxh07b" path="res://scenes/resources/input/previous_flight_computer_mode.tres.tres" id="8_x5v8n"]
 [ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="9_j7fmf"]
 [ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="10_cq0qe"]
 [ext_resource type="Script" path="res://src/flightComputer/RawFlightCommandInterpret.cs" id="10_i85cv"]
@@ -37,7 +39,7 @@ scale_max = 0.5
 color_initial_ramp = SubResource("GradientTexture1D_bcehv")
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-rotation = 0.785398
+motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
 
@@ -49,6 +51,8 @@ accelerate = ExtResource("3_7142o")
 decelerate = ExtResource("4_uxwfd")
 strafeLeft = ExtResource("5_2dowe")
 strafeRight = ExtResource("6_wyvvr")
+nextFlightComputerMode = ExtResource("7_252av")
+previousFlightComputerMode = ExtResource("8_x5v8n")
 rotateLeft = ExtResource("7_hdevr")
 rotateRight = ExtResource("8_bkhpr")
 

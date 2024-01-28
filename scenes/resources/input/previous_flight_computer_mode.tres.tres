@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ControlConfiguration" load_steps=2 format=3 uid="uid://bptqhbhvxh07b"]
+
+[ext_resource type="Script" path="res://src/resources/ControlConfiguration.cs" id="1_a773e"]
+
+[resource]
+script = ExtResource("1_a773e")
+inputName = "previous_flight_mode"

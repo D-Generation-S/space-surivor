@@ -29,11 +29,10 @@ public partial class EntityMovement : CharacterBody2D
 	[ExportGroup("Rotation")]
 	[Export]
 	private float rotationSpeedDegree = 0.2f;
-
 	
 	[ExportGroup("Rotation")]
 	[Export]
-	private float cancelRotationBelow = 0.003f;
+	private float cancelRotationBelow = 0.000001f;
 
 	private float rotationSpeedRadian => DegreeToRad(rotationSpeedDegree);
 
@@ -46,60 +45,46 @@ public partial class EntityMovement : CharacterBody2D
 	private float deviation = 0.001f;
 
 	public override void _PhysicsProcess(double delta)
-	{
-		var accelerationMultiplier = velocityInput.X < 0 ? accelerationSpeed.X : accelerationSpeed.Y;
-		Velocity += velocityInput * accelerationMultiplier;
-		rotationVelocity += rotationInput * rotationSpeedRadian;
-		rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
-		Rotate(rotationVelocity);
-
-		if (velocityInput.Y < 0)
-		{
-			EmitSignal(SignalName.PoweringForward);
-		}
-		if (velocityInput.Y >= 0)
-		{
-			EmitSignal(SignalName.IdleForward);
-		}
-
-		MoveAndSlide();
-
-		Vector2 relativeVelocity = GetRealVelocity().Rotated(Rotation);
-		if (Math.Abs(relativeVelocity.Y) > maxForward + deviation || Math.Abs(relativeVelocity.X) > maxStrafe + deviation)
-		{
-			Vector2 FixedVelocity = FixVelocity(relativeVelocity);
-			//Velocity = FixedVelocity;
-		}
-
-		if (Math.Abs(rotationVelocity) > maxRotationVelocity)
-		{
-			rotationVelocity = rotationVelocity < 0 ? -maxRotationVelocity : maxRotationVelocity;
-		}
-
-		rotationInput = 0f;
-		velocityInput = Vector2.Zero;
-	}
-
-    private Vector2 FixVelocity(Vector2 shipVelocity)
     {
-		float newXVelocity = shipVelocity.X;
-        float newYVelocity = shipVelocity.Y;
-		if (Math.Abs(shipVelocity.X) > maxStrafe)
-		{
-			newXVelocity = shipVelocity.X < 0 ? -maxStrafe : maxStrafe;
-			Debug.WriteLine("Fix X");
-			Debug.WriteLine(newXVelocity);
-		}		
-		if (Math.Abs(shipVelocity.Y) > maxForward)
-		{
-			newYVelocity = shipVelocity.Y < 0 ? -maxForward : maxForward;
-			Debug.WriteLine("Fix Y");
-			Debug.WriteLine(newYVelocity);
-		}
-		Debug.WriteLine("Fix called!");
-		Debug.WriteLine(Rotation);
-		return new Vector2(newXVelocity, newYVelocity).Rotated(-Rotation);
+        
+        Velocity += GetVelocityInput();
+        rotationVelocity += rotationInput * rotationSpeedRadian;
+        rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
+        Rotate(rotationVelocity);
+
+        MoveAndSlide();
+        if (Math.Abs(rotationVelocity) > maxRotationVelocity)
+        {
+            rotationVelocity = rotationVelocity < 0 ? -maxRotationVelocity : maxRotationVelocity;
+        }
+
+        rotationInput = 0f;
+        velocityInput = Vector2.Zero;
     }
+
+    private Vector2 GetVelocityInput()
+    {	
+        var accelerationMultiplier = velocityInput.X < 0 ? accelerationSpeed.X : accelerationSpeed.Y;
+		var velocityToAdd = velocityInput * accelerationMultiplier;
+        var targetVelocity = Velocity + velocityToAdd;
+        if (Math.Abs(targetVelocity.Y) > maxForward + deviation || Math.Abs(targetVelocity.X) > maxStrafe + deviation)
+        {
+            float newXVelocity = velocityInput.X;
+            float newYVelocity = velocityInput.Y;
+            Debug.WriteLine(velocityInput);
+            if (Math.Abs(targetVelocity.X) > maxStrafe)
+            {
+                newXVelocity = 0;
+            }
+            if (Math.Abs(targetVelocity.Y) > maxForward)
+            {
+                newYVelocity = 0;
+            }
+            velocityInput = new Vector2(newXVelocity, newYVelocity);
+        }
+		return velocityInput.Rotated(Rotation) * accelerationMultiplier;
+    }
+
 
     private float DegreeToRad(float degree)
 	{
@@ -108,7 +93,15 @@ public partial class EntityMovement : CharacterBody2D
 
 	public void InputVelocity(Vector2 currentBaseVelocity)
 	{
-		velocityInput = currentBaseVelocity.Rotated(Rotation).Normalized();
+		if (currentBaseVelocity.Y < 0)
+		{
+			EmitSignal(SignalName.PoweringForward);
+		}
+		if (currentBaseVelocity.Y >= 0)
+		{
+			EmitSignal(SignalName.IdleForward);
+		}
+		velocityInput = currentBaseVelocity.Normalized(); //.Rotated(Rotation).Normalized()
 	}
 
 	public void InputRotation(float rotation)

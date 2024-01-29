@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 public partial class FlyByWireCommandInterpret : FlightCommandInterpret
@@ -17,6 +18,13 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 
     private float targetShipRotation;
 
+    private float halfRotation;
+
+    public FlyByWireCommandInterpret()
+    {
+        halfRotation = (float)Math.PI;
+    }
+
     public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         targetShipRotation = currentShipRotation;
@@ -26,6 +34,13 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     {
         var diff = targetShipRotation - currentShipRotation;
         var absoluteDiff = Math.Abs(diff);
+        Debug.WriteLine(absoluteDiff);
+        if (absoluteDiff > halfRotation)
+        {
+            absoluteDiff = halfRotation - diff * -1;
+            diff *= -1;
+        }
+        Debug.WriteLine(absoluteDiff);
         if ((diff < rotationDifference && diff > -rotationDifference) || absoluteDiff < 0.1f)
         {
             return 0;
@@ -33,6 +48,7 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         
         var clamped = Math.Clamp(absoluteDiff, 0, 1);
         float direction = diff < 0 ? -1f : 1f;
+        Debug.WriteLine(direction);
         if (diff > 1)
         {
             return direction;

@@ -9,14 +9,13 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     
     [Export]
     private float rotationMinThreshold = 0.000001f;
-    
-    [Export]
-    private float velocityMax = 15;
 
     [Export]
     private float rotationDifference = 0.001f;
 
     private float targetShipRotation;
+
+    private Vector2 targetShipCourse;
 
     private float halfRotation;
 
@@ -28,19 +27,18 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         targetShipRotation = currentShipRotation;
+        targetShipCourse = Vector2.Up.Rotated(targetShipRotation);
     }
 
     public override float IdleBaseRotation(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         var diff = targetShipRotation - currentShipRotation;
         var absoluteDiff = Math.Abs(diff);
-        Debug.WriteLine(absoluteDiff);
         if (absoluteDiff > halfRotation)
         {
             absoluteDiff = halfRotation - diff * -1;
             diff *= -1;
         }
-        Debug.WriteLine(absoluteDiff);
         if ((diff < rotationDifference && diff > -rotationDifference) || absoluteDiff < 0.1f)
         {
             return 0;
@@ -48,7 +46,6 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         
         var clamped = Math.Clamp(absoluteDiff, 0, 1);
         float direction = diff < 0 ? -1f : 1f;
-        Debug.WriteLine(direction);
         if (diff > 1)
         {
             return direction;
@@ -63,27 +60,23 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 
     public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
-        Vector2 direction = currentVelocity.Normalized().Rotated(currentShipRotation);
-        Vector2 shipBasedMovement = currentVelocity.Rotated(currentRotationVelocity);
+        Vector2 direction = currentVelocity.Rotated(currentShipRotation);
+        //Debug.WriteLine(currentVelocity);
 
         if (currentVelocity == Vector2.Zero)
         {
             return currentVelocity;
         }
-        return Vector2.Zero;
         /**
-        float returnXValue = Lerp(0, velocityMax, shipBasedMovement.X * -1f);
-        float returnYValue = Lerp(0, velocityMax, shipBasedMovement.Y * -1f);
-        if (Math.Abs(returnXValue) < rotationMinThreshold)
+        if ( direction.X > 1 || direction.Y > 1)
         {
-            returnXValue = returnXValue > 0 ? velocityMax : -velocityMax;
+            direction.Normalized();
         }
-        if (Math.Abs(returnYValue) < rotationMinThreshold)
-        {
-            returnYValue = returnYValue > 0 ? velocityMax : -velocityMax;
-        }
-        return new Vector2(returnXValue, returnYValue);
         */
+        //float yDirection = direction.X * -1;
+        //Debug.WriteLine(direction);
+        //Debug.WriteLine(currentVelocity);
+        return new Vector2(0, 0);
     }
 
     public override float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
@@ -93,6 +86,8 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             return 0;
         }
         targetShipRotation = currentShipRotation;
+        targetShipCourse = Vector2.Up.Rotated(targetShipRotation);
+        
         return base.InterpretRotation(commandedRotation, currentVelocity, rotationVelocity, currentShipRotation);
     }
 

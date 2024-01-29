@@ -67,20 +67,20 @@ public partial class EntityMovement : CharacterBody2D
         var accelerationMultiplier = velocityInput.X < 0 ? accelerationSpeed.X : accelerationSpeed.Y;
 		var velocityToAdd = velocityInput * accelerationMultiplier;
         var targetVelocity = Velocity + velocityToAdd;
+		targetVelocity = targetVelocity.Rotated(Rotation);
         if (Math.Abs(targetVelocity.Y) > maxForward + deviation || Math.Abs(targetVelocity.X) > maxStrafe + deviation)
         {
-            float newXVelocity = velocityInput.X;
-            float newYVelocity = velocityInput.Y;
-            Debug.WriteLine(velocityInput);
-            if (Math.Abs(targetVelocity.X) > maxStrafe)
+            float newXVelocityInput = velocityInput.X;
+            float newYVelocityInput = velocityInput.Y;
+            if (Math.Abs(targetVelocity.X) > maxStrafe && targetVelocity.X < Velocity.X)
             {
-                newXVelocity = 0;
+                newXVelocityInput = 0;
             }
-            if (Math.Abs(targetVelocity.Y) > maxForward)
+            if (Math.Abs(targetVelocity.Y) > maxForward && targetVelocity.Y < Velocity.Y)
             {
-                newYVelocity = 0;
+                newYVelocityInput = 0;
             }
-            velocityInput = new Vector2(newXVelocity, newYVelocity);
+            velocityInput = new Vector2(newXVelocityInput, newYVelocityInput);
         }
 		return velocityInput.Rotated(Rotation) * accelerationMultiplier;
     }

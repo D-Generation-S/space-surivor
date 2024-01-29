@@ -46,7 +46,6 @@ public partial class EntityMovement : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
     {
-        
         Velocity += GetVelocityInput();
         rotationVelocity += rotationInput * rotationSpeedRadian;
         rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
@@ -101,7 +100,7 @@ public partial class EntityMovement : CharacterBody2D
 		{
 			EmitSignal(SignalName.IdleForward);
 		}
-		velocityInput = currentBaseVelocity.Normalized(); //.Rotated(Rotation).Normalized()
+		velocityInput = currentBaseVelocity.Normalized();
 	}
 
 	public void InputRotation(float rotation)

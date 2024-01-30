@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Diagnostics;
+using System.Linq;
 
 /// <summary>
 /// This class does describe the entity movement for each ship in the game
@@ -40,25 +42,11 @@ public partial class EntityMovement : CharacterBody2D
 	private float maxStrafe = 150;
 
 	/// <summary>
-	/// The speed value used to accelerate or decelerate the ship
-	/// </summary>
-	[ExportGroup("Base Movement")]
-	[Export]
-	private Vector2 accelerationSpeed = new Vector2(10, 5);
-
-	/// <summary>
 	/// The maximal allowed rotation speed
 	/// </summary>
 	[ExportGroup("Rotation")]
 	[Export]
 	private float maxRotationVelocity = 0.2f;
-
-	/// <summary>
-	/// The rotation speed in degree
-	/// </summary>
-	[ExportGroup("Rotation")]
-	[Export]
-	private float rotationSpeedDegree = 0.2f;
 	
 	/// <summary>
 	/// If the rotation is below this value the rotation will be stopped completely
@@ -66,11 +54,6 @@ public partial class EntityMovement : CharacterBody2D
 	[ExportGroup("Rotation")]
 	[Export]
 	private float cancelRotationBelow = 0.000001f;
-
-	/// <summary>
-	/// The rotation speed as radian
-	/// </summary>
-	private float rotationSpeedRadian => DegreeToRad(rotationSpeedDegree);
 
 	/// <summary>
 	/// The velocity input by the pilot
@@ -92,10 +75,33 @@ public partial class EntityMovement : CharacterBody2D
 	/// </summary>
 	private float deviation = 0.001f;
 
-	public override void _PhysicsProcess(double delta)
+	/// <summary>
+	/// The engine component which does allow the movement
+	/// </summary>
+	private EngineComponent engine;
+
+    public override void _Ready()
     {
+        var componentNode = GetChildren().OfType<Node>().FirstOrDefault();
+		if (componentNode is null)
+		{
+			GD.PushError("Could not find component node!");
+		}
+		engine = componentNode.GetChildren().OfType<EngineComponent>().FirstOrDefault();
+		if (engine is null)
+		{
+			GD.PushError("Entity is missing an engine, that seems bad");
+		}
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+		if (!engine.Active())
+		{
+			return;
+		}
         Velocity += GetVelocityInput();
-        rotationVelocity += rotationInput * rotationSpeedRadian;
+        rotationVelocity += rotationInput * DegreeToRad(engine.GetRotationSpeed());
         rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
         Rotate(rotationVelocity);
 
@@ -118,6 +124,7 @@ public partial class EntityMovement : CharacterBody2D
 	/// <returns>The computed input</returns>
     private Vector2 GetVelocityInput()
     {	
+		var accelerationSpeed = engine.GetAccelerationSpeed();
         var accelerationMultiplier = velocityInput.X < 0 ? accelerationSpeed.X : accelerationSpeed.Y;
 		var velocityToAdd = velocityInput * accelerationMultiplier;
         var targetVelocity = Velocity + velocityToAdd;
@@ -157,6 +164,10 @@ public partial class EntityMovement : CharacterBody2D
 	/// <param name="currentBaseVelocity">The velocity commanded for this ship</param>
 	public void InputVelocity(Vector2 currentBaseVelocity)
 	{
+		if (!engine.Active())
+		{
+			return;
+		}
 		if (currentBaseVelocity.Y < 0)
 		{
 			EmitSignal(SignalName.PoweringForward);
@@ -164,6 +175,10 @@ public partial class EntityMovement : CharacterBody2D
 		if (currentBaseVelocity.Y >= 0)
 		{
 			EmitSignal(SignalName.IdleForward);
+		}
+		if (currentBaseVelocity != Vector2.Zero)
+		{
+			engine.Firing();
 		}
 		velocityInput = currentBaseVelocity.Normalized();
 	}
@@ -175,6 +190,10 @@ public partial class EntityMovement : CharacterBody2D
 	/// <param name="rotation">The rotation to command</param>
 	public void InputRotation(float rotation)
 	{
+		if (!engine.Active())
+		{
+			return;
+		}
 		rotationInput = Math.Clamp(rotation, -1, 1);
 	}
 

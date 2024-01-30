@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CoolingUnitConfiguration" load_steps=4 format=3 uid="uid://dbgg3rral6dv6"]
+
+[ext_resource type="Script" path="res://src/resources/CoolingUnitConfiguration.cs" id="1_esk8t"]
+[ext_resource type="Script" path="res://src/resources/ConsumerConfiguration.cs" id="1_saush"]
+
+[sub_resource type="Resource" id="Resource_4opmn"]
+script = ExtResource("1_saush")
+consumption = 200
+priority = 1
+
+[resource]
+script = ExtResource("1_esk8t")
+name = "Arctig freezing"
+consumerConfiguration = SubResource("Resource_4opmn")
+heatAbsorptionPerTick = 150
+heatCapacity = 200

@@ -74,7 +74,8 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Fly through the crosses.
 
-For this training level you won't be able to leave this screen."
+For this training level you won't be able to leave this screen.
+To see the controls, press the help button in the top right corner."
 horizontal_alignment = 1
 vertical_alignment = 1
 

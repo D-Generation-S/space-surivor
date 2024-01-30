@@ -1,0 +1,197 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4wtvfpp0y2ey"]
+
+[ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
+[ext_resource type="Script" path="res://src/ui/closing/MultiCloseUi.cs" id="2_vdu3p"]
+[ext_resource type="Script" path="res://src/ui/player/PlayerBasedUi.cs" id="3_18yav"]
+[ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
+[ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
+[ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
+[ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="6_3radj"]
+[ext_resource type="Script" path="res://src/entities/player/TempBorderCollision.cs" id="8_wclp7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57mdp"]
+size = Vector2(1927, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jtqye"]
+size = Vector2(26, 1090)
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_i8hdf")]
+position = Vector2(80, 830)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("nodes")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_vdu3p")
+nodes = [NodePath("Expander2"), NodePath("Expander3"), NodePath("Expander4"), NodePath("Expander"), NodePath("Panel")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentFlightMode" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("player")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("3_18yav")
+player = NodePath("../../../../Player")
+
+[node name="Help" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Help"
+
+[node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Close"
+script = ExtResource("5_b4j62")
+
+[node name="Expander2" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Expander3" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Expander4" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Expander" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fly through the crosses.
+
+For this training level you won't be able to leave this screen.
+To see the controls, press the help button in the top right corner."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="CanvasLayer/VBoxContainer/Panel"]
+wait_time = 10.0
+autostart = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Complete Panel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_q4agf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Complete Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+layout_mode = 2
+text = "You did fly throug the last target.
+Thank you for playing.
+
+Please leave a comment if you liked the flight model."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="CanvasLayer/Control/Complete Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "Close"
+script = ExtResource("5_b4j62")
+
+[node name="HelpScreen" parent="CanvasLayer" instance=ExtResource("6_3radj")]
+
+[node name="Targets" type="Node" parent="."]
+
+[node name="InitialTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
+position = Vector2(256, 192)
+targetVisible = true
+
+[node name="SecondTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
+position = Vector2(1464, 192)
+
+[node name="ThirdTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
+position = Vector2(1432, 808)
+
+[node name="SixthTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
+position = Vector2(879, 508)
+
+[node name="SeventhTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
+position = Vector2(280, 832)
+
+[node name="BorderCollision" type="Node2D" parent="."]
+script = ExtResource("8_wclp7")
+
+[node name="TopCollider" type="StaticBody2D" parent="BorderCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderCollision/TopCollider"]
+position = Vector2(960, -8)
+shape = SubResource("RectangleShape2D_57mdp")
+
+[node name="BottomCollider" type="StaticBody2D" parent="BorderCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderCollision/BottomCollider"]
+position = Vector2(960, 1088)
+shape = SubResource("RectangleShape2D_57mdp")
+
+[node name="LeftCollider" type="StaticBody2D" parent="BorderCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderCollision/LeftCollider"]
+position = Vector2(-5, 543)
+shape = SubResource("RectangleShape2D_jtqye")
+
+[node name="RightCollider" type="StaticBody2D" parent="BorderCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderCollision/RightCollider"]
+position = Vector2(1928, 544)
+shape = SubResource("RectangleShape2D_jtqye")
+
+[connection signal="EntityDidCollide" from="Player" to="BorderCollision" method="SomethingCollided"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
+[connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]
+[connection signal="TargetHit" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
+[connection signal="TargetHit" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
+[connection signal="TargetHit" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
+[connection signal="TargetHit" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
+[connection signal="TargetHit" from="Targets/SeventhTarget" to="CanvasLayer/Control/Complete Panel" method="ShowControl"]

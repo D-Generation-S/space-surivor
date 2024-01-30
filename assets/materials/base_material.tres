@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dsnt0lgov2k2u"]
+
+[ext_resource type="Shader" uid="uid://ba7k66bsrr0gt" path="res://assets/shaders/color_change_shader.tres" id="1_mx14d"]
+
+[resource]
+shader = ExtResource("1_mx14d")
+shader_parameter/BaseColor = Color(1, 1, 1, 1)

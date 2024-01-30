@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ControlConfiguration" load_steps=2 format=3 uid="uid://c50fxuwgeaw5o"]
+
+[ext_resource type="Script" path="res://src/resources/ControlConfiguration.cs" id="1_ssv4a"]
+
+[resource]
+script = ExtResource("1_ssv4a")
+inputName = "rotate_left"

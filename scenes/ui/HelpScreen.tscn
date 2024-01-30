@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkyopd6of3531"]
+
+[ext_resource type="Script" path="res://src/ui/scenes/DisplayHelpScript.cs" id="1_d5w06"]
+[ext_resource type="PackedScene" uid="uid://ci6xq0sit2twe" path="res://scenes/ui/ControlHelp_Accelerate.tscn" id="2_pruow"]
+[ext_resource type="PackedScene" uid="uid://bixmpa5u3qhfk" path="res://scenes/ui/ControlHelp_Decelerate.tscn" id="3_2oe8r"]
+[ext_resource type="PackedScene" uid="uid://ctnqyi2nupy2f" path="res://scenes/ui/ControlHelp_Rotate.tscn" id="4_mrsbp"]
+[ext_resource type="PackedScene" uid="uid://cagsnkt10ahnm" path="res://scenes/ui/ControlHelp_Strafe.tscn" id="5_2rnik"]
+[ext_resource type="PackedScene" uid="uid://c18nqmh62b3dr" path="res://scenes/ui/ControlHelp_SwitchFlightMode.tscn" id="6_d3mye"]
+
+[node name="HelpScreen" type="Control" node_paths=PackedStringArray("helpScenes")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d5w06")
+helpScenes = [NodePath("Accelerate"), NodePath("Decelerate"), NodePath("Rotate"), NodePath("Strafe"), NodePath("SwitchFlightMode")]
+
+[node name="Accelerate" parent="." instance=ExtResource("2_pruow")]
+visible = false
+layout_mode = 1
+
+[node name="Decelerate" parent="." instance=ExtResource("3_2oe8r")]
+visible = false
+layout_mode = 1
+
+[node name="Rotate" parent="." instance=ExtResource("4_mrsbp")]
+visible = false
+layout_mode = 1
+
+[node name="Strafe" parent="." instance=ExtResource("5_2rnik")]
+visible = false
+layout_mode = 1
+
+[node name="SwitchFlightMode" parent="." instance=ExtResource("6_d3mye")]
+visible = false
+layout_mode = 1
+
+[connection signal="ShowNext" from="Accelerate" to="." method="NextHelpText"]
+[connection signal="ShowPrevious" from="Accelerate" to="." method="PreviousHelpText"]
+[connection signal="ShowNext" from="Decelerate" to="." method="NextHelpText"]
+[connection signal="ShowPrevious" from="Decelerate" to="." method="PreviousHelpText"]
+[connection signal="ShowNext" from="Rotate" to="." method="NextHelpText"]
+[connection signal="ShowPrevious" from="Rotate" to="." method="PreviousHelpText"]
+[connection signal="ShowNext" from="Strafe" to="." method="NextHelpText"]
+[connection signal="ShowPrevious" from="Strafe" to="." method="PreviousHelpText"]
+[connection signal="Close" from="SwitchFlightMode" to="." method="CloseHelpPanels"]
+[connection signal="ShowNext" from="SwitchFlightMode" to="." method="CloseHelpPanels"]
+[connection signal="ShowPrevious" from="SwitchFlightMode" to="." method="PreviousHelpText"]

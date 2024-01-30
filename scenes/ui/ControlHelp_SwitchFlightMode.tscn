@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://c18nqmh62b3dr"]
+
+[ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_wd4bq"]
+[ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_506o3"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("1_wd4bq")
+script = ExtResource("2_506o3")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 350.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wd4bq")
+
+[node name="Headline" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wd4bq")
+text = "Strafe left and right"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_wd4bq")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "There are two flight modes to use.
+
+You could use raw input, this will give you full control of the ship.
+but you need to counter forces like rotation and acceleration yourself.
+
+As an alternative you could use the flight computer. 
+It will try to ensure that you stay on course by interpreting your inputs.
+If you stop with input commands it will try to stop your ship.
+
+You can switch those modes as you like while playing."
+horizontal_alignment = 1
+
+[node name="StepDescription" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wd4bq")
+text = "Press `X` to cycle flight modes forward, or `y/z` to cycle backwards"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_wd4bq")
+
+[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wd4bq")
+text = "Previous
+"
+
+[node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wd4bq")
+text = "Replay Animation"
+
+[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wd4bq")
+text = "Close"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="CloseHelpPanel"]

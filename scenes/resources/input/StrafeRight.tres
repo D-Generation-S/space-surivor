@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ControlConfiguration" load_steps=2 format=3 uid="uid://cmxx6205ec7d2"]
+
+[ext_resource type="Script" path="res://src/resources/ControlConfiguration.cs" id="1_cyjnr"]
+
+[resource]
+script = ExtResource("1_cyjnr")
+inputName = "strafe_right"

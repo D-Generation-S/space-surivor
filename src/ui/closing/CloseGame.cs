@@ -1,6 +1,8 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Script to close the game
+/// </summary>
 public partial class CloseGame : Button
 {
     public override void _Pressed()

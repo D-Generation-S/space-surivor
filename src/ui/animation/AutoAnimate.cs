@@ -1,14 +1,18 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Start a animation automatically
+/// </summary>
 public partial class AutoAnimate : AnimationPlayer
 {
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		ReplayAnimation();
 	}
 
+	/// <summary>
+	/// Replay the animation
+	/// </summary>
 	public void ReplayAnimation()
 	{
 		Play("MoveForward");

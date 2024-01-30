@@ -1,7 +1,13 @@
 using Godot;
 
+/// <summary>
+/// Show or hide a node
+/// </summary>
 public partial class ShowOrHideNode : Control
 {
+	/// <summary>
+	/// The initial state of the node
+	/// </summary>
 	[Export]
 	private bool initialState = false;
 
@@ -11,6 +17,9 @@ public partial class ShowOrHideNode : Control
 		GetParent<Control>().MouseFilter = initialState ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
 	}
 
+	/// <summary>
+	/// Show the control node
+	/// </summary>
 	public void ShowControl()
 	{
 		SetDeferred("visible", true);
@@ -18,6 +27,9 @@ public partial class ShowOrHideNode : Control
 		
 	}
 
+	/// <summary>
+	/// Hide the control node
+	/// </summary>
 	public void HideControl()
 	{
 		SetDeferred("visible", false);

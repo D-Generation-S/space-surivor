@@ -1,33 +1,37 @@
 using System;
-using System.Diagnostics;
 using Godot;
 
+/// <summary>
+/// Class used to provide a fly by wire interpret
+/// This will try to keep the ship on course and prevent drifting if no input is given.
+/// </summary>
 public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 {
+    /// <summary>
+    /// The maximal rotation allowed to correct the rotation in case of no input
+    /// </summary>
     [Export(PropertyHint.Range,"0.01745, 0.01745")]
     private float rotationMax = 0.01745f;
-    
-    [Export]
-    private float rotationMinThreshold = 0.000001f;
 
+    /// <summary>
+    /// The allowed difference between target and real rotation, this prevents some osculation
+    /// </summary>
     [Export]
     private float rotationDifference = 0.001f;
 
+    /// <summary>
+    /// The 
+    /// </summary>
     private float targetShipRotation;
 
-    private Vector2 targetShipCourse;
-
-    private float halfRotation;
-
-    public FlyByWireCommandInterpret()
-    {
-        halfRotation = (float)Math.PI;
-    }
+    /// <summary>
+    /// Constant for a half rotation in degree, this is identically to pi or 180 degree
+    /// </summary>
+    private readonly float halfRotation = (float)Math.PI;
 
     public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         targetShipRotation = currentShipRotation;
-        targetShipCourse = Vector2.Up.Rotated(targetShipRotation);
     }
 
     public override float IdleBaseRotation(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
@@ -72,7 +76,6 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             return 0;
         }
         targetShipRotation = currentShipRotation;
-        targetShipCourse = currentVelocity.Normalized();
         
         return base.InterpretRotation(commandedRotation, currentVelocity, rotationVelocity, currentShipRotation);
     }
@@ -87,6 +90,14 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         return base.InterpretBaseVelocity(commandedVelocity, currentVelocity, rotationVelocity, currentShipRotation);
     }
 
+    /// <summary>
+    /// Method to lerp between two values
+    /// Note: This method should properly be moved to some math extension
+    /// </summary>
+    /// <param name="firstFloat">The first float value to lerp between</param>
+    /// <param name="secondFloat">The second float value to lerp between</param>
+    /// <param name="by">The value used for lerping, should be between 0 and 1</param>
+    /// <returns>The lerped value</returns>
     float Lerp(float firstFloat, float secondFloat, float by)
     {
         return firstFloat * (1 - by) + secondFloat * by;

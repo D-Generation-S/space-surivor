@@ -58,12 +58,12 @@ public partial class PlayerInputController : Node
 			flightComputer.NoVelocityCommands();
 		}
 
-		if (Input.IsActionPressed(nextFlightComputerMode.GetInputName()))
+		if (Input.IsActionJustPressed(nextFlightComputerMode.GetInputName()))
 		{
 			flightComputer.SwitchToNextModeInterpret();
 		}
 
-		if (Input.IsActionPressed(previousFlightComputerMode.GetInputName()))
+		if (Input.IsActionJustPressed(previousFlightComputerMode.GetInputName()))
 		{
 			flightComputer.SwitchToPreviousModeInterpret();
 		}

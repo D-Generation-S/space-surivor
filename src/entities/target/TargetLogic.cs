@@ -28,11 +28,7 @@ public partial class TargetLogic : Node2D
 		areaCollider = GetChildren().OfType<Area2D>().FirstOrDefault();
 		audio = GetChildren().OfType<AudioStreamPlayer2D>().FirstOrDefault();
 
-		HideTarget();
-		if (targetVisible)
-		{
-			MakeTargetVisible();
-		}
+		ToggleTargetVisibility(targetVisible);
 
 		areaCollider.BodyEntered += (entity) => {
 			if (entity.Name != "Player")
@@ -59,10 +55,9 @@ public partial class TargetLogic : Node2D
 
 	private void ToggleTargetVisibility(bool newState)
 	{
-
-		visuals.Visible = newState;
-		areaCollider.Monitorable = newState;
-		areaCollider.Monitoring = newState;
+		SetDeferred("visible", newState);
+		areaCollider.SetDeferred("monitorable", newState);
+		areaCollider.SetDeferred("monitoring", newState);
 	}
 
 	public void HideTarget()

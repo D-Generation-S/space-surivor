@@ -2,6 +2,9 @@ using Godot;
 
 public partial class FlightCommandInterpret : Node
 {
+    [Export]
+    private string displayName;
+
     public virtual void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         
@@ -25,5 +28,10 @@ public partial class FlightCommandInterpret : Node
     public virtual float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
     {
         return commandedRotation;
+    }
+
+    public string GetDisplayName()
+    {
+        return displayName ?? Name.ToString();
     }
 }

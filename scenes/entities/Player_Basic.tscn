@@ -56,14 +56,16 @@ previousFlightComputerMode = ExtResource("8_x5v8n")
 rotateLeft = ExtResource("7_hdevr")
 rotateRight = ExtResource("8_bkhpr")
 
-[node name="FlightComputer" type="Node" parent="Components"]
+[node name="FlightComputer" type="Node" parent="Components" groups=["player_component"]]
 script = ExtResource("9_j7fmf")
 
 [node name="FlyByWireControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_cq0qe")
+displayName = "Fly by wire"
 
 [node name="RawControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_i85cv")
+displayName = "Uncoupled"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("1_1ckmu")

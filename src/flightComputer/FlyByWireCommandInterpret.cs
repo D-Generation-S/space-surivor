@@ -60,23 +60,9 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 
     public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
-        Vector2 direction = currentVelocity.Rotated(currentShipRotation);
-        //Debug.WriteLine(currentVelocity);
-
-        if (currentVelocity == Vector2.Zero)
-        {
-            return currentVelocity;
-        }
-        /**
-        if ( direction.X > 1 || direction.Y > 1)
-        {
-            direction.Normalized();
-        }
-        */
-        //float yDirection = direction.X * -1;
-        //Debug.WriteLine(direction);
-        //Debug.WriteLine(currentVelocity);
-        return new Vector2(0, 0);
+        float yComponent = currentVelocity.Y;
+        float xComponent = currentVelocity.X;
+        return new Vector2(xComponent, yComponent) * -1;
     }
 
     public override float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
@@ -86,9 +72,19 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             return 0;
         }
         targetShipRotation = currentShipRotation;
-        targetShipCourse = Vector2.Up.Rotated(targetShipRotation);
+        targetShipCourse = currentVelocity.Normalized();
         
         return base.InterpretRotation(commandedRotation, currentVelocity, rotationVelocity, currentShipRotation);
+    }
+
+    public override Vector2 InterpretBaseVelocity(Vector2 commandedVelocity, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
+    {
+        if (commandedVelocity.X == 0)
+        {
+            float newX = currentVelocity.X * -1;
+            commandedVelocity = new Vector2(newX, commandedVelocity.Y);
+        }
+        return base.InterpretBaseVelocity(commandedVelocity, currentVelocity, rotationVelocity, currentShipRotation);
     }
 
     float Lerp(float firstFloat, float secondFloat, float by)

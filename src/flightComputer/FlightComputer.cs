@@ -5,6 +5,10 @@ using Godot;
 
 public partial class FlightComputer : Node
 {
+    
+	[Signal]
+	public delegate void FlightModeChangedEventHandler(string name);
+
     private List<FlightCommandInterpret> flightCommandModes;
 
     private FlightCommandInterpret activeFlightCommandInterpret;
@@ -13,6 +17,10 @@ public partial class FlightComputer : Node
 
     private EntityMovement entityMovement;
 
+    private Vector2 lastPosition;
+
+    private Vector2 localVelocity;
+
     public override void _Ready()
     {
         entityMovement = GetParent().GetParent<EntityMovement>();
@@ -20,6 +28,22 @@ public partial class FlightComputer : Node
         activeFlightCommandInterpret = flightCommandModes.FirstOrDefault();
         ComputerSetup();
         currentCommandInterpretIndex = 0;
+        lastPosition = entityMovement.Position;
+
+        EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        localVelocity = entityMovement.Position - lastPosition;
+        lastPosition = entityMovement.Position;
+
+        Vector2 forwardFlightDirection = Vector2.Up.Rotated(entityMovement.Rotation);
+        Vector2 strafeLeftDirection = Vector2.Left.Rotated(entityMovement.Rotation);
+        var transformation = new Transform2D(strafeLeftDirection, forwardFlightDirection, Vector2.Zero);
+        localVelocity = transformation.BasisXformInv(localVelocity).Normalized() * -1;
+
+        base._PhysicsProcess(delta);
     }
 
     public void ComputerSetup()
@@ -36,13 +60,13 @@ public partial class FlightComputer : Node
 
     public void NoRotationCommands()
     {
-        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(entityMovement.Velocity, entityMovement.GetRotationVelocity(), GetEntityRotation());
+        float computedRotation = activeFlightCommandInterpret.IdleBaseRotation(localVelocity, entityMovement.GetRotationVelocity(), GetEntityRotation());
         entityMovement.InputRotation(computedRotation);
     }
 
     public void NoVelocityCommands()
     {
-        Vector2 computedVelocity = activeFlightCommandInterpret.IdleBaseVelocity(entityMovement.Velocity,
+        Vector2 computedVelocity = activeFlightCommandInterpret.IdleBaseVelocity(localVelocity,
                                                                                  entityMovement.GetRotationVelocity(),
                                                                                  GetEntityRotation());
         entityMovement.InputVelocity(computedVelocity);
@@ -51,7 +75,7 @@ public partial class FlightComputer : Node
     public void CommandBaseFlightVector(Vector2 commandedVelocity)
     {
         Vector2 computedVector = activeFlightCommandInterpret.InterpretBaseVelocity(commandedVelocity,
-                                                                                    entityMovement.Velocity,
+                                                                                    localVelocity,
                                                                                     entityMovement.GetRotationVelocity(),
                                                                                     GetEntityRotation());
         entityMovement.InputVelocity(computedVector);
@@ -60,7 +84,7 @@ public partial class FlightComputer : Node
     public void CommandRotation(float commandedRotation)
     {
         float computedRotation = activeFlightCommandInterpret.InterpretRotation(commandedRotation,
-                                                                                entityMovement.Velocity,
+                                                                                localVelocity,
                                                                                 entityMovement.GetRotationVelocity(),
                                                                                 GetEntityRotation());
         entityMovement.InputRotation(computedRotation);
@@ -72,6 +96,8 @@ public partial class FlightComputer : Node
         currentCommandInterpretIndex = currentCommandInterpretIndex > flightCommandModes.Count - 1? 0 : currentCommandInterpretIndex;
         activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
         ComputerSetup();
+
+        EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
 	}
 
 	public void SwitchToPreviousModeInterpret()
@@ -80,10 +106,17 @@ public partial class FlightComputer : Node
         currentCommandInterpretIndex = currentCommandInterpretIndex < 0? flightCommandModes.Count - 1 : currentCommandInterpretIndex;
         activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
         ComputerSetup();
+        
+		EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
 	}
 
     public List<FlightCommandInterpret> GetComputerModes()
     {
         return flightCommandModes;
+    }
+
+    public FlightCommandInterpret GetActiveComputerMode()
+    {
+        return activeFlightCommandInterpret;
     }
 }

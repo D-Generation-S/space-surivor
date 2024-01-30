@@ -40,10 +40,15 @@ size_flags_horizontal = 0
 script = ExtResource("3_18yav")
 player = NodePath("../../../../Player")
 
-[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+[node name="Help" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Help"
+
+[node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Close"
+script = ExtResource("5_b4j62")
 
 [node name="Expander2" type="Control" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
@@ -183,7 +188,7 @@ position = Vector2(1928, 544)
 shape = SubResource("RectangleShape2D_jtqye")
 
 [connection signal="EntityDidCollide" from="Player" to="BorderCollision" method="SomethingCollided"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button" to="CanvasLayer/HelpScreen" method="NextHelpText"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]
 [connection signal="TargetHit" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
 [connection signal="TargetHit" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]

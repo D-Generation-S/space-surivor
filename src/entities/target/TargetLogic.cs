@@ -1,22 +1,47 @@
 using Godot;
 using System.Linq;
 
+/// <summary>
+/// Class to define a fly through target.
+/// It does hold the complete logic for such an packed scene
+/// </summary>
 public partial class TargetLogic : Node2D
 {
+	/// <summary>
+	/// Event handler if the target was hit
+	/// </summary>
 	[Signal]
 	public delegate void TargetHitEventHandler();
 
+	/// <summary>
+	/// Should the target be visible after spawning
+	/// </summary>
 	[Export]
 	private bool targetVisible;
 
+	/// <summary>
+	/// The visual component for this target
+	/// </summary>
 	private Sprite2D visuals;
 
-	private GpuParticles2D particleEngine;
-
+	/// <summary>
+	/// The collider of this target
+	/// </summary>
 	private Area2D areaCollider;
 
+	/// <summary>
+	/// The particle emitter for the death animation
+	/// </summary>
+	private GpuParticles2D particleEmitter;
+
+	/// <summary>
+	/// The audio component sued for the death animation
+	/// </summary>
 	private AudioStreamPlayer2D audio;
 
+	/// <summary>
+	/// Is this target already destroyed
+	/// </summary>
 	private bool destroyed;
 
 
@@ -24,7 +49,7 @@ public partial class TargetLogic : Node2D
 	public override void _Ready()
 	{
 		visuals = GetChildren().OfType<Sprite2D>().FirstOrDefault();
-		particleEngine = GetChildren().OfType<GpuParticles2D>().FirstOrDefault();
+		particleEmitter = GetChildren().OfType<GpuParticles2D>().FirstOrDefault();
 		areaCollider = GetChildren().OfType<Area2D>().FirstOrDefault();
 		audio = GetChildren().OfType<AudioStreamPlayer2D>().FirstOrDefault();
 
@@ -36,13 +61,13 @@ public partial class TargetLogic : Node2D
 				return;
 			}
 			HideTarget();
-			particleEngine.Emitting = true;
+			particleEmitter.Emitting = true;
 			audio.Play();
 			EmitSignal(SignalName.TargetHit);
 			destroyed = true;
 		};
 
-		particleEngine.Finished += () => {
+		particleEmitter.Finished += () => {
 			if (!destroyed)
 			{
 				return;
@@ -53,6 +78,10 @@ public partial class TargetLogic : Node2D
 
 	}
 
+	/// <summary>
+	/// Toggle the visibility of this target
+	/// </summary>
+	/// <param name="newState">The new state to set the target</param>
 	private void ToggleTargetVisibility(bool newState)
 	{
 		SetDeferred("visible", newState);
@@ -60,11 +89,17 @@ public partial class TargetLogic : Node2D
 		areaCollider.SetDeferred("monitoring", newState);
 	}
 
+	/// <summary>
+	/// Hide the target
+	/// </summary>
 	public void HideTarget()
 	{
 		ToggleTargetVisibility(false);
 	}
 
+	/// <summary>
+	/// Make the target visible again
+	/// </summary>
 	public void MakeTargetVisible()
 	{
 		ToggleTargetVisibility(true);

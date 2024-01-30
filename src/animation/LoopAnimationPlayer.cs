@@ -1,13 +1,17 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Simple loop animation player.
+/// </summary>
 public partial class LoopAnimationPlayer : AnimationPlayer
 {
 
+	/// <summary>
+	/// The name of the animation to loop
+	/// </summary>
 	[Export]
 	private string animationName;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Play(animationName);

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Diagnostics;
 
 public partial class EntityMovement : CharacterBody2D
 {
@@ -9,6 +8,10 @@ public partial class EntityMovement : CharacterBody2D
 
 	[Signal]
 	public delegate void IdleForwardEventHandler();
+
+	[Signal]
+	public delegate void EntityDidCollideEventHandler(EntityMovement entity);
+
 
 	[ExportGroup("Base Movement")]
 	[Export]
@@ -51,7 +54,10 @@ public partial class EntityMovement : CharacterBody2D
         rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
         Rotate(rotationVelocity);
 
-        MoveAndSlide();
+        if (MoveAndSlide())
+		{
+			EmitSignal(SignalName.EntityDidCollide, this);
+		}
         if (Math.Abs(rotationVelocity) > maxRotationVelocity)
         {
             rotationVelocity = rotationVelocity < 0 ? -maxRotationVelocity : maxRotationVelocity;

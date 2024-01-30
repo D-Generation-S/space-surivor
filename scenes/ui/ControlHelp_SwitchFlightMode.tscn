@@ -98,4 +98,4 @@ theme = ExtResource("1_wd4bq")
 text = "Close"
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="HidingPanel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="CloseHelpPanel"]

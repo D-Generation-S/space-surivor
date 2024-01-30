@@ -45,5 +45,6 @@ layout_mode = 1
 [connection signal="ShowPrevious" from="Rotate" to="." method="PreviousHelpText"]
 [connection signal="ShowNext" from="Strafe" to="." method="NextHelpText"]
 [connection signal="ShowPrevious" from="Strafe" to="." method="PreviousHelpText"]
+[connection signal="Close" from="SwitchFlightMode" to="." method="CloseHelpPanels"]
 [connection signal="ShowNext" from="SwitchFlightMode" to="." method="CloseHelpPanels"]
 [connection signal="ShowPrevious" from="SwitchFlightMode" to="." method="PreviousHelpText"]

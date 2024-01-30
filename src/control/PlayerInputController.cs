@@ -12,7 +12,7 @@ public partial class PlayerInputController : Node
 	[ExportGroup("Base Movement")]
 	[Export]
 	private ControlConfiguration accelerate;
-	
+
 	/// <summary>
 	/// The control configuration to decelerate the space ship
 	/// </summary>
@@ -20,15 +20,15 @@ public partial class PlayerInputController : Node
 	[Export]
 	private ControlConfiguration decelerate;
 
-	
+
 	/// <summary>
 	/// The control configuration to strafe the space ship to the left
 	/// </summary>
 	[ExportGroup("Base Movement")]
 	[Export]
 	private ControlConfiguration strafeLeft;
-	
-	
+
+
 	/// <summary>
 	/// The control configuration to strafe the space ship to the right
 	/// </summary>
@@ -69,13 +69,13 @@ public partial class PlayerInputController : Node
 	/// </summary>
 	private FlightComputer flightComputer;
 
-    public override void _Ready()
-    {
+	public override void _Ready()
+	{
 		flightComputer = GetParent().GetChildren().OfType<FlightComputer>().FirstOrDefault();
-    }
+	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
 	{
 		Vector2 commandedVelocity = new Vector2(GetStrafing(), GetAccelerationOrDeceleration());
 		float rotation = GetRotation();

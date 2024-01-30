@@ -8,15 +8,19 @@ public partial class ShowOrHideNode : Control
 	public override void _Ready()
 	{
 		Visible = initialState;
+		GetParent<Control>().MouseFilter = initialState ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
 	}
 
 	public void ShowControl()
 	{
-		Visible = true;
+		SetDeferred("visible", true);
+		GetParent<Control>().SetDeferred("mouse_filter", 0);		
+		
 	}
 
 	public void HideControl()
 	{
-		Visible = false;
+		SetDeferred("visible", false);
+		GetParent<Control>().SetDeferred("mouse_filter", 2);	
 	}
 }

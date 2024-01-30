@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c18nqmh62b3dr"]
+[gd_scene load_steps=3 format=3 uid="uid://c18nqmh62b3dr"]
 
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_wd4bq"]
-[ext_resource type="Script" path="res://src/ui/scenes/CloseUi.cs" id="3_mguuo"]
-[ext_resource type="Script" path="res://src/ui/scenes/LoadNewScene.cs" id="4_qsbpp"]
+[ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_506o3"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_wd4bq")
+script = ExtResource("2_506o3")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -81,23 +81,21 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_wd4bq")
 
-[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("nodeToClose")]
+[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
 text = "Previous
 "
-script = ExtResource("4_qsbpp")
-scenePath = "res://scenes/ui/ControlHelp_Rotate.tscn"
-nodeToClose = NodePath("../../../..")
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
 text = "Replay Animation"
 
-[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("nodeToClose")]
+[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
 text = "Close"
-script = ExtResource("3_mguuo")
-nodeToClose = NodePath("../../../..")
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="HidingPanel"]

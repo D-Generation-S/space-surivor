@@ -4,15 +4,27 @@ using System;
 public partial class CloseUi : Button
 {
 	[Export]
-	private Node nodeToClose;
+	protected Node nodeToClose;
+	
+	[Export]
+	protected Node targetNode;
 
     public override void _Pressed()
     {
         base._Pressed();
-		if (nodeToClose == null)
+		if (nodeToClose is null)
 		{
 			return;
 		}
-		GetTree().Root.CallDeferred("remove_child", nodeToClose);
+		if ( targetNode is null)
+		{
+			if (GetTree().Root == GetParent())
+			{
+				GetTree().Root.CallDeferred("remove_child", nodeToClose);
+			}
+			GetParent().CallDeferred("remove_child", nodeToClose);
+			return;
+		}
+		targetNode.CallDeferred("remove_child", nodeToClose);
     }
 }

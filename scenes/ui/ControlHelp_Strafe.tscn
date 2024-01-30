@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://cagsnkt10ahnm"]
 
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_7qnb8"]
+[ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_ir8si"]
 [ext_resource type="Texture2D" uid="uid://fb37evsbtc3a" path="res://assets/sprites/ship_C.png" id="2_vqn60"]
 [ext_resource type="Script" path="res://src/ui/animation/AutoAnimate.cs" id="3_vw02f"]
-[ext_resource type="Script" path="res://src/ui/scenes/LoadNewScene.cs" id="4_r6k6w"]
 
 [sub_resource type="Animation" id="Animation_xwskf"]
 resource_name = "MoveForward"
@@ -26,7 +26,7 @@ _data = {
 "MoveForward": SubResource("Animation_xwskf")
 }
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" node_paths=PackedStringArray("animationPlayer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +35,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_7qnb8")
+script = ExtResource("2_ir8si")
+animationPlayer = NodePath("Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D/AnimationPlayer")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -103,7 +105,7 @@ grow_vertical = 0
 theme = ExtResource("1_7qnb8")
 
 [node name="Sprite2D" type="Sprite2D" parent="Panel/VBoxContainer/MarginContainer/AnimationControl/Animation"]
-position = Vector2(-100, -150)
+position = Vector2(0, -150)
 texture = ExtResource("2_vqn60")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D"]
@@ -124,26 +126,22 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_7qnb8")
 
-[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("nodeToClose")]
+[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_7qnb8")
 text = "Previous
 "
-script = ExtResource("4_r6k6w")
-scenePath = "res://scenes/ui/ControlHelp_Decelerate.tscn"
-nodeToClose = NodePath("../../../..")
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_7qnb8")
 text = "Replay Animation"
 
-[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("nodeToClose")]
+[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_7qnb8")
 text = "Next"
-script = ExtResource("4_r6k6w")
-scenePath = "res://scenes/ui/ControlHelp_Rotate.tscn"
-nodeToClose = NodePath("../../../..")
 
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Replay" to="Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D/AnimationPlayer" method="ReplayAnimation"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="ShowNextHelpPanel"]

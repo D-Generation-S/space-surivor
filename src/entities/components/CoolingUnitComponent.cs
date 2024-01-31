@@ -1,10 +1,15 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 
 public partial class CoolingUnitComponent : ConsumerComponent
 {
+    [Signal]
+    public delegate void MaxHeatCapacityChangedEventHandler(int newHeatCapacity);
+    
+    [Signal]
+    public delegate void StoredHeatChangedEventHandler(int newHeat);
+
 	[Export]
 	private CoolingUnitConfiguration coolingUnitConfiguration;
 
@@ -45,7 +50,19 @@ public partial class CoolingUnitComponent : ConsumerComponent
 			var damage = storedHeat - coolingUnitConfiguration.GetHeatCapacity();
 			healthComponent.Damage(Math.Min(damage, maxHeatDamage));
 		}
+
+		EmitSignal(SignalName.StoredHeatChanged, storedHeat);
 	}
+
+	public int GetMaxHeatCapacity()
+	{
+		return coolingUnitConfiguration.GetHeatCapacity();
+	}
+
+    public override int GetStoredHeat()
+    {
+        return storedHeat;
+    }
 
     public override int GetConsumption()
     {

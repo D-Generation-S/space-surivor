@@ -64,8 +64,9 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
 
     public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
-        float yComponent = currentVelocity.Y;
-        float xComponent = currentVelocity.X;
+        var normalized = currentVelocity.Normalized();
+        float yComponent = currentVelocity.Y < normalized.Y ? currentVelocity.Y : normalized.Y;
+        float xComponent = currentVelocity.X < normalized.X ? currentVelocity.X : normalized.X;
         return new Vector2(xComponent, yComponent) * -1;
     }
 

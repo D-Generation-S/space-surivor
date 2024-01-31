@@ -45,16 +45,16 @@ scale_min = 0.1
 scale_max = 0.5
 color_initial_ramp = SubResource("GradientTexture1D_bcehv")
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
 
 [node name="Components" type="Node" parent="."]
 
-[node name="Health" type="Node" parent="Components"]
+[node name="HealthComponent" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("2_dlx6e")
-health = 300
+maxHealth = 300
 
 [node name="InputController" type="Node" parent="Components"]
 script = ExtResource("2_lxc1a")
@@ -78,26 +78,26 @@ displayName = "Fly by wire"
 script = ExtResource("10_i85cv")
 displayName = "Uncoupled"
 
-[node name="PowerPlant" type="Node" parent="Components"]
+[node name="PowerPlant" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("14_et7re")
 plantConfiguration = ExtResource("15_nyjjv")
 
-[node name="CoolingUnit" type="Node" parent="Components"]
+[node name="CoolingUnit" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("16_t28t7")
 coolingUnitConfiguration = ExtResource("17_3c07j")
 
-[node name="Engine" type="Node" parent="Components"]
+[node name="Engine" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("17_wkxei")
 engineConfiguration = ExtResource("18_eeyan")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerVisual" type="Sprite2D" parent="."]
 material = ExtResource("1_1ckmu")
 texture = ExtResource("1_5ux5h")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="PlayerCollision" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -15, 23, 8, 16, 16, 0, 7, -16, 15, -22, 8)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="PlayerEngineExhaust" type="GPUParticles2D" parent="."]
 position = Vector2(0, 6)
 emitting = false
 amount = 150
@@ -105,5 +105,5 @@ process_material = SubResource("ParticleProcessMaterial_6lwlb")
 texture = ExtResource("3_knjwj")
 script = ExtResource("5_apxo6")
 
-[connection signal="IdleForward" from="." to="GPUParticles2D" method="DisableParticleEmitter"]
-[connection signal="PoweringForward" from="." to="GPUParticles2D" method="ActivateParticleEmitter"]
+[connection signal="IdleForward" from="." to="PlayerEngineExhaust" method="DisableParticleEmitter"]
+[connection signal="PoweringForward" from="." to="PlayerEngineExhaust" method="ActivateParticleEmitter"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
 [ext_resource type="Script" path="res://src/ui/closing/MultiCloseUi.cs" id="2_vdu3p"]
-[ext_resource type="Script" path="res://src/ui/player/PlayerBasedUi.cs" id="3_18yav"]
+[ext_resource type="PackedScene" uid="uid://bawpucfa4dn86" path="res://scenes/ui/UserInterface.tscn" id="3_dp45m"]
 [ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
 [ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
@@ -31,14 +31,12 @@ grow_vertical = 2
 script = ExtResource("2_vdu3p")
 nodes = [NodePath("Expander2"), NodePath("Expander3"), NodePath("Expander4"), NodePath("Expander"), NodePath("Panel")]
 
+[node name="UserInterface" parent="CanvasLayer/VBoxContainer" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
+layout_mode = 2
+player = NodePath("../../../Player")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-
-[node name="CurrentFlightMode" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("player")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("3_18yav")
-player = NodePath("../../../../Player")
 
 [node name="Help" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -145,7 +143,7 @@ script = ExtResource("5_b4j62")
 [node name="Targets" type="Node" parent="."]
 
 [node name="InitialTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(256, 192)
+position = Vector2(192, 320)
 targetVisible = true
 
 [node name="SecondTarget" parent="Targets" instance=ExtResource("4_pmjjq")]

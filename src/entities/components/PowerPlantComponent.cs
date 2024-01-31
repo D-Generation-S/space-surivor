@@ -6,6 +6,7 @@ public partial class PowerPlantComponent : Node
 {
 	[Export]
 	private PowerPlantConfiguration plantConfiguration;
+	
 
 	private List<ConsumerComponent> consumers;
 

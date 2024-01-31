@@ -67,7 +67,7 @@ public partial class FlightComputer : Node
         Vector2 forwardFlightDirection = Vector2.Up.Rotated(controlledEntity.Rotation);
         Vector2 strafeLeftDirection = Vector2.Left.Rotated(controlledEntity.Rotation);
         var transformation = new Transform2D(strafeLeftDirection, forwardFlightDirection, Vector2.Zero);
-        localVelocity = transformation.BasisXformInv(localVelocity).Normalized() * -1;
+        localVelocity = transformation.BasisXformInv(localVelocity) * -1;
 
         base._PhysicsProcess(delta);
     }

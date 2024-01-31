@@ -143,6 +143,11 @@ public partial class EntityMovement : CharacterBody2D
             }
             velocityInput = new Vector2(newXVelocityInput, newYVelocityInput);
         }
+		
+		if (velocityInput != Vector2.Zero)
+		{
+			engine.Firing();
+		}
 		return velocityInput.Rotated(Rotation) * accelerationMultiplier;
     }
 
@@ -175,10 +180,6 @@ public partial class EntityMovement : CharacterBody2D
 		if (currentBaseVelocity.Y >= 0)
 		{
 			EmitSignal(SignalName.IdleForward);
-		}
-		if (currentBaseVelocity != Vector2.Zero)
-		{
-			engine.Firing();
 		}
 		velocityInput = currentBaseVelocity.Normalized();
 	}

@@ -34,7 +34,7 @@ public partial class CoolingUnitComponent : ConsumerComponent
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		var consumers = GetParent().GetChildren().OfType<ConsumerComponent>().ToList();
+		var consumers = GetParent().GetChildren().OfType<ConsumerComponent>().Where(consumer => consumer != this).ToList();
 		foreach (var consumer in consumers)
 		{
 			storedHeat += consumer.GetStoredHeat();

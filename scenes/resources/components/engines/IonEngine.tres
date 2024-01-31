@@ -11,7 +11,7 @@ priority = 2
 
 [sub_resource type="Resource" id="Resource_37jk5"]
 script = ExtResource("2_12mkk")
-heatPerTick = 151
+heatPerTick = 150
 
 [resource]
 script = ExtResource("1_qgyyt")

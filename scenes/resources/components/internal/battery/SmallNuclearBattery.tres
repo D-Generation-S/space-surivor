@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BatteryConfiguration" load_steps=2 format=3 uid="uid://dhqljxttv22hv"]
+
+[ext_resource type="Script" path="res://src/resources/BatteryConfiguration.cs" id="1_jwar7"]
+
+[resource]
+script = ExtResource("1_jwar7")
+batteryCapacity = 2000
+maxLoadAmount = 50
+loadHeat = 0
+maxUnloadAmount = 50
+name = "Small Nuclear Battery"
+description = ""
+SlotSize = 1
+componentSlot = 1

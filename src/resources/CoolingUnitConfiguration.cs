@@ -2,14 +2,8 @@ using System.Reflection.Metadata.Ecma335;
 using Godot;
 
 [GlobalClass]
-public partial class CoolingUnitConfiguration : Resource
+public partial class CoolingUnitConfiguration : BaseComponent
 {
-    /// <summary>
-    /// The name of the engine
-    /// </summary>
-    [Export]
-    private string name;
-
     [Export]
     private ConsumerConfiguration consumerConfiguration;
 
@@ -18,11 +12,6 @@ public partial class CoolingUnitConfiguration : Resource
 
     [Export]
     private int heatCapacity;
-
-    public string GetName()
-    {
-        return name;
-    }
 
     public ConsumerConfiguration GetConsumerConfiguration()
     {

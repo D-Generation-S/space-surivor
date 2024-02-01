@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class BatteryConfiguration : Resource
+public partial class BatteryConfiguration : BaseComponent
 {
     [Export]
     private int batteryCapacity;

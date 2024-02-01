@@ -1,13 +1,8 @@
 using Godot;
 
 [GlobalClass]
-public partial class EngineConfiguration : Resource
+public partial class EngineConfiguration : BaseComponent
 {
-    /// <summary>
-    /// The name of the engine
-    /// </summary>
-    [Export]
-    private string name;
 
     [Export]
     private Vector2 engineAcceleration;
@@ -24,11 +19,6 @@ public partial class EngineConfiguration : Resource
 
     [Export]
     private HeatConfiguration heatConfiguration;
-
-    public string GetName()
-    {
-        return name;
-    }
 
     public ConsumerConfiguration GetConsumerConfiguration()
     {

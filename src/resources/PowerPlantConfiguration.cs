@@ -1,21 +1,14 @@
 using Godot;
 
 [GlobalClass]
-public partial class PowerPlantConfiguration : Resource
+public partial class PowerPlantConfiguration : BaseComponent
 {
-    [Export]
-    private string name;
 
     [Export]
     private int production;
 
     [Export]
     private int size;
-
-    public string GetName()
-    {
-        return name;
-    }
 
     public int GetProduction()
     {

@@ -19,13 +19,13 @@
 [ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="10_cq0qe"]
 [ext_resource type="Script" path="res://src/flightComputer/RawFlightCommandInterpret.cs" id="10_i85cv"]
 [ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="14_et7re"]
-[ext_resource type="Resource" uid="uid://dx3208x1fkhhl" path="res://scenes/resources/components/powerPlant/NuclearReactor.tres" id="15_nyjjv"]
 [ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="16_t28t7"]
-[ext_resource type="Resource" uid="uid://dbgg3rral6dv6" path="res://scenes/resources/components/coolingUnit/ArcticFreezing.tres" id="17_3c07j"]
+[ext_resource type="Resource" uid="uid://dx3208x1fkhhl" path="res://scenes/resources/components/core/powerPlant/NuclearReactor.tres" id="16_yis07"]
 [ext_resource type="Script" path="res://src/entities/components/EngineComponent.cs" id="17_wkxei"]
-[ext_resource type="Resource" uid="uid://htqdua2xkjq3" path="res://scenes/resources/components/engines/IonEngine.tres" id="18_eeyan"]
+[ext_resource type="Resource" uid="uid://dbgg3rral6dv6" path="res://scenes/resources/components/core/coolingUnit/ArcticFreezing.tres" id="18_lxhlp"]
+[ext_resource type="Resource" uid="uid://htqdua2xkjq3" path="res://scenes/resources/components/core/engines/IonEngine.tres" id="20_t8j5j"]
 [ext_resource type="Script" path="res://src/entities/components/BatteryComponent.cs" id="21_klf7x"]
-[ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/Battery/SmallNuclearBattery.tres" id="22_wffd7"]
+[ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/internal/battery/SmallNuclearBattery.tres" id="22_6xc5u"]
 
 [sub_resource type="Gradient" id="Gradient_oyg3n"]
 offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
@@ -82,19 +82,19 @@ displayName = "Uncoupled"
 
 [node name="PowerPlant" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("14_et7re")
-plantConfiguration = ExtResource("15_nyjjv")
+plantConfiguration = ExtResource("16_yis07")
 
 [node name="CoolingUnit" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("16_t28t7")
-coolingUnitConfiguration = ExtResource("17_3c07j")
+coolingUnitConfiguration = ExtResource("18_lxhlp")
 
 [node name="Engine" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("17_wkxei")
-engineConfiguration = ExtResource("18_eeyan")
+engineConfiguration = ExtResource("20_t8j5j")
 
 [node name="BatteryComponent" type="Node" parent="Components"]
 script = ExtResource("21_klf7x")
-batteryConfiguration = ExtResource("22_wffd7")
+batteryConfiguration = ExtResource("22_6xc5u")
 
 [node name="PlayerVisual" type="Sprite2D" parent="."]
 material = ExtResource("1_1ckmu")

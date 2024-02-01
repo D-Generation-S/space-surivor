@@ -75,7 +75,6 @@ public partial class TargetLogic : Node2D
 			
 			GetParent().CallDeferred("remove_child", this);
 		};
-
 	}
 
 	/// <summary>

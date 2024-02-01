@@ -29,11 +29,13 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
     /// </summary>
     private readonly float halfRotation = (float)Math.PI;
 
+    /// <inheritdoc/>
     public override void SetupInterpret(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         targetShipRotation = currentShipRotation;
     }
 
+    /// <inheritdoc/>
     public override float IdleBaseRotation(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         var diff = targetShipRotation - currentShipRotation;
@@ -62,6 +64,7 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         return Lerp(0, 1, percentage) * direction;
     }
 
+    /// <inheritdoc/>
     public override Vector2 IdleBaseVelocity(Vector2 currentVelocity, float currentRotationVelocity, float currentShipRotation)
     {
         var normalized = currentVelocity.Normalized();
@@ -70,6 +73,7 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         return new Vector2(xComponent, yComponent) * -1;
     }
 
+    /// <inheritdoc/>
     public override float InterpretRotation(float commandedRotation, Vector2 currentVelocity, float rotationVelocity, float currentShipRotation)
     {
         if(commandedRotation == 0)

@@ -84,6 +84,9 @@ public partial class BaseComponent : Resource
     
 }
 
+/// <summary>
+/// The available component types
+/// </summary>
 public enum ComponentType
 {
     Core = 0,

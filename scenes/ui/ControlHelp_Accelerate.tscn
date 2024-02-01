@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci6xq0sit2twe"]
+[gd_scene load_steps=11 format=3 uid="uid://ci6xq0sit2twe"]
 
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_efc26"]
 [ext_resource type="Texture2D" uid="uid://fb37evsbtc3a" path="res://assets/sprites/ship_C.png" id="1_yxb4a"]
 [ext_resource type="Script" path="res://src/ui/animation/AutoAnimate.cs" id="2_1ym6f"]
 [ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_jvnvi"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="5_2q7ke"]
+[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="5_kgnc5"]
+[ext_resource type="Texture2D" uid="uid://f6uejmj1cqxg" path="res://assets/sprites/input/keyboard/keyboard_w_outline.png" id="6_myy8p"]
+[ext_resource type="Texture2D" uid="uid://caxwp3dy788qb" path="res://assets/sprites/input/Controller/xbox_stick_l_up.png" id="7_ts0lq"]
 
 [sub_resource type="Animation" id="Animation_xwskf"]
 resource_name = "MoveForward"
@@ -114,10 +118,38 @@ libraries = {
 }
 script = ExtResource("2_1ym6f")
 
-[node name="StepDescription" type="Label" parent="Panel/VBoxContainer"]
+[node name="InputDescription" type="HBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("5_2q7ke")
+keyBoardControls = [NodePath("KeyboardButton")]
+controllerControls = [NodePath("ControllerButton")]
+
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_myy8p")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("7_ts0lq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepEndDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = "Press `W` to accelerate"
+text = " to accelerate"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -142,6 +174,8 @@ text = "Replay Animation"
 layout_mode = 2
 theme = ExtResource("1_efc26")
 text = "Next"
+script = ExtResource("5_kgnc5")
+getFocusIfVisible = true
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Replay" to="Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D/AnimationPlayer" method="ReplayAnimation"]

@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://c18nqmh62b3dr"]
+[gd_scene load_steps=10 format=3 uid="uid://c18nqmh62b3dr"]
 
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_wd4bq"]
 [ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_506o3"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="3_gy2q2"]
+[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="3_q6c5e"]
+[ext_resource type="Texture2D" uid="uid://bpqemme1inq4t" path="res://assets/sprites/input/keyboard/keyboard_x_outline.png" id="4_bi284"]
+[ext_resource type="Texture2D" uid="uid://bxkwnr5ppoitv" path="res://assets/sprites/input/Controller/xbox_lb_outline.png" id="5_kfuti"]
+[ext_resource type="Texture2D" uid="uid://710ufsj4lbw5" path="res://assets/sprites/input/keyboard/keyboard_y_outline.png" id="6_uo5dd"]
+[ext_resource type="Texture2D" uid="uid://dy5hsyi4s4uyi" path="res://assets/sprites/input/keyboard/keyboard_z_outline.png" id="7_d3nvd"]
+[ext_resource type="Texture2D" uid="uid://s2k06yjwg4j5" path="res://assets/sprites/input/Controller/xbox_rb_outline.png" id="8_kxjth"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -59,21 +66,99 @@ layout_mode = 2
 size_flags_vertical = 1
 text = "There are two flight modes to use.
 
-You could use raw input, this will give you full control of the ship.
-but you need to counter forces like rotation and acceleration yourself.
+You could use raw input,
+this will give you full control of the ship.
+But you need to counter forces like
+rotation and acceleration yourself.
 
 As an alternative you could use the flight computer. 
-It will try to ensure that you stay on course by interpreting your inputs.
+It will try to ensure that you stay on course
+by interpreting your inputs.
 If you stop with input commands it will try to stop your ship.
 
 You can switch those modes as you like while playing."
 horizontal_alignment = 1
 
-[node name="StepDescription" type="Label" parent="Panel/VBoxContainer"]
+[node name="InputDescription" type="VBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
 layout_mode = 2
-theme = ExtResource("1_wd4bq")
-text = "Press `X` to cycle flight modes forward, or `y/z` to cycle backwards"
+size_flags_horizontal = 4
+script = ExtResource("3_gy2q2")
+keyBoardControls = [NodePath("HBoxContainer/KeyboardButton1"), NodePath("HBoxContainer2/KeyboardButton2"), NodePath("HBoxContainer2/KeyboardButton3"), NodePath("HBoxContainer2/separator")]
+controllerControls = [NodePath("HBoxContainer/ControllerButton1"), NodePath("HBoxContainer2/ControllerButton2")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
+layout_mode = 2
+text = "Press"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_bi284")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_kfuti")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
+layout_mode = 2
+text = "to cycle flight modes forward"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_uo5dd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="separator" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+layout_mode = 2
+text = "/"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton3" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_d3nvd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("8_kxjth")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+layout_mode = 2
+text = "to cycle flight modes backwards"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -88,14 +173,17 @@ text = "Previous
 "
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
 text = "Replay Animation"
 
-[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
 text = "Close"
+script = ExtResource("3_q6c5e")
+getFocusIfVisible = true
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="CloseHelpPanel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Close" to="." method="CloseHelpPanel"]

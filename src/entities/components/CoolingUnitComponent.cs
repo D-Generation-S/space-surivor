@@ -89,19 +89,19 @@ public partial class CoolingUnitComponent : ConsumerComponent
 		return coolingUnitConfiguration.GetHeatCapacity();
 	}
 
-/// <inheritdoc/>
+	/// <inheritdoc/>
     public override int GetStoredHeat()
     {
         return storedHeat;
     }
 
-/// <inheritdoc/>
+	/// <inheritdoc/>
     public override int GetConsumption()
     {
         return coolingUnitConfiguration.GetConsumerConfiguration().GetConsumption();
     }
 
-/// <inheritdoc/>
+	/// <inheritdoc/>
 	public override int GetPriority()
     {
         return coolingUnitConfiguration.GetConsumerConfiguration().GetPriority();

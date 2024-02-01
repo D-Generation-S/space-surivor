@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource("1_jwar7")
-batteryCapacity = 2000
+maxBatteryCapacity = 2000
 maxLoadAmount = 50
-loadHeat = 0
+heatGeneratedIfLoading = 50
 maxUnloadAmount = 50
 name = "Small Nuclear Battery"
 description = ""
-SlotSize = 1
+slotSize = 1
 componentSlot = 1

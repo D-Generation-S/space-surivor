@@ -80,8 +80,6 @@ public partial class BaseComponent : Resource
     {
         return (ComponentType)componentSlot;
     }
-
-    
 }
 
 /// <summary>

@@ -1,18 +1,22 @@
 using Godot;
-using System.Linq;
+
+/// <summary>
+/// Class to switch the visibility of a control based on the input device
+/// </summary>
 
 public partial class InputDependentControl : Control
 {
+	/// <summary>
+	/// All the controls which are used for keyboards
+	/// </summary>
 	[Export]
 	private Control[] keyBoardControls;
 
+	/// <summary>
+	/// All the controls which are used for controllers
+	/// </summary>
 	[Export]
 	private Control[] controllerControls;
-
-	private InputDevice inputDevice;
-
-	private bool firstTick;
-
 
     public override void _Process(double delta)
     {
@@ -25,11 +29,10 @@ public partial class InputDependentControl : Control
         base._Process(delta);
     }
 
-    public void SetInputDevice()
-	{
-
-	}
-
+	/// <summary>
+	/// Switch the visibility of the controls based on the input device
+	/// </summary>
+	/// <param name="inputDevice">The input device to use</param>
     public void SwitchControlVisibility(InputDevice inputDevice)
 	{
 		foreach (var keyboardControl in keyBoardControls)

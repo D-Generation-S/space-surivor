@@ -28,6 +28,10 @@ window/size/resizable=false
 
 project/assembly_name="SpaceSurivor"
 
+[gui]
+
+theme/custom="res://assets/ui/UiTheme.tres"
+
 [input]
 
 ui_accept={

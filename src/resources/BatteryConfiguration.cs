@@ -13,16 +13,17 @@ public partial class BatteryConfiguration : BaseComponent
     private int maxBatteryCapacity;
 
     /// <summary>
+    /// The heat configuration if battery is loading
+    /// </summary>
+    [Export]
+    private HeatConfiguration heatConfigurationIfLoading;
+
+    /// <summary>
     /// The maximal amount which can be loaded at one
     /// </summary>
     [Export]
     private int maxLoadAmount;
 
-    /// <summary>
-    /// The heat 
-    /// </summary>
-    [Export]
-    private int heatGeneratedIfLoading;
 
     /// <summary>
     /// The max amount which can be unloaded per tick
@@ -63,6 +64,6 @@ public partial class BatteryConfiguration : BaseComponent
     /// <returns>The heat generated if loading</returns>
     public int GetLoadHeat()
     {
-        return heatGeneratedIfLoading;
+        return heatConfigurationIfLoading.GetHeatPerTick();
     }
 }

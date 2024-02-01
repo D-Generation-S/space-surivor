@@ -1,9 +1,13 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
+/// <summary>
+/// Class to detect the last used input device
+/// </summary>
 public partial class InputDeviceControlledControl : Node
 {
+    /// <summary>
+    /// Event if the input device was changed
+    /// </summary>
 	[Signal]
 	public delegate void InputChangedEventHandler();
 

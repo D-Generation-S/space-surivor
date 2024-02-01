@@ -10,7 +10,10 @@ priority = 1
 
 [resource]
 script = ExtResource("1_esk8t")
-name = "Arctig freezing"
 consumerConfiguration = SubResource("Resource_4opmn")
 heatAbsorptionPerTick = 150
 heatCapacity = 5000
+name = "Arctig freezing"
+description = ""
+slotSize = 1
+componentSlot = 0

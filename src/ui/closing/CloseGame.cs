@@ -8,6 +8,6 @@ public partial class CloseGame : GetFocus
     public override void _Pressed()
     {
         base._Pressed();
-		GetTree().Quit();
+        GetTree().Quit();
     }
 }

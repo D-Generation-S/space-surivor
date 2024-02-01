@@ -6,27 +6,27 @@ using Godot;
 /// </summary>
 public partial class ChangeParticleStatus : GpuParticles2D
 {
-	/// <summary>
-	/// Activate the particle emitter
-	/// </summary>
-	public void ActivateParticleEmitter()
-	{
-		Emitting = true;
-	}
+    /// <summary>
+    /// Activate the particle emitter
+    /// </summary>
+    public void ActivateParticleEmitter()
+    {
+        Emitting = true;
+    }
 
-	/// <summary>
-	/// Disable the particle emitter
-	/// </summary>
-	public void DisableParticleEmitter()
-	{
-		Emitting = false;
-	}
+    /// <summary>
+    /// Disable the particle emitter
+    /// </summary>
+    public void DisableParticleEmitter()
+    {
+        Emitting = false;
+    }
 
-	/// <summary>
-	/// Toggle the particle emitter on or off
-	/// </summary>
-	public void ToggleParticleEmitter()
-	{
-		Emitting = !Emitting;
-	}
+    /// <summary>
+    /// Toggle the particle emitter on or off
+    /// </summary>
+    public void ToggleParticleEmitter()
+    {
+        Emitting = !Emitting;
+    }
 }

@@ -26,11 +26,11 @@ public partial class EngineComponent : ConsumerComponent
     /// </summary>
     private bool wasOn;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
         currentHeat = 0;
-	}
+    }
 
     /// <inheritdoc/>
     public override void ConsumerTick(int tickNumber)

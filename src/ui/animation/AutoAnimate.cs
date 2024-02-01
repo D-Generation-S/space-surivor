@@ -5,16 +5,16 @@ using Godot;
 /// </summary>
 public partial class AutoAnimate : AnimationPlayer
 {
-	public override void _Ready()
-	{
-		ReplayAnimation();
-	}
+    public override void _Ready()
+    {
+        ReplayAnimation();
+    }
 
-	/// <summary>
-	/// Replay the animation
-	/// </summary>
-	public void ReplayAnimation()
-	{
-		Play("MoveForward");
-	}
+    /// <summary>
+    /// Replay the animation
+    /// </summary>
+    public void ReplayAnimation()
+    {
+        Play("MoveForward");
+    }
 }

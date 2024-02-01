@@ -31,8 +31,8 @@ public partial class ConsumerComponent : Node
     /// </summary>
     private int tickNumber = 0;
 
-	public override void _Process(double delta)
-	{
+    public override void _Process(double delta)
+    {
         deltaLeftOver += delta;
         if (deltaLeftOver > tickMark)
         {
@@ -40,7 +40,7 @@ public partial class ConsumerComponent : Node
             ConsumerTick(tickNumber);
             tickNumber++;
         }
-	}
+    }
 
     /// <summary>
     /// Method used for ticks produced by the tick settings

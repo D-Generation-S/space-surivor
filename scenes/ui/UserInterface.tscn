@@ -1,12 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://bawpucfa4dn86"]
+[gd_scene load_steps=21 format=3 uid="uid://bawpucfa4dn86"]
 
 [ext_resource type="Texture2D" uid="uid://cqlwuuawdepxk" path="res://assets/sprites/ui/uipackSpace_vector.svg" id="1_gvu2p"]
 [ext_resource type="Script" path="res://src/ui/overlay/UserInterface.cs" id="1_shlqk"]
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="2_omw7v"]
+[ext_resource type="Shader" uid="uid://d0uecasb8gelq" path="res://assets/shaders/silhouette_recolor.tres" id="4_fklmk"]
+[ext_resource type="Texture2D" uid="uid://dxoigt15ecid8" path="res://assets/sprites/ui/cog.png" id="5_sbqko"]
+[ext_resource type="Texture2D" uid="uid://btreijuxhnri1" path="res://assets/sprites/ui/health.png" id="5_urcdf"]
+[ext_resource type="Texture2D" uid="uid://dl6rohvwu3dl6" path="res://assets/sprites/ui/power.png" id="7_6tfgo"]
+[ext_resource type="Texture2D" uid="uid://bvghwyofpscb7" path="res://assets/sprites/ui/heat.png" id="7_oagmm"]
+[ext_resource type="Texture2D" uid="uid://c85lfm410jq57" path="res://assets/sprites/ui/battery.png" id="8_qyv0f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gfnn"]
 atlas = ExtResource("1_gvu2p")
 region = Rect2(1796, 488, 400, 400)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tji1w"]
+shader = ExtResource("4_fklmk")
+shader_parameter/Replace_Color = Color(1, 0.552941, 0.00392157, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uog0p"]
+shader = ExtResource("4_fklmk")
+shader_parameter/Replace_Color = Color(0.773856, 7.70092e-07, 5.77569e-07, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5xbl3"]
 bg_color = Color(0.345098, 0.345098, 0.345098, 1)
@@ -16,7 +30,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sciou"]
-bg_color = Color(0.733333, 0, 0, 1)
+bg_color = Color(0.737255, 0, 0.0666667, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -25,6 +39,40 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfn4q"]
+shader = ExtResource("4_fklmk")
+shader_parameter/Replace_Color = Color(0.815686, 0.815686, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3mem"]
+bg_color = Color(0.815686, 0.815686, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tok4m"]
+shader = ExtResource("4_fklmk")
+shader_parameter/Replace_Color = Color(0, 0.384314, 0.992157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gg8oj"]
+bg_color = Color(0, 0.384314, 0.992157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8clk"]
+shader = ExtResource("4_fklmk")
+shader_parameter/Replace_Color = Color(0.886275, 0.67451, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b58gq"]
 bg_color = Color(0.933333, 0.278431, 0, 1)
@@ -72,38 +120,93 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 2
 
-[node name="FlightMode" type="Label" parent="TextureRect/MarginContainer/GridContainer"]
+[node name="FlightMode" type="TextureRect" parent="TextureRect/MarginContainer/GridContainer"]
+material = SubResource("ShaderMaterial_tji1w")
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme = ExtResource("2_omw7v")
-text = "Mode
-"
+texture = ExtResource("5_sbqko")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CurrentFlightMode" type="Label" parent="TextureRect/MarginContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_omw7v")
 
-[node name="Health" type="Label" parent="TextureRect/MarginContainer/GridContainer"]
+[node name="Health" type="TextureRect" parent="TextureRect/MarginContainer/GridContainer"]
+material = SubResource("ShaderMaterial_uog0p")
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme = ExtResource("2_omw7v")
-text = "Health
-"
+texture = ExtResource("5_urcdf")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="HealthBar" type="ProgressBar" parent="TextureRect/MarginContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("2_omw7v")
 theme_override_styles/background = SubResource("StyleBoxFlat_5xbl3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_sciou")
 show_percentage = false
 
-[node name="Heat" type="Label" parent="TextureRect/MarginContainer/GridContainer"]
+[node name="PowerUsage" type="TextureRect" parent="TextureRect/MarginContainer/GridContainer"]
+material = SubResource("ShaderMaterial_nfn4q")
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme = ExtResource("2_omw7v")
-text = "Heat
-"
+texture = ExtResource("7_6tfgo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PowerUsageBar" type="ProgressBar" parent="TextureRect/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_omw7v")
+theme_override_styles/background = SubResource("StyleBoxFlat_5xbl3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p3mem")
+show_percentage = false
+
+[node name="BatteryLevel" type="TextureRect" parent="TextureRect/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_tok4m")
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("2_omw7v")
+texture = ExtResource("8_qyv0f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BatteryLevelBar" type="ProgressBar" parent="TextureRect/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_omw7v")
+theme_override_styles/background = SubResource("StyleBoxFlat_5xbl3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gg8oj")
+show_percentage = false
+
+[node name="Heat" type="TextureRect" parent="TextureRect/MarginContainer/GridContainer"]
+material = SubResource("ShaderMaterial_h8clk")
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("2_omw7v")
+texture = ExtResource("7_oagmm")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="HeatBar" type="ProgressBar" parent="TextureRect/MarginContainer/GridContainer"]
 unique_name_in_owner = true

@@ -31,10 +31,9 @@ public partial class CoolingUnitComponent : ConsumerComponent
 		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		var consumers = GetParent().GetChildren().OfType<ConsumerComponent>().Where(consumer => consumer != this).ToList();
+    public override void ConsumerTick(int tickNumber)
+    {
+        var consumers = GetParent().GetChildren().OfType<ConsumerComponent>().Where(consumer => consumer != this).ToList();
 		foreach (var consumer in consumers)
 		{
 			storedHeat += consumer.GetStoredHeat();
@@ -52,9 +51,9 @@ public partial class CoolingUnitComponent : ConsumerComponent
 		}
 
 		EmitSignal(SignalName.StoredHeatChanged, storedHeat);
-	}
+    }
 
-	public int GetMaxHeatCapacity()
+    public int GetMaxHeatCapacity()
 	{
 		return coolingUnitConfiguration.GetHeatCapacity();
 	}

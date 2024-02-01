@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BatteryConfiguration" load_steps=2 format=3 uid="uid://dhqljxttv22hv"]
+
+[ext_resource type="Script" path="res://src/resources/BatteryConfiguration.cs" id="1_1g0tv"]
+
+[resource]
+script = ExtResource("1_1g0tv")
+batteryCapacity = 2000
+maxLoadAmount = 50
+maxUnloadAmount = 50

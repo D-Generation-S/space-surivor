@@ -4,6 +4,14 @@ public partial class ConsumerComponent : Node
 {
     private bool isActive = false;
 
+    private double deltaLeftOver = 0f;
+
+    private int ticksPerSecond = 10;
+
+    private double tickMark => ticksPerSecond / 60;
+
+    private int tickNumber = 0;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -12,7 +20,19 @@ public partial class ConsumerComponent : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+        deltaLeftOver += delta;
+        if (deltaLeftOver > tickMark)
+        {
+            deltaLeftOver -= tickMark;
+            ConsumerTick(tickNumber);
+            tickNumber++;
+        }
 	}
+
+    public virtual void ConsumerTick(int tickNumber)
+    {
+
+    }
 
     public virtual int GetConsumption()
     {

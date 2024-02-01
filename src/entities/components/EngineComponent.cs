@@ -7,20 +7,31 @@ public partial class EngineComponent : ConsumerComponent
 
     private int currentHeat;
 
+    private int lastPowerConsumption;
+
+    private bool wasOn;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
         currentHeat = 0;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void ConsumerTick(int tickNumber)
+    {
+        if (!wasOn)
+        {
+            lastPowerConsumption = 0;
+            return;
+        }
+        currentHeat += engineConfiguration.GetHeatConfiguration().GetHeatPerTick();
+        lastPowerConsumption = engineConfiguration.GetConsumerConfiguration().GetConsumption();
+        wasOn = false;
+    }
 
     public void Firing()
     {
-        currentHeat += engineConfiguration.GetHeatConfiguration().GetHeatPerTick();
+        wasOn = true;
     }
 
     public override int GetStoredHeat()
@@ -32,7 +43,7 @@ public partial class EngineComponent : ConsumerComponent
 
     public override int GetConsumption()
     {
-        return engineConfiguration.GetConsumerConfiguration().GetConsumption();
+        return lastPowerConsumption;
     }
 
     public override int GetPriority()

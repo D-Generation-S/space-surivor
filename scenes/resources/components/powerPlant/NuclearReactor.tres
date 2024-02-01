@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_nwo6u")
 name = "Nuclear Reactor MK I"
-capacity = 5000
-size = 0
+production = 500
+size = 1

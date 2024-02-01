@@ -7,7 +7,7 @@ public partial class PowerPlantConfiguration : Resource
     private string name;
 
     [Export]
-    private int capacity;
+    private int production;
 
     [Export]
     private int size;
@@ -17,9 +17,9 @@ public partial class PowerPlantConfiguration : Resource
         return name;
     }
 
-    public int GetCapacity()
+    public int GetProduction()
     {
-        return capacity;
+        return production;
     }
 
     public int GetSize()

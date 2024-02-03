@@ -37,8 +37,9 @@ Ships will have core, internal and hardpoints slots. The slot count can vary bet
 
 Components of the core category can only be replaced, the following types are present.
 
-- Generator => The power generator of your ship. It will tell you how many components you can use.`FlyByWire`
+- Generator => The power generator of your ship. It will tell you how many components you can use.
 - Cooling => A device which will remove heat from other components, overheating will damage the ship
+- Engine => The engine of the ship, which does produce a lot of heat
 
 ### Internal
 

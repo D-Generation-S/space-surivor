@@ -14,8 +14,8 @@ public partial class FlightComputer : Node
     /// The mode for the flight computer has changed
     /// </summary>
     /// <param name="name">The name of the new mode</param>
-	[Signal]
-	public delegate void FlightModeChangedEventHandler(string name);
+    [Signal]
+    public delegate void FlightModeChangedEventHandler(string name);
 
     /// <summary>
     /// All the modes available for this flight computer
@@ -67,7 +67,7 @@ public partial class FlightComputer : Node
         Vector2 forwardFlightDirection = Vector2.Up.Rotated(controlledEntity.Rotation);
         Vector2 strafeLeftDirection = Vector2.Left.Rotated(controlledEntity.Rotation);
         var transformation = new Transform2D(strafeLeftDirection, forwardFlightDirection, Vector2.Zero);
-        localVelocity = transformation.BasisXformInv(localVelocity).Normalized() * -1;
+        localVelocity = transformation.BasisXformInv(localVelocity) * -1;
 
         base._PhysicsProcess(delta);
     }
@@ -140,29 +140,29 @@ public partial class FlightComputer : Node
     /// <summary>
     /// Switch to the next command interpret
     /// </summary>
-	public void SwitchToNextModeInterpret()
-	{   
+    public void SwitchToNextModeInterpret()
+    {   
         currentCommandInterpretIndex++;
         currentCommandInterpretIndex = currentCommandInterpretIndex > flightCommandModes.Count - 1? 0 : currentCommandInterpretIndex;
         activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
         ComputerSetup();
 
         EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
-	}
+    }
 
 
     /// <summary>
     /// Switch to the previous command interpret
     /// </summary>
-	public void SwitchToPreviousModeInterpret()
-	{
+    public void SwitchToPreviousModeInterpret()
+    {
         currentCommandInterpretIndex--;
         currentCommandInterpretIndex = currentCommandInterpretIndex < 0? flightCommandModes.Count - 1 : currentCommandInterpretIndex;
         activeFlightCommandInterpret = flightCommandModes[currentCommandInterpretIndex];
         ComputerSetup();
         
-		EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
-	}
+        EmitSignal(SignalName.FlightModeChanged, GetActiveComputerMode().GetDisplayName());
+    }
 
     /// <summary>
     /// Get all the computer modes available for this flight computer

@@ -1,9 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://cagsnkt10ahnm"]
+[gd_scene load_steps=13 format=3 uid="uid://cagsnkt10ahnm"]
 
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_7qnb8"]
 [ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_ir8si"]
 [ext_resource type="Texture2D" uid="uid://fb37evsbtc3a" path="res://assets/sprites/ship_C.png" id="2_vqn60"]
 [ext_resource type="Script" path="res://src/ui/animation/AutoAnimate.cs" id="3_vw02f"]
+[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="5_8bbh1"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="5_uaa64"]
+[ext_resource type="Texture2D" uid="uid://cke0rt8nulncg" path="res://assets/sprites/input/keyboard/keyboard_a_outline.png" id="6_ngmih"]
+[ext_resource type="Texture2D" uid="uid://dvt571wgs5xq0" path="res://assets/sprites/input/Controller/xbox_stick_l_left.png" id="7_hu5pw"]
+[ext_resource type="Texture2D" uid="uid://cwwwlp5y208fe" path="res://assets/sprites/input/keyboard/keyboard_d_outline.png" id="8_1a018"]
+[ext_resource type="Texture2D" uid="uid://cjyer01yrevpx" path="res://assets/sprites/input/Controller/xbox_stick_l_right.png" id="9_1ko4x"]
 
 [sub_resource type="Animation" id="Animation_xwskf"]
 resource_name = "MoveForward"
@@ -114,10 +120,59 @@ libraries = {
 }
 script = ExtResource("3_vw02f")
 
-[node name="StepDescription" type="Label" parent="Panel/VBoxContainer"]
+[node name="InputDescription" type="HBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("5_uaa64")
+keyBoardControls = [NodePath("KeyboardButton1"), NodePath("KeyboardButton2")]
+controllerControls = [NodePath("ControllerButton1"), NodePath("ControllerButton2")]
+
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_ngmih")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("7_hu5pw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+text = " to strafe left"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_1a018")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("9_1ko4x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepEndDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
 layout_mode = 2
 theme = ExtResource("1_7qnb8")
-text = "Press `A` to strafe left, `D` to strafe right"
+text = " to strafe right"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -141,6 +196,8 @@ text = "Replay Animation"
 layout_mode = 2
 theme = ExtResource("1_7qnb8")
 text = "Next"
+script = ExtResource("5_8bbh1")
+getFocusIfVisible = true
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Replay" to="Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D/AnimationPlayer" method="ReplayAnimation"]

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EngineConfiguration" load_steps=6 format=3 uid="uid://htqdua2xkjq3"]
+
+[ext_resource type="Script" path="res://src/resources/ConsumerConfiguration.cs" id="1_fxj5h"]
+[ext_resource type="Script" path="res://src/resources/HeatConfiguration.cs" id="2_thxfv"]
+[ext_resource type="Script" path="res://src/resources/EngineConfiguration.cs" id="3_4rj58"]
+
+[sub_resource type="Resource" id="Resource_t6iro"]
+script = ExtResource("1_fxj5h")
+consumption = 200
+priority = 2
+
+[sub_resource type="Resource" id="Resource_37jk5"]
+script = ExtResource("2_thxfv")
+heatPerTick = 150
+
+[resource]
+script = ExtResource("3_4rj58")
+engineAcceleration = Vector2(10, 5)
+engineRotation = 0.2
+consumerConfiguration = SubResource("Resource_t6iro")
+heatConfiguration = SubResource("Resource_37jk5")
+name = "Ion Engine"
+description = ""
+slotSize = 1
+componentSlot = 0

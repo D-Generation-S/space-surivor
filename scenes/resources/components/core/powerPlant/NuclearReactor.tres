@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PowerPlantConfiguration" load_steps=2 format=3 uid="uid://dx3208x1fkhhl"]
+
+[ext_resource type="Script" path="res://src/resources/PowerPlantConfiguration.cs" id="1_nwo6u"]
+
+[resource]
+script = ExtResource("1_nwo6u")
+production = 500
+size = 1
+name = "Nuclear Reactor MK I"
+description = ""

@@ -1,13 +1,40 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=22 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
 [ext_resource type="Script" path="res://src/ui/closing/MultiCloseUi.cs" id="2_vdu3p"]
-[ext_resource type="Script" path="res://src/ui/player/PlayerBasedUi.cs" id="3_18yav"]
+[ext_resource type="PackedScene" uid="uid://bawpucfa4dn86" path="res://scenes/ui/UserInterface.tscn" id="3_dp45m"]
 [ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
 [ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
 [ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="6_3radj"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="6_4ifep"]
+[ext_resource type="Texture2D" uid="uid://bj2s4odke61un" path="res://assets/sprites/input/keyboard/keyboard_f1_outline.png" id="7_h7bbt"]
+[ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="7_mqv5f"]
+[ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
 [ext_resource type="Script" path="res://src/entities/player/TempBorderCollision.cs" id="8_wclp7"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ubee6"]
+device = -1
+keycode = 4194332
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_k0sow"]
+button_index = 4
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_vua6o"]
+events = [SubResource("InputEventKey_ubee6"), SubResource("InputEventJoypadButton_k0sow")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_8pv6x"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_2b2yr"]
+button_index = 6
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_3u1nn"]
+events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButton_2b2yr")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57mdp"]
 size = Vector2(1927, 20)
@@ -16,6 +43,10 @@ size = Vector2(1927, 20)
 size = Vector2(26, 1090)
 
 [node name="TestScene" type="Node2D"]
+
+[node name="InputTypeDetector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_yadgb")
 
 [node name="Player" parent="." instance=ExtResource("1_i8hdf")]
 position = Vector2(80, 830)
@@ -31,22 +62,24 @@ grow_vertical = 2
 script = ExtResource("2_vdu3p")
 nodes = [NodePath("Expander2"), NodePath("Expander3"), NodePath("Expander4"), NodePath("Expander"), NodePath("Panel")]
 
+[node name="UserInterface" parent="CanvasLayer/VBoxContainer" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
+layout_mode = 2
+player = NodePath("../../../Player")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-
-[node name="CurrentFlightMode" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("player")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("3_18yav")
-player = NodePath("../../../../Player")
 
 [node name="Help" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+theme = ExtResource("7_mqv5f")
+shortcut = SubResource("Shortcut_vua6o")
 text = "Help"
 
 [node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("7_mqv5f")
+shortcut = SubResource("Shortcut_3u1nn")
 text = "Close"
 script = ExtResource("5_b4j62")
 
@@ -70,13 +103,24 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel"]
+[node name="Timer" type="Timer" parent="CanvasLayer/VBoxContainer/Panel"]
+wait_time = 10.0
+autostart = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("6_4ifep")
+keyBoardControls = [NodePath("HBoxContainer/Keyboard")]
+controllerControls = [NodePath("HBoxContainer/Controller")]
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("7_mqv5f")
 text = "Fly through the crosses.
 
 For this training level you won't be able to leave this screen.
@@ -84,9 +128,34 @@ To see the controls, press the help button in the top right corner."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Timer" type="Timer" parent="CanvasLayer/VBoxContainer/Panel"]
-wait_time = 10.0
-autostart = true
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="StartDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("7_mqv5f")
+text = "Press"
+
+[node name="Keyboard" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("7_h7bbt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Controller" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("8_uwlun")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("7_mqv5f")
+text = "to get additional help"
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -123,10 +192,12 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("7_mqv5f")
 text = "You did fly throug the last target.
 Thank you for playing.
 
-Please leave a comment if you liked the flight model."
+Please leave a comment,
+if you liked the flight model or not."
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
@@ -137,15 +208,17 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme = ExtResource("7_mqv5f")
 text = "Close"
 script = ExtResource("5_b4j62")
+getFocusIfVisible = true
 
 [node name="HelpScreen" parent="CanvasLayer" instance=ExtResource("6_3radj")]
 
 [node name="Targets" type="Node" parent="."]
 
 [node name="InitialTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(256, 192)
+position = Vector2(192, 320)
 targetVisible = true
 
 [node name="SecondTarget" parent="Targets" instance=ExtResource("4_pmjjq")]

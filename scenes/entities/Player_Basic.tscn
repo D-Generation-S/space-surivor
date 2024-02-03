@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=30 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
 [ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_85b7m"]
+[ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="2_dlx6e"]
 [ext_resource type="Script" path="res://src/control/PlayerInputController.cs" id="2_lxc1a"]
 [ext_resource type="Resource" uid="uid://c2h3qfh5n3dq" path="res://scenes/resources/input/Accelerate.tres" id="3_7142o"]
 [ext_resource type="Texture2D" uid="uid://hisbcixp03dt" path="res://assets/sprites/star_small.png" id="3_knjwj"]
@@ -17,6 +18,14 @@
 [ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="9_j7fmf"]
 [ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="10_cq0qe"]
 [ext_resource type="Script" path="res://src/flightComputer/RawFlightCommandInterpret.cs" id="10_i85cv"]
+[ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="14_et7re"]
+[ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="16_t28t7"]
+[ext_resource type="Resource" uid="uid://dx3208x1fkhhl" path="res://scenes/resources/components/core/powerPlant/NuclearReactor.tres" id="16_yis07"]
+[ext_resource type="Script" path="res://src/entities/components/EngineComponent.cs" id="17_wkxei"]
+[ext_resource type="Resource" uid="uid://dbgg3rral6dv6" path="res://scenes/resources/components/core/coolingUnit/ArcticFreezing.tres" id="18_lxhlp"]
+[ext_resource type="Resource" uid="uid://htqdua2xkjq3" path="res://scenes/resources/components/core/engines/IonEngine.tres" id="20_t8j5j"]
+[ext_resource type="Script" path="res://src/entities/components/BatteryComponent.cs" id="21_klf7x"]
+[ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/internal/battery/SmallNuclearBattery.tres" id="22_6xc5u"]
 
 [sub_resource type="Gradient" id="Gradient_oyg3n"]
 offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
@@ -38,12 +47,16 @@ scale_min = 0.1
 scale_max = 0.5
 color_initial_ramp = SubResource("GradientTexture1D_bcehv")
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
 
 [node name="Components" type="Node" parent="."]
+
+[node name="HealthComponent" type="Node" parent="Components" groups=["component"]]
+script = ExtResource("2_dlx6e")
+maxHealth = 300
 
 [node name="InputController" type="Node" parent="Components"]
 script = ExtResource("2_lxc1a")
@@ -67,14 +80,30 @@ displayName = "Fly by wire"
 script = ExtResource("10_i85cv")
 displayName = "Uncoupled"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PowerPlant" type="Node" parent="Components" groups=["component"]]
+script = ExtResource("14_et7re")
+plantConfiguration = ExtResource("16_yis07")
+
+[node name="CoolingUnit" type="Node" parent="Components" groups=["component"]]
+script = ExtResource("16_t28t7")
+coolingUnitConfiguration = ExtResource("18_lxhlp")
+
+[node name="Engine" type="Node" parent="Components" groups=["component"]]
+script = ExtResource("17_wkxei")
+engineConfiguration = ExtResource("20_t8j5j")
+
+[node name="BatteryComponent" type="Node" parent="Components"]
+script = ExtResource("21_klf7x")
+batteryConfiguration = ExtResource("22_6xc5u")
+
+[node name="PlayerVisual" type="Sprite2D" parent="."]
 material = ExtResource("1_1ckmu")
 texture = ExtResource("1_5ux5h")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="PlayerCollision" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -15, 23, 8, 16, 16, 0, 7, -16, 15, -22, 8)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="PlayerEngineExhaust" type="GPUParticles2D" parent="."]
 position = Vector2(0, 6)
 emitting = false
 amount = 150
@@ -82,5 +111,5 @@ process_material = SubResource("ParticleProcessMaterial_6lwlb")
 texture = ExtResource("3_knjwj")
 script = ExtResource("5_apxo6")
 
-[connection signal="IdleForward" from="." to="GPUParticles2D" method="DisableParticleEmitter"]
-[connection signal="PoweringForward" from="." to="GPUParticles2D" method="ActivateParticleEmitter"]
+[connection signal="IdleForward" from="." to="PlayerEngineExhaust" method="DisableParticleEmitter"]
+[connection signal="PoweringForward" from="." to="PlayerEngineExhaust" method="ActivateParticleEmitter"]

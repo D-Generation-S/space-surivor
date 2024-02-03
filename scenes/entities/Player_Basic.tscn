@@ -52,7 +52,10 @@ motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="Components" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="HealthComponent" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("2_dlx6e")

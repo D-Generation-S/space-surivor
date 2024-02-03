@@ -81,7 +81,7 @@ public partial class EntityMovement : CharacterBody2D
 
     public override void _Ready()
     {
-        var componentNode = GetChildren().OfType<Node>().FirstOrDefault();
+        var componentNode = GetNode("%Components");
         if (componentNode is null)
         {
             GD.PushError("Could not find component node!");

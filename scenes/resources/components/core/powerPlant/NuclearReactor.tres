@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_nwo6u")
 production = 500
-size = 1
 name = "Nuclear Reactor MK I"
 description = ""
+slotSize = 1
+componentSlot = 0

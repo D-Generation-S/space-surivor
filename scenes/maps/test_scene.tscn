@@ -43,8 +43,6 @@ script = ExtResource("9_yadgb")
 
 [node name="Player" parent="." instance=ExtResource("1_i8hdf")]
 position = Vector2(80, 832)
-maxForward = 6.0
-maxStrafe = 4.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -213,20 +211,20 @@ getFocusIfVisible = true
 [node name="Targets" type="Node" parent="."]
 
 [node name="InitialTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(312, 224)
+position = Vector2(312, -1984)
 targetVisible = true
 
 [node name="SecondTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(1464, 192)
+position = Vector2(3232, -1960)
 
 [node name="ThirdTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(1432, 808)
+position = Vector2(3256, 1160)
 
 [node name="SixthTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(879, 508)
+position = Vector2(224, 1784)
 
 [node name="SeventhTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
-position = Vector2(280, 832)
+position = Vector2(1896, -456)
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]

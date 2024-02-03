@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ch0m7yj50l7tm"]
+[gd_scene load_steps=11 format=3 uid="uid://ch0m7yj50l7tm"]
 
 [ext_resource type="Script" path="res://src/entities/target/TargetLogic.cs" id="1_2lbkj"]
 [ext_resource type="Texture2D" uid="uid://dmtuuc67kupr6" path="res://assets/sprites/icon_crossSmall.png" id="1_hrpe8"]
 [ext_resource type="Script" path="res://src/animation/LoopAnimationPlayer.cs" id="2_0kfy5"]
 [ext_resource type="Texture2D" uid="uid://kgju1n1w0mp5" path="res://assets/sprites/star_medium.png" id="4_igfgp"]
 [ext_resource type="AudioStream" uid="uid://dmmo26kwjujnc" path="res://assets/sounds/TargetExplode.mp3" id="5_adpu6"]
+[ext_resource type="PackedScene" uid="uid://dbjhi7rb87yvb" path="res://scenes/entities/target_pointer.tscn" id="6_bx705"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osodk"]
 size = Vector2(32, 32)
@@ -67,3 +68,5 @@ explosiveness = 1.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_adpu6")
+
+[node name="TargetPointer" parent="." instance=ExtResource("6_bx705")]

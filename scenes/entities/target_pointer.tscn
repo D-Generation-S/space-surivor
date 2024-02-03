@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbjhi7rb87yvb"]
+
+[ext_resource type="Texture2D" uid="uid://hkhcwg500bxp" path="res://assets/sprites/utility/arrowUp.png" id="1_spqq0"]
+[ext_resource type="Script" path="res://src/ui/enviroment/TargetPointer.cs" id="2_t0fgi"]
+
+[node name="TargetPointer" type="Sprite2D"]
+texture = ExtResource("1_spqq0")
+script = ExtResource("2_t0fgi")
+additionalRotation = 90.0
+
+[node name="RotationNode" type="Node2D" parent="."]
+
+[node name="Distance" type="Label" parent="RotationNode"]
+offset_left = -48.0
+offset_top = 24.0
+offset_right = 51.0
+offset_bottom = 42.0
+text = "Distance
+"
+horizontal_alignment = 1
+vertical_alignment = 1

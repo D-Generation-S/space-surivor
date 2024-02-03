@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=34 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -26,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://htqdua2xkjq3" path="res://scenes/resources/components/core/engines/IonEngine.tres" id="20_t8j5j"]
 [ext_resource type="Script" path="res://src/entities/components/BatteryComponent.cs" id="21_klf7x"]
 [ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/internal/battery/SmallNuclearBattery.tres" id="22_6xc5u"]
+[ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
 
 [sub_resource type="Gradient" id="Gradient_oyg3n"]
 offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
@@ -47,12 +48,32 @@ scale_min = 0.1
 scale_max = 0.5
 color_initial_ramp = SubResource("GradientTexture1D_bcehv")
 
+[sub_resource type="Curve" id="Curve_0kyxg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.987952, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_i20cx"]
+curve = SubResource("Curve_0kyxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ojw4w"]
+lifetime_randomness = 0.47
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 540, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+alpha_curve = SubResource("CurveTexture_i20cx")
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="Components" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="HealthComponent" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("2_dlx6e")
@@ -110,6 +131,12 @@ amount = 150
 process_material = SubResource("ParticleProcessMaterial_6lwlb")
 texture = ExtResource("3_knjwj")
 script = ExtResource("5_apxo6")
+
+[node name="SpaceDust" type="GPUParticles2D" parent="."]
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_ojw4w")
+texture = ExtResource("27_7sqhj")
+lifetime = 15.0
 
 [connection signal="IdleForward" from="." to="PlayerEngineExhaust" method="DisableParticleEmitter"]
 [connection signal="PoweringForward" from="." to="PlayerEngineExhaust" method="ActivateParticleEmitter"]

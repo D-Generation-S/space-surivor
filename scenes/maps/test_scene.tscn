@@ -43,6 +43,8 @@ script = ExtResource("9_yadgb")
 
 [node name="Player" parent="." instance=ExtResource("1_i8hdf")]
 position = Vector2(80, 832)
+maxForward = 6.0
+maxStrafe = 4.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

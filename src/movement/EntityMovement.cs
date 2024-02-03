@@ -31,14 +31,14 @@ public partial class EntityMovement : CharacterBody2D
     /// </summary>
     [ExportGroup("Base Movement")]
     [Export]
-    private float maxForward = 250;
+    private float maxForward = 6;
 
     /// <summary>
     /// The maximal allowed strafe speed
     /// </summary>
     [ExportGroup("Base Movement")]
     [Export]
-    private float maxStrafe = 150;
+    private float maxStrafe = 4;
 
     /// <summary>
     /// The maximal allowed rotation speed
@@ -79,6 +79,11 @@ public partial class EntityMovement : CharacterBody2D
     /// </summary>
     private EngineComponent engine;
 
+    /// <summary>
+    /// The position of the controlled entity in the last frame
+    /// </summary>T
+    private Vector2 lastPosition;
+
     public override void _Ready()
     {
         var componentNode = GetNode("%Components");
@@ -91,6 +96,8 @@ public partial class EntityMovement : CharacterBody2D
         {
             GD.PushError("Entity is missing an engine, that seems bad");
         }
+
+        lastPosition = Position;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -125,18 +132,22 @@ public partial class EntityMovement : CharacterBody2D
     {	
         var accelerationSpeed = engine.GetAccelerationSpeed();
         var accelerationMultiplier = velocityInput.X < 0 ? accelerationSpeed.X : accelerationSpeed.Y;
-        var velocityToAdd = velocityInput * accelerationMultiplier;
-        var targetVelocity = Velocity + velocityToAdd;
-        targetVelocity = targetVelocity.Rotated(Rotation);
-        if (Math.Abs(targetVelocity.Y) > maxForward + deviation || Math.Abs(targetVelocity.X) > maxStrafe + deviation)
+        var localVelocity = GetLocalVelocity();
+        if (Math.Abs(localVelocity.Y) > maxForward + deviation || Math.Abs(localVelocity.X) > maxStrafe + deviation)
         {
             float newXVelocityInput = velocityInput.X;
             float newYVelocityInput = velocityInput.Y;
-            if (Math.Abs(targetVelocity.X) > maxStrafe && targetVelocity.X < Velocity.X)
+
+            bool accelerateLeft = newXVelocityInput < 0;
+            bool accelerating = newYVelocityInput < 0;
+            bool driftUp = localVelocity.Y < 0;
+            bool driftLeft = localVelocity.X < 0;
+            
+            if (Math.Abs(localVelocity.X) > maxStrafe && accelerateLeft == driftLeft)
             {
                 newXVelocityInput = 0;
             }
-            if (Math.Abs(targetVelocity.Y) > maxForward && targetVelocity.Y < Velocity.Y)
+            if (Math.Abs(localVelocity.Y) > maxForward && accelerating == driftUp)
             {
                 newYVelocityInput = 0;
             }
@@ -148,6 +159,21 @@ public partial class EntityMovement : CharacterBody2D
             engine.Firing();
         }
         return velocityInput.Rotated(Rotation) * accelerationMultiplier;
+    }
+
+    /// <summary>
+    /// Method to get the local velocity of this entity
+    /// </summary>
+    /// <returns>The local velocity</returns>
+    public Vector2 GetLocalVelocity()
+    {
+        var localVelocity = Position - lastPosition;
+        lastPosition = Position;
+
+        Vector2 forwardFlightDirection = Vector2.Up.Rotated(Rotation);
+        Vector2 strafeLeftDirection = Vector2.Left.Rotated(Rotation);
+        var transformation = new Transform2D(strafeLeftDirection, forwardFlightDirection, Vector2.Zero);
+        return transformation.BasisXformInv(localVelocity) * -1;
     }
 
     /// <summary>

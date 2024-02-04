@@ -23,7 +23,7 @@ public partial class BackgroundControl : Sprite2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        int selection = Random.Shared.Next(0, backgroundConfiguration.GetBackgroundColorConfigurations().Length - 1);
+        int selection = Random.Shared.Next(0, backgroundConfiguration.GetBackgroundColorConfigurations().Length);
         var colorConfiguration = backgroundConfiguration.GetBackgroundColorConfigurations()[selection];
         float zoomLevel = (float)Math.Floor(Random.Shared.NextDouble() * (backgroundConfiguration.GetMaxZoomScale() - backgroundConfiguration.GetMinZoomScale() + 1) + backgroundConfiguration.GetMinZoomScale());
         var shaderMaterial = Material as ShaderMaterial;

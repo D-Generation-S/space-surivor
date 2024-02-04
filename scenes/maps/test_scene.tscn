@@ -1,8 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=25 format=3 uid="uid://c4wtvfpp0y2ey"]
 
+[ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
 [ext_resource type="Script" path="res://scenes/maps/BackgroundControl.cs" id="2_mrovg"]
 [ext_resource type="Script" path="res://src/ui/closing/MultiCloseUi.cs" id="2_vdu3p"]
+[ext_resource type="Resource" uid="uid://dy13r7km27u4j" path="res://scenes/resources/input/Screenshot.tres" id="2_ycvoj"]
 [ext_resource type="PackedScene" uid="uid://bawpucfa4dn86" path="res://scenes/ui/UserInterface.tscn" id="3_dp45m"]
 [ext_resource type="Resource" uid="uid://dd27nqj5n606g" path="res://scenes/resources/background/DefaultBackground.tres" id="3_dufgb"]
 [ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
@@ -37,12 +39,8 @@ shader_parameter/seed = 500.0
 device = -1
 keycode = 4194332
 
-[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_k0sow"]
-button_index = 4
-pressed = true
-
 [sub_resource type="Shortcut" id="Shortcut_vua6o"]
-events = [SubResource("InputEventKey_ubee6"), SubResource("InputEventJoypadButton_k0sow")]
+events = [SubResource("InputEventKey_ubee6")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8pv6x"]
 device = -1
@@ -56,6 +54,8 @@ pressed = true
 events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButton_2b2yr")]
 
 [node name="TestScene" type="Node2D"]
+script = ExtResource("1_hj8tq")
+screenshotConfiguration = ExtResource("2_ycvoj")
 
 [node name="Background" type="Sprite2D" parent="." node_paths=PackedStringArray("bindTarget")]
 material = SubResource("ShaderMaterial_xqy8u")

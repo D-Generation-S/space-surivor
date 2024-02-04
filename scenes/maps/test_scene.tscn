@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=24 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
 [ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="6_3radj"]
-[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="6_4ifep"]
 [ext_resource type="Texture2D" uid="uid://bj2s4odke61un" path="res://assets/sprites/input/keyboard/keyboard_f1_outline.png" id="7_h7bbt"]
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="7_mqv5f"]
 [ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
@@ -58,6 +57,7 @@ script = ExtResource("1_hj8tq")
 screenshotConfiguration = ExtResource("2_ycvoj")
 
 [node name="Background" type="Sprite2D" parent="." node_paths=PackedStringArray("bindTarget")]
+visible = false
 material = SubResource("ShaderMaterial_xqy8u")
 scale = Vector2(1920, 1920)
 texture = SubResource("CanvasTexture_bum7s")
@@ -128,16 +128,13 @@ size_flags_vertical = 3
 wait_time = 10.0
 autostart = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("6_4ifep")
-keyBoardControls = [NodePath("HBoxContainer/Keyboard")]
-controllerControls = [NodePath("HBoxContainer/Controller")]
 
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -167,6 +164,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Controller" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("8_uwlun")

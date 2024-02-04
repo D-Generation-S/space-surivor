@@ -34,6 +34,8 @@ public partial class BackgroundControl : Sprite2D
         shaderMaterial.SetShaderParameter("CLOUD4_COL", colorConfiguration.GetCloudColor4());
         shaderMaterial.SetShaderParameter("SPACE", colorConfiguration.GetSpaceColor());
         shaderMaterial.SetShaderParameter("zoomScale", zoomLevel);
+
+        Visible = true;
     }
 
     public override void _Process(double delta)

@@ -1,26 +1,32 @@
 using Godot;
 using System;
 
+/// <summary>
+/// Class to control the background shader via configuration
+/// and bind it to a target
+/// </summary>
 public partial class BackgroundControl : Sprite2D
 {
+    /// <summary>
+    /// The target to bind the position for this sprite to
+    /// </summary>
     [Export]
     private Node2D bindTarget;
 
+    /// <summary>
+    /// The configuration used for the background to show
+    /// </summary>
     [Export]
     private BackgroundConfiguration backgroundConfiguration;
-
-    private BackgroundColorConfiguration colorConfiguration;
-
-    private ShaderMaterial shaderMaterial;
 
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         int selection = Random.Shared.Next(0, backgroundConfiguration.GetBackgroundColorConfigurations().Length - 1);
-        colorConfiguration = backgroundConfiguration.GetBackgroundColorConfigurations()[selection];
+        var colorConfiguration = backgroundConfiguration.GetBackgroundColorConfigurations()[selection];
         float zoomLevel = (float)Math.Floor(Random.Shared.NextDouble() * (backgroundConfiguration.GetMaxZoomScale() - backgroundConfiguration.GetMinZoomScale() + 1) + backgroundConfiguration.GetMinZoomScale());
-        shaderMaterial = Material as ShaderMaterial;
+        var shaderMaterial = Material as ShaderMaterial;
 
         shaderMaterial.SetShaderParameter("CLOUD1_COL", colorConfiguration.GetCloudColor1());
         shaderMaterial.SetShaderParameter("CLOUD2_COL", colorConfiguration.GetCloudColor2());

@@ -20,7 +20,7 @@
 shader = ExtResource("13_llayv")
 shader_parameter/OCTAVE = 12
 shader_parameter/timescale = 1e-08
-shader_parameter/CLOUD1_COL = Color(0.411765, 0.639216, 0.780392, 0.4)
+shader_parameter/CLOUD1_COL = Color(0.41, 0.64, 0.78, 0.4)
 shader_parameter/CLOUD2_COL = Color(0.99, 0.79, 0.46, 0.2)
 shader_parameter/CLOUD3_COL = Color(0.81, 0.31, 0.59, 1)
 shader_parameter/CLOUD4_COL = Color(0.27, 0.15, 0.33, 1)

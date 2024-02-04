@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
-//uniform vec3 color_replace = vec3(1.0,1.0,0.0);
+//Copied from https://godotshaders.com/shader/2d-nebula-shader/
+//Improved by comment son the subject (Fixing rand method)
 uniform int OCTAVE = 12;
 uniform float timescale: hint_range(0.00000001,5.0) = 0.0001;
 uniform vec4 CLOUD1_COL: source_color = vec4(0.41,0.64,0.78,0.4);
@@ -14,9 +15,10 @@ uniform float starscale = 0;
 uniform float prob: hint_range(0.0,1.0) = 0.98;
 uniform float seed: hint_range(500.0,50000.0) = 500;
 
-float rand(vec2 input){
-input += min(0.0, TIME);
-return fract(sin(dot(input,vec2(23.53,44.0)))*seed);
+float rand(vec2 input)
+{
+	input += min(0.0, TIME);
+	return fract(sin(dot(input,vec2(23.53,44.0)))*seed);
 }
 
 float perlin(vec2 input){

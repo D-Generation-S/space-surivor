@@ -1,28 +1,45 @@
-[gd_scene load_steps=19 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=24 format=3 uid="uid://c4wtvfpp0y2ey"]
 
+[ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
+[ext_resource type="Script" path="res://scenes/maps/BackgroundControl.cs" id="2_mrovg"]
 [ext_resource type="Script" path="res://src/ui/closing/MultiCloseUi.cs" id="2_vdu3p"]
+[ext_resource type="Resource" uid="uid://dy13r7km27u4j" path="res://scenes/resources/input/Screenshot.tres" id="2_ycvoj"]
 [ext_resource type="PackedScene" uid="uid://bawpucfa4dn86" path="res://scenes/ui/UserInterface.tscn" id="3_dp45m"]
+[ext_resource type="Resource" uid="uid://dd27nqj5n606g" path="res://scenes/resources/background/DefaultBackground.tres" id="3_dufgb"]
 [ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
 [ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
 [ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="6_3radj"]
-[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="6_4ifep"]
 [ext_resource type="Texture2D" uid="uid://bj2s4odke61un" path="res://assets/sprites/input/keyboard/keyboard_f1_outline.png" id="7_h7bbt"]
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="7_mqv5f"]
 [ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
 [ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
+[ext_resource type="Shader" path="res://assets/shaders/background_nebular.gdshader" id="13_llayv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xqy8u"]
+shader = ExtResource("13_llayv")
+shader_parameter/OCTAVE = 12
+shader_parameter/timescale = 1e-08
+shader_parameter/CLOUD1_COL = Color(0.41, 0.64, 0.78, 0.4)
+shader_parameter/CLOUD2_COL = Color(0.99, 0.79, 0.46, 0.2)
+shader_parameter/CLOUD3_COL = Color(0.81, 0.31, 0.59, 1)
+shader_parameter/CLOUD4_COL = Color(0.27, 0.15, 0.33, 1)
+shader_parameter/SPACE = Color(0.09, 0.06, 0.28, 0.3)
+shader_parameter/zoomScale = 20.0
+shader_parameter/size = 10.0
+shader_parameter/starscale = 0.0
+shader_parameter/prob = 0.98
+shader_parameter/seed = 500.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bum7s"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ubee6"]
 device = -1
 keycode = 4194332
 
-[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_k0sow"]
-button_index = 4
-pressed = true
-
 [sub_resource type="Shortcut" id="Shortcut_vua6o"]
-events = [SubResource("InputEventKey_ubee6"), SubResource("InputEventJoypadButton_k0sow")]
+events = [SubResource("InputEventKey_ubee6")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8pv6x"]
 device = -1
@@ -36,6 +53,17 @@ pressed = true
 events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButton_2b2yr")]
 
 [node name="TestScene" type="Node2D"]
+script = ExtResource("1_hj8tq")
+screenshotConfiguration = ExtResource("2_ycvoj")
+
+[node name="Background" type="Sprite2D" parent="." node_paths=PackedStringArray("bindTarget")]
+visible = false
+material = SubResource("ShaderMaterial_xqy8u")
+scale = Vector2(1920, 1920)
+texture = SubResource("CanvasTexture_bum7s")
+script = ExtResource("2_mrovg")
+bindTarget = NodePath("../Player")
+backgroundConfiguration = ExtResource("3_dufgb")
 
 [node name="InputTypeDetector" type="Node" parent="."]
 unique_name_in_owner = true
@@ -100,16 +128,13 @@ size_flags_vertical = 3
 wait_time = 10.0
 autostart = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("6_4ifep")
-keyBoardControls = [NodePath("HBoxContainer/Keyboard")]
-controllerControls = [NodePath("HBoxContainer/Controller")]
 
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -139,6 +164,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Controller" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("8_uwlun")

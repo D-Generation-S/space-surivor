@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="BackgroundConfiguration" load_steps=5 format=3 uid="uid://dd27nqj5n606g"]
+
+[ext_resource type="Script" path="res://src/resources/design/BackgroundColorConfiguration.cs" id="1_4vyn6"]
+[ext_resource type="Script" path="res://src/resources/design/BackgroundConfiguration.cs" id="1_qwdt2"]
+
+[sub_resource type="Resource" id="Resource_k5l1m"]
+script = ExtResource("1_4vyn6")
+cloudColor1 = Color(0.41, 0.64, 0.78, 0.4)
+cloudColor2 = Color(0.99, 0.79, 0.46, 0.2)
+cloudColor3 = Color(0.81, 0.31, 0.59, 1)
+cloudColor4 = Color(0.27, 0.15, 0.33, 1)
+spaceColor = Color(0.09, 0.06, 0.28, 0.3)
+
+[sub_resource type="Resource" id="Resource_bsw5m"]
+script = ExtResource("1_4vyn6")
+cloudColor1 = Color(0.643137, 0.631373, 0.0470588, 0.4)
+cloudColor2 = Color(0.345098, 0.980392, 0, 0.2)
+cloudColor3 = Color(0.803922, 0.392157, 0, 1)
+cloudColor4 = Color(0.321569, 0.160784, 0, 1)
+spaceColor = Color(0.137255, 0.105882, 0, 0.301961)
+
+[resource]
+script = ExtResource("1_qwdt2")
+backgroundColorConfiguration = Array[Resource]([SubResource("Resource_k5l1m"), SubResource("Resource_bsw5m")])
+minZoomScale = 10.0
+maxZoomScale = 13.0

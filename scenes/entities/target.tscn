@@ -1,14 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://ch0m7yj50l7tm"]
+[gd_scene load_steps=13 format=3 uid="uid://ch0m7yj50l7tm"]
 
 [ext_resource type="Script" path="res://src/entities/target/TargetLogic.cs" id="1_2lbkj"]
 [ext_resource type="Texture2D" uid="uid://dmtuuc67kupr6" path="res://assets/sprites/icon_crossSmall.png" id="1_hrpe8"]
 [ext_resource type="Script" path="res://src/animation/LoopAnimationPlayer.cs" id="2_0kfy5"]
+[ext_resource type="Shader" uid="uid://ba7k66bsrr0gt" path="res://assets/shaders/color_change_shader.tres" id="2_grjra"]
 [ext_resource type="Texture2D" uid="uid://kgju1n1w0mp5" path="res://assets/sprites/star_medium.png" id="4_igfgp"]
 [ext_resource type="AudioStream" uid="uid://dmmo26kwjujnc" path="res://assets/sounds/TargetExplode.mp3" id="5_adpu6"]
 [ext_resource type="PackedScene" uid="uid://dbjhi7rb87yvb" path="res://scenes/entities/target_pointer.tscn" id="6_bx705"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osodk"]
 size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nbgf"]
+shader = ExtResource("2_grjra")
+shader_parameter/BaseColor = Color(1, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_r6ytc"]
 resource_name = "Pulse"
@@ -49,6 +54,7 @@ script = ExtResource("1_2lbkj")
 shape = SubResource("RectangleShape2D_osodk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4nbgf")
 texture = ExtResource("1_hrpe8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]

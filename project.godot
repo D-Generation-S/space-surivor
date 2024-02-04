@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Space Survivor"
-config/version="0.0.3"
+config/version="0.0.4"
 config/tags=PackedStringArray("action", "learning")
 run/main_scene="res://scenes/maps/test_scene.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")

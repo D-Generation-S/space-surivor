@@ -17,6 +17,7 @@ If you stop making rotational or translational input the ship will try to stop a
 
 ### Add a mode
 
-To add a note please got to the [developer section][flight-computer-as-developder] of this documentation. 
+To add a note please got to the [developer section][flight-computer-as-developer] of this documentation. 
 
-[flight-computer-as-developder]: ../developer/FlightComputerAsDeveloper.md
+
+[flight-computer-as-developer]: ../developer/FlightComputerAsDeveloper.md

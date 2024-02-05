@@ -24,42 +24,19 @@ The movement of the ships is based on a simplified newtonian physic model. If yo
 
 To help the player navigating around the game will allow you to use a `FlyByWire` system. This will try to cancel any unwanted movement to any direction.
 
-### Flight Computer (FlyByWire)
-
-The computer will try to cancel every strafe movement if you accelerate into one direction. If you stop rotating it will try to point the ship into the direction you stopped the rotation.
-
-If you stop moving the computer will try to stop the ship velocity.
-
-- [Flight Computer][flight-computer]
+For more information check the game mechanic section of this document or go to the [Flight Computer][flight-computer] documentation.
 
 ### Upgrades
 
 Ships will have core, internal and hardpoint slots. The slot count can vary between ships. Those components can either be replaced, added or removes.`FlyByWire`
 
-#### Core
+### Components
 
-Components of the core category can only be replaced, the following types are present.
-
-- [Generator][generator]
-- [Battery][battery]
-- [Cooling][cooling-aggregate]
-- [Engine][engine]
-
-### Internal
-
-- [Shield generator][shield-generator]
-- [Tractor beam][tractor-beam]
-- [Hull Reinforcement][hull-reinforcement]
-
-### Hardpoints
-
-- Weapons => Something to shoot on enemies
+Check the [component][component-overview] list to see all the implemented or planned components.
 
 ### Game Mechanics
 
-- [Heat][heat-mechanic]
-- [Power][power-mechanic]
-- [Health][health-mechanic]
+For more information check the [Game Mechanic Overview][game-mechanic-overview]
 
 ### Ai
 
@@ -73,14 +50,5 @@ Enemies consist of simple fighters or asteroids flying around.
 
 \-
 
-[flight-computer]: ../components/FlightComputer.md
-[generator]: ../components/GeneratorComponent.md
-[cooling-aggregate]: ../components/CoolingAggregateComponent.md
-[battery]: ../components/BatteryComponent.md
-[engine]: ../components/EngineComponent.md
-[heat-mechanic]: ../mechanics/HeatMechanic.md
-[power-mechanic]: ../mechanics/PowerMechanic.md
-[health-mechanic]: ../mechanics/HullHealthMechanic.md
-[shield-generator]: ../components/ShieldGenerator.md
-[hull-reinforcement]: ../components/HullReinforcement.md
-[tractor-beam]: ../components/TractorBeam.md
+[component-overview]: ../components/ComponentOverview.md
+[game-mechanic-overview]: ../mechanics/GameMechanicOverview.md

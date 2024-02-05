@@ -77,8 +77,6 @@ public partial class PowerPlantComponent : ConsumerComponent
             if (availablePower - consumerConsumption < 0)
             {
                 var powerPool = availablePower;
-                consumedEnergy += availablePower;
-                availablePower = 0;
                 var difference = consumerConsumption - powerPool;
                 if (currentBatteryCapacity < difference || maxBatteryUnload < difference)
                 {
@@ -91,6 +89,8 @@ public partial class PowerPlantComponent : ConsumerComponent
                     difference -= unloadedAmount;
                     difference = difference < 0? 0 : difference;
                 }
+                consumedEnergy += availablePower;
+                availablePower = 0;
                 consumer.Enable();
                 continue;
             }

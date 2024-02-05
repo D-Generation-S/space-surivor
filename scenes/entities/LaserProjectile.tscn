@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://4q07w1fxrq3n"]
+
+[ext_resource type="Script" path="res://src/entities/projectiles/LaserProjectile.cs" id="1_tddld"]
+[ext_resource type="Shader" uid="uid://ba7k66bsrr0gt" path="res://assets/shaders/color_change_shader.tres" id="3_a183j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nor8u"]
+shader = ExtResource("3_a183j")
+shader_parameter/BaseColor = Color(1, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogmf2"]
+size = Vector2(5.31726, 15.0069)
+
+[node name="LaserProjectile" type="Area2D"]
+script = ExtResource("1_tddld")
+
+[node name="Shape" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_nor8u")
+scale = Vector2(3.0522, 11.9708)
+polygon = PackedVector2Array(0, 0, 2.62106, 0, 2.62106, 5.34633, 0, 5.34633)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 32)
+scale = Vector2(1.50453, 4.26471)
+shape = SubResource("RectangleShape2D_ogmf2")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

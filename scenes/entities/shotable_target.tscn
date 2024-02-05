@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dn36o12p8t34c"]
+
+[ext_resource type="Script" path="res://src/entities/target/ShotableTarget.cs" id="1_2hbr1"]
+[ext_resource type="Texture2D" uid="uid://j8533gbck1y1" path="res://assets/sprites/enemy_E.png" id="2_trr70"]
+[ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="3_e4kdk"]
+[ext_resource type="PackedScene" uid="uid://dbjhi7rb87yvb" path="res://scenes/entities/target_pointer.tscn" id="4_b8g4d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b4v8h"]
+radius = 32.0624
+
+[node name="ShotableTarget" type="CharacterBody2D" node_paths=PackedStringArray("progressBar")]
+position = Vector2(1896, -552)
+motion_mode = 1
+slide_on_ceiling = false
+platform_on_leave = 2
+script = ExtResource("1_2hbr1")
+progressBar = NodePath("ProgressBar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_trr70")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_b4v8h")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -75.0
+offset_top = -62.0
+offset_right = 75.0
+offset_bottom = -40.0
+show_percentage = false
+
+[node name="Components" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="HealthComponent" type="Node" parent="Components"]
+script = ExtResource("3_e4kdk")
+maxHealth = 300
+
+[node name="TargetPointer" parent="." instance=ExtResource("4_b8g4d")]
+
+[connection signal="Died" from="Components/HealthComponent" to="." method="Died"]
+[connection signal="MaxHealthChanged" from="Components/HealthComponent" to="." method="MaxHealthChanged"]
+[connection signal="TookDamage" from="Components/HealthComponent" to="." method="ReceivedDamage"]

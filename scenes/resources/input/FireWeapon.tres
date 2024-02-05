@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ControlConfiguration" load_steps=2 format=3 uid="uid://chs7r5mieaisd"]
+
+[ext_resource type="Script" path="res://src/resources/ControlConfiguration.cs" id="1_vt1ui"]
+
+[resource]
+script = ExtResource("1_vt1ui")
+inputName = "fire"

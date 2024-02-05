@@ -1,9 +1,10 @@
 # Game Idea
 
+[ToC]
+
 ## Story
 
 You got an important document about and enemy outpost. You enter the jump to deliver the information but somehow it got interrupted and enemies try to hunt you down. You need to survive this until the drive is back online and you can jump again.
-
 
 ## Game loop
 
@@ -29,41 +30,36 @@ The computer will try to cancel every strafe movement if you accelerate into one
 
 If you stop moving the computer will try to stop the ship velocity.
 
+- [Flight Computer][flight-computer]
+
 ### Upgrades
 
-Ships will have core, internal and hardpoints slots. The slot count can vary between ships. Those components can either be replaced, added or removes.`FlyByWire`
+Ships will have core, internal and hardpoint slots. The slot count can vary between ships. Those components can either be replaced, added or removes.`FlyByWire`
 
 #### Core
 
 Components of the core category can only be replaced, the following types are present.
 
-- Generator => The power generator of your ship. It will tell you how many components you can use.
-- Cooling => A device which will remove heat from other components, overheating will damage the ship
-- Engine => The engine of the ship, which does produce a lot of heat
+- [Generator][generator]
+- [Battery][battery]
+- [Cooling][cooling-aggregate]
+- [Engine][engine]
 
 ### Internal
 
-- Shield generator => An refillable health pool
-- Traktor beam => Pull items to your ship
-- Hull Reinforcement => Increase health pool
+- [Shield generator][shield-generator]
+- [Tractor beam][tractor-beam]
+- [Hull Reinforcement][hull-reinforcement]
 
 ### Hardpoints
 
 - Weapons => Something to shoot on enemies
 
-### Heat
+### Game Mechanics
 
-Each component will generate heat if used. as example if an engine or weapon is fired it will produce heat. Same goes for a charging shield generator.
-
-Heat will be removed by the cooling unit but if heat is still present at the end of the tick it will deal damage to the hull.
-
-### Power
-
-Power will be defined by the generator. Each component will have a power requirement. You can only add so many components until you hit the barrier. Each additional added component will be disabled and can't be activated if there is not enough free power available.
-
-### Health (Hull)
-
-The health of a hull is dependent on the base hull health and any hull reinforcement's added.
+- [Heat][heat-mechanic]
+- [Power][power-mechanic]
+- [Health][health-mechanic]
 
 ### Ai
 
@@ -76,3 +72,15 @@ Enemies consist of simple fighters or asteroids flying around.
 ### Meta Progression
 
 \-
+
+[flight-computer]: ../components/FlightComputer.md
+[generator]: ../components/GeneratorComponent.md
+[cooling-aggregate]: ../components/CoolingAggregateComponent.md
+[battery]: ../components/BatteryComponent.md
+[engine]: ../components/EngineComponent.md
+[heat-mechanic]: ../mechanics/HeatMechanic.md
+[power-mechanic]: ../mechanics/PowerMechanic.md
+[health-mechanic]: ../mechanics/HullHealthMechanic.md
+[shield-generator]: ../components/ShieldGenerator.md
+[hull-reinforcement]: ../components/HullReinforcement.md
+[tractor-beam]: ../components/TractorBeam.md

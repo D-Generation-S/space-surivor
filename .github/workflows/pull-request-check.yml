@@ -6,7 +6,7 @@ on:
 env:
   GODOT_VERSION: 4.2.1
   EXPORT_NAME: space-survivor
-  PROJECT_PATH: space-survivor
+  PROJECT_PATH: ./
 
 jobs:
   export-windows:

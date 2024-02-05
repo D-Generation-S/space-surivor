@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dn36o12p8t34c"]
+[gd_scene load_steps=8 format=3 uid="uid://dn36o12p8t34c"]
 
 [ext_resource type="Script" path="res://src/entities/target/ShotableTarget.cs" id="1_2hbr1"]
 [ext_resource type="Texture2D" uid="uid://j8533gbck1y1" path="res://assets/sprites/enemy_E.png" id="2_trr70"]
@@ -7,6 +7,12 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b4v8h"]
 radius = 32.0624
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_71eav"]
+bg_color = Color(0.345098, 0.345098, 0.345098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u75do"]
+bg_color = Color(0.772549, 0, 0, 1)
 
 [node name="ShotableTarget" type="CharacterBody2D" node_paths=PackedStringArray("progressBar")]
 position = Vector2(1896, -552)
@@ -27,6 +33,8 @@ offset_left = -75.0
 offset_top = -62.0
 offset_right = 75.0
 offset_bottom = -40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_71eav")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u75do")
 show_percentage = false
 
 [node name="Components" type="Node" parent="."]

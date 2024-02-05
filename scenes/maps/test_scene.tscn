@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=27 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -53,6 +53,8 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_3u1nn"]
 events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButton_2b2yr")]
+
+[sub_resource type="Environment" id="Environment_vsba0"]
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_hj8tq")
@@ -269,6 +271,9 @@ position = Vector2(1544, -440)
 
 [node name="FourthShotableTarget" parent="Targets" instance=ExtResource("18_8kmv6")]
 position = Vector2(1904, -144)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vsba0")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]

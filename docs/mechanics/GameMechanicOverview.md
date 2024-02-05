@@ -1,6 +1,7 @@
 # Game Mechanic overview
 
-[ToC]
+- TOC
+{:toc}
 
 ## Flight Computer
 

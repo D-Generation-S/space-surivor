@@ -1,6 +1,7 @@
 # Game Idea
 
-[ToC]
+- TOC
+{:toc}
 
 ## Story
 

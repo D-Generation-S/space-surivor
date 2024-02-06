@@ -72,7 +72,7 @@ theme = ExtResource("1_x31y7")
 [node name="Headline" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x31y7")
-text = "Rotate left and right"
+text = "HELP_ROTATE_HEADLINE"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
@@ -120,20 +120,23 @@ libraries = {
 }
 script = ExtResource("3_aykic")
 
-[node name="InputDescription" type="HBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+[node name="HBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputDescription" type="HBoxContainer" parent="Panel/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("5_5sgkl")
-keyBoardControls = [NodePath("KeyboardButton1"), NodePath("KeyboardButton2")]
-controllerControls = [NodePath("ControllerButton1"), NodePath("ControllerButton2")]
+keyBoardControls = [NodePath("KeyboardButton1"), NodePath("../HBoxContainer/KeyboardButton2")]
+controllerControls = [NodePath("ControllerButton1"), NodePath("../HBoxContainer/ControllerButton2")]
 
-[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/InputDescription"]
 layout_mode = 2
-text = "Press"
+text = "DEFAULT_PRESS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="KeyboardButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+[node name="KeyboardButton1" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/InputDescription"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -141,20 +144,30 @@ texture = ExtResource("6_gjcrp")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ControllerButton1" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+[node name="ControllerButton1" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/InputDescription"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("7_ff5q7")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/InputDescription"]
 layout_mode = 2
-text = " to rotate left"
+text = "HELP_ROTATE_LEFT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="KeyboardButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="StepStartDescription2" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "DEFAULT_PRESS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -162,17 +175,17 @@ texture = ExtResource("8_j1q1c")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ControllerButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription"]
+[node name="ControllerButton2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("9_4coai")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StepEndDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
+[node name="StepEndDescription" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x31y7")
-text = " to rotate right"
+text = "HELP_ROTATE_RIGHT"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -184,18 +197,17 @@ theme = ExtResource("1_x31y7")
 [node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x31y7")
-text = "Previous
-"
+text = "BUTTON_PREVIOUS"
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x31y7")
-text = "Replay Animation"
+text = "BUTTON_REPLAY_ANIMATION"
 
 [node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x31y7")
-text = "Next"
+text = "BUTTON_NEXT"
 script = ExtResource("5_t7q40")
 getFocusIfVisible = true
 

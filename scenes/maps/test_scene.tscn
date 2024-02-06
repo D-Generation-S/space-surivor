@@ -99,13 +99,13 @@ layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("7_mqv5f")
 shortcut = SubResource("Shortcut_vua6o")
-text = "Help"
+text = "BUTTON_HELP"
 
 [node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
 shortcut = SubResource("Shortcut_3u1nn")
-text = "Close"
+text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 
 [node name="Expander2" type="Control" parent="CanvasLayer/VBoxContainer"]
@@ -143,10 +143,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "Fly through the crosses.
-
-For this training level you won't be able to leave this screen.
-To see the controls, press the help button in the top right corner."
+text = "INTRO_TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -158,7 +155,7 @@ size_flags_vertical = 4
 [node name="StartDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "Press"
+text = "DEFAULT_PRESS"
 
 [node name="Keyboard" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
@@ -178,9 +175,9 @@ stretch_mode = 5
 [node name="EndDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "to get additional help"
+text = "HELP_ADDITIONAL"
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="FinishBox" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,7 +187,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Complete Panel" type="Panel" parent="CanvasLayer/Control"]
+[node name="Complete Panel" type="Panel" parent="CanvasLayer/FinishBox"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -204,8 +201,9 @@ offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_q4agf")
+initialState = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Complete Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,26 +211,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "You did fly throug the last target.
-Thank you for playing.
-
-Please leave a comment,
-if you liked the flight model or not."
+text = "DEMO_FINISHED"
 horizontal_alignment = 1
+autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Close" type="Button" parent="CanvasLayer/Control/Complete Panel/VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource("7_mqv5f")
-text = "Close"
+text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 getFocusIfVisible = true
 
@@ -282,7 +278,7 @@ environment = SubResource("Environment_vsba0")
 [connection signal="TargetCompleted" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SeventhTarget" to="Targets/MultipleTargets" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="CanvasLayer/Control/Complete Panel" method="ShowControl"]
+[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="CanvasLayer/FinishBox/Complete Panel" method="ShowControl"]
 [connection signal="TargetCompleted" from="Targets/FirstShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
 [connection signal="TargetCompleted" from="Targets/SecondShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
 [connection signal="TargetCompleted" from="Targets/ThirdShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]

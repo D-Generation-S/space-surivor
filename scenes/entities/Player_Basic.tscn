@@ -117,11 +117,11 @@ script = ExtResource("9_j7fmf")
 
 [node name="FlyByWireControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_cq0qe")
-displayName = "Fly by wire"
+displayName = "RESOURCE_FLIGHT_COMPUTER_FLY_BY_WIRE"
 
 [node name="RawControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_i85cv")
-displayName = "Uncoupled"
+displayName = "RESOURCE_FLIGHT_COMPUTER_RAW_INPUT"
 
 [node name="PowerPlant" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("14_et7re")

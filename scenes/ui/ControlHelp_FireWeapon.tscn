@@ -1,0 +1,131 @@
+[gd_scene load_steps=7 format=3 uid="uid://5axda1n3qkg8"]
+
+[ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="1_ephtl"]
+[ext_resource type="Script" path="res://src/ui/scenes/HelpPanel.cs" id="2_qbwus"]
+[ext_resource type="Script" path="res://src/ui/overlay/InputDependentControl.cs" id="3_j6l6l"]
+[ext_resource type="Texture2D" uid="uid://doywx4qpi4pmr" path="res://assets/sprites/input/keyboard/keyboard_space_outline.png" id="4_e0fjy"]
+[ext_resource type="Texture2D" uid="uid://c4ffuptgju8wl" path="res://assets/sprites/input/Controller/xbox_rt_outline.png" id="5_gyxup"]
+[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="9_nsov1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ephtl")
+script = ExtResource("2_qbwus")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 350.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ephtl")
+
+[node name="Headline" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ephtl")
+text = "HELP_FIRE_WEAPON_HEALINE"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ephtl")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 1
+text = "HELP_FIRE_WEAPON_DESCRIPTION"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="InputDescription" type="VBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("3_j6l6l")
+keyBoardControls = [NodePath("HBoxContainer2/KeyboardButton2")]
+controllerControls = [NodePath("HBoxContainer2/ControllerButton2")]
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer/InputDescription"]
+layout_mode = 2
+
+[node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+layout_mode = 2
+text = "DEFAULT_PRESS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_e0fjy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControllerButton2" type="TextureRect" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_gyxup")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
+layout_mode = 2
+text = "HELP_FIRE_WEAPON_FIRE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_ephtl")
+
+[node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ephtl")
+text = "BUTTON_PREVIOUS"
+
+[node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_ephtl")
+text = "Replay Animation"
+
+[node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ephtl")
+text = "BUTTON_NEXT"
+script = ExtResource("9_nsov1")
+getFocusIfVisible = true
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Previous" to="." method="ShowPreviousHelpPanel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Next" to="." method="ShowNextHelpPanel"]

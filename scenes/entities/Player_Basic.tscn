@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=38 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -30,6 +30,7 @@
 [ext_resource type="Script" path="res://src/entities/components/LaserWeaponComponent.cs" id="23_0spkx"]
 [ext_resource type="Resource" uid="uid://q4vmjuybv14m" path="res://scenes/resources/components/hardpoints/laser/SimpleBlaster.tres" id="25_17b5p"]
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
+[ext_resource type="Script" path="res://src/entities/player/KillSwitch.cs" id="31_xt3y3"]
 
 [sub_resource type="Gradient" id="Gradient_oyg3n"]
 offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
@@ -151,4 +152,8 @@ lifetime = 15.0
 unique_name_in_owner = true
 position = Vector2(0, -32)
 
+[node name="KillSwitch" type="Node" parent="."]
+script = ExtResource("31_xt3y3")
+
+[connection signal="Died" from="Components/HealthComponent" to="KillSwitch" method="Died"]
 [connection signal="EngineFireState" from="Components/Engine" to="PlayerEngineExhaust" method="SetParticleEmitterState"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=28 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
 [ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
 [ext_resource type="Shader" path="res://assets/shaders/background_nebular.gdshader" id="13_llayv"]
+[ext_resource type="Script" path="res://src/ui/overlay/CheckForPlayer.cs" id="15_kfttb"]
 [ext_resource type="PackedScene" uid="uid://dn36o12p8t34c" path="res://scenes/entities/shotable_target.tscn" id="18_8kmv6"]
 [ext_resource type="Script" path="res://src/entities/target/MultiTarget.cs" id="20_1vspa"]
 
@@ -180,6 +181,7 @@ theme = ExtResource("7_mqv5f")
 text = "HELP_ADDITIONAL"
 
 [node name="FinishBox" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -233,6 +235,62 @@ text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 getFocusIfVisible = true
 
+[node name="DeadBox" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("15_kfttb")
+player = NodePath("../../Player")
+
+[node name="Complete Panel" type="Panel" parent="CanvasLayer/DeadBox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_q4agf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("7_mqv5f")
+text = "DEMO_FINISHED_DIED"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = ExtResource("7_mqv5f")
+text = "BUTTON_CLOSE"
+script = ExtResource("5_b4j62")
+getFocusIfVisible = true
+
 [node name="HelpScreen" parent="CanvasLayer" instance=ExtResource("6_3radj")]
 
 [node name="Targets" type="Node" parent="."]
@@ -274,6 +332,8 @@ environment = SubResource("Environment_vsba0")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]
+[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/VBoxContainer/UserInterface" method="HideInterface"]
+[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/DeadBox/Complete Panel" method="ShowControl"]
 [connection signal="TargetCompleted" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]

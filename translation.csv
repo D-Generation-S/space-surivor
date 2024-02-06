@@ -27,3 +27,4 @@ HELP_FIRE_WEAPON_FIRE;to fire the weapons;um deine Waffen abzufeuern
 RESOURCE_FLIGHT_COMPUTER_FLY_BY_WIRE;Fly By Wire;
 RESOURCE_FLIGHT_COMPUTER_RAW_INPUT;Uncoupled;
 DEMO_FINISHED;You did fly through the last target. Thank you for playing.\n\nPlease leave a comment, what you think about the flight model; Du hast das letzte Ziel durchflogen. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst
+DEMO_FINISHED_DIED;You where killed by heat, better watch out.\nThank you for playing.\n\nPlease leave a comment, what you think about the flight model; Du bist durch überhitzung gestorben,\n passe nächstes mal besser auf. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst

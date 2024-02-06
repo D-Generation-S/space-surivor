@@ -37,6 +37,10 @@ public partial class BackgroundControl : Sprite2D
         shaderMaterial.SetShaderParameter("zoomScale", zoomLevel);
 
         Visible = true;
+
+        bindTarget.TreeExiting += () => {
+            bindTarget = GetViewport().GetCamera2D();
+        };
     }
 
     public override void _Process(double delta)

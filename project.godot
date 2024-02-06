@@ -118,6 +118,7 @@ fire={
 [internationalization]
 
 locale/translations=PackedStringArray("res://translation.en.translation", "res://translation.de.translation")
+locale/test="en"
 
 [layer_names]
 

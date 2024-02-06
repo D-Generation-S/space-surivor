@@ -40,6 +40,8 @@ public partial class HealthComponent : Node
     {
         currentHealth = maxHealth;
         base._Ready();
+        EmitSignal(SignalName.MaxHealthChanged, maxHealth);
+        EmitSignal(SignalName.TookDamage, currentHealth);
     }
 
     /// <summary>

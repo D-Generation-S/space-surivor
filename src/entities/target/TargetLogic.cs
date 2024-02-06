@@ -5,20 +5,8 @@ using System.Linq;
 /// Class to define a fly through target.
 /// It does hold the complete logic for such an packed scene
 /// </summary>
-public partial class TargetLogic : Node2D
+public partial class TargetLogic : BaseTarget
 {
-    /// <summary>
-    /// Event handler if the target was hit
-    /// </summary>
-    [Signal]
-    public delegate void TargetHitEventHandler();
-
-    /// <summary>
-    /// Should the target be visible after spawning
-    /// </summary>
-    [Export]
-    private bool targetVisible;
-
     /// <summary>
     /// The visual component for this target
     /// </summary>
@@ -53,8 +41,8 @@ public partial class TargetLogic : Node2D
         areaCollider = GetChildren().OfType<Area2D>().FirstOrDefault();
         audio = GetChildren().OfType<AudioStreamPlayer2D>().FirstOrDefault();
 
-        ToggleTargetVisibility(targetVisible);
 
+        base._Ready();
         areaCollider.BodyEntered += (entity) => {
             if (entity.Name != "Player")
             {
@@ -63,7 +51,7 @@ public partial class TargetLogic : Node2D
             HideTarget();
             particleEmitter.Emitting = true;
             audio.Play();
-            EmitSignal(SignalName.TargetHit);
+            EmitSignal(SignalName.TargetCompleted);
             destroyed = true;
         };
 
@@ -77,32 +65,12 @@ public partial class TargetLogic : Node2D
         };
     }
 
-    /// <summary>
-    /// Toggle the visibility of this target
-    /// </summary>
-    /// <param name="newState">The new state to set the target</param>
-    private void ToggleTargetVisibility(bool newState)
+    protected override void ToggleTargetVisibility(bool newState)
     {
-        SetDeferred("visible", newState);
+        base.ToggleTargetVisibility(newState);
         areaCollider.SetDeferred("monitorable", newState);
         areaCollider.SetDeferred("monitoring", newState);
     }
 
-    /// <summary>
-    /// Hide the target
-    /// </summary>
-    public void HideTarget()
-    {
-        ToggleTargetVisibility(false);
-    }
 
-    /// <summary>
-    /// Make the target visible again
-    /// </summary>
-    public void MakeTargetVisible()
-    {
-        ToggleTargetVisibility(true);
-    }
-
-    
 }

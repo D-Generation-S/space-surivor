@@ -33,11 +33,14 @@ public partial class TargetPointer : Sprite2D
     /// The player object
     /// </summary>
     private EntityMovement player;
+
+    private bool canTarget;
     
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        canTarget = true;
         textRotator = GetChildren().OfType<Node2D>()
                                    .FirstOrDefault();
         distance = textRotator.GetChildren()
@@ -49,11 +52,21 @@ public partial class TargetPointer : Sprite2D
                                .OfType<EntityMovement>()
                                .Where(node => node.IsInGroup("player"))
                                .FirstOrDefault();
+
+        player.TreeExiting += () => {
+            canTarget = false;
+        };
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {	
+        if (!canTarget)
+        {
+            SetDeferred("visible", false);
+            distance.SetDeferred("visible", false);
+            return;
+        }
         var cameraGlobalPosition = GetViewport().GetCamera2D().GlobalPosition;
         var viewport = GetViewportRect();
         viewport.Size = new Vector2(viewport.Size.X - viewportBoundLimiter * 2, viewport.Size.Y - viewportBoundLimiter * 2);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=28 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -16,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
 [ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
 [ext_resource type="Shader" path="res://assets/shaders/background_nebular.gdshader" id="13_llayv"]
+[ext_resource type="Script" path="res://src/ui/overlay/CheckForPlayer.cs" id="15_kfttb"]
+[ext_resource type="PackedScene" uid="uid://dn36o12p8t34c" path="res://scenes/entities/shotable_target.tscn" id="18_8kmv6"]
+[ext_resource type="Script" path="res://src/entities/target/MultiTarget.cs" id="20_1vspa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqy8u"]
 shader = ExtResource("13_llayv")
@@ -51,6 +54,10 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_3u1nn"]
 events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButton_2b2yr")]
+
+[sub_resource type="Environment" id="Environment_vsba0"]
+background_mode = 3
+glow_enabled = true
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_hj8tq")
@@ -95,13 +102,13 @@ layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("7_mqv5f")
 shortcut = SubResource("Shortcut_vua6o")
-text = "Help"
+text = "BUTTON_HELP"
 
 [node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
 shortcut = SubResource("Shortcut_3u1nn")
-text = "Close"
+text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 
 [node name="Expander2" type="Control" parent="CanvasLayer/VBoxContainer"]
@@ -139,10 +146,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "Fly through the crosses.
-
-For this training level you won't be able to leave this screen.
-To see the controls, press the help button in the top right corner."
+text = "INTRO_TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -154,7 +158,7 @@ size_flags_vertical = 4
 [node name="StartDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "Press"
+text = "DEFAULT_PRESS"
 
 [node name="Keyboard" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
@@ -174,9 +178,10 @@ stretch_mode = 5
 [node name="EndDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "to get additional help"
+text = "HELP_ADDITIONAL"
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="FinishBox" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -186,7 +191,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Complete Panel" type="Panel" parent="CanvasLayer/Control"]
+[node name="Complete Panel" type="Panel" parent="CanvasLayer/FinishBox"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -201,7 +206,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_q4agf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Complete Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,26 +214,80 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
-text = "You did fly throug the last target.
-Thank you for playing.
-
-Please leave a comment,
-if you liked the flight model or not."
+text = "DEMO_FINISHED"
 horizontal_alignment = 1
+autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Complete Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Close" type="Button" parent="CanvasLayer/Control/Complete Panel/VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource("7_mqv5f")
-text = "Close"
+text = "BUTTON_CLOSE"
+script = ExtResource("5_b4j62")
+getFocusIfVisible = true
+
+[node name="DeadBox" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("15_kfttb")
+player = NodePath("../../Player")
+
+[node name="Complete Panel" type="Panel" parent="CanvasLayer/DeadBox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_q4agf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("7_mqv5f")
+text = "DEMO_FINISHED_DIED"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = ExtResource("7_mqv5f")
+text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 getFocusIfVisible = true
 
@@ -252,10 +311,36 @@ position = Vector2(224, 1784)
 [node name="SeventhTarget" parent="Targets" instance=ExtResource("4_pmjjq")]
 position = Vector2(1896, -456)
 
+[node name="MultipleTargets" type="Node2D" parent="Targets" node_paths=PackedStringArray("targets")]
+script = ExtResource("20_1vspa")
+targets = [NodePath("../FirstShotableTarget"), NodePath("../SecondShotableTarget"), NodePath("../ThirdShotableTarget"), NodePath("../FourthShotableTarget")]
+
+[node name="FirstShotableTarget" parent="Targets" instance=ExtResource("18_8kmv6")]
+position = Vector2(1904, -720)
+
+[node name="SecondShotableTarget" parent="Targets" instance=ExtResource("18_8kmv6")]
+position = Vector2(2344, -456)
+
+[node name="ThirdShotableTarget" parent="Targets" instance=ExtResource("18_8kmv6")]
+position = Vector2(1544, -440)
+
+[node name="FourthShotableTarget" parent="Targets" instance=ExtResource("18_8kmv6")]
+position = Vector2(1904, -144)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vsba0")
+
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]
-[connection signal="TargetHit" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
-[connection signal="TargetHit" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
-[connection signal="TargetHit" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
-[connection signal="TargetHit" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
-[connection signal="TargetHit" from="Targets/SeventhTarget" to="CanvasLayer/Control/Complete Panel" method="ShowControl"]
+[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/VBoxContainer/UserInterface" method="HideInterface"]
+[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/DeadBox/Complete Panel" method="ShowControl"]
+[connection signal="TargetCompleted" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
+[connection signal="TargetCompleted" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
+[connection signal="TargetCompleted" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
+[connection signal="TargetCompleted" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
+[connection signal="TargetCompleted" from="Targets/SeventhTarget" to="Targets/MultipleTargets" method="MakeTargetVisible"]
+[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="CanvasLayer/FinishBox/Complete Panel" method="ShowControl"]
+[connection signal="TargetCompleted" from="Targets/FirstShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
+[connection signal="TargetCompleted" from="Targets/SecondShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
+[connection signal="TargetCompleted" from="Targets/ThirdShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
+[connection signal="TargetCompleted" from="Targets/FourthShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]

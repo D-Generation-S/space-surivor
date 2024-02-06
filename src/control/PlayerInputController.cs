@@ -65,6 +65,13 @@ public partial class PlayerInputController : Node
     private ControlConfiguration rotateRight;
 
     /// <summary>
+    /// The control configuration to rotate the ship to the right
+    /// </summary>
+    [ExportGroup("Weapon Control")]
+    [Export]
+    private ControlConfiguration fireWeapons;
+
+    /// <summary>
     /// The flight computer used to interpret the user input
     /// </summary>
     private FlightComputer flightComputer;
@@ -98,6 +105,14 @@ public partial class PlayerInputController : Node
         if (Input.IsActionJustPressed(previousFlightComputerMode.GetInputName()))
         {
             flightComputer.SwitchToPreviousModeInterpret();
+        }
+        if (Input.IsActionPressed(fireWeapons.GetInputName()))
+        {
+            var weapons = GetParent().GetChildren().OfType<WeaponComponent>().ToList();
+            foreach(var weapon in weapons)
+            {
+                weapon.FireWeapon();
+            }
         }
     }
 

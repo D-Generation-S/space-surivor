@@ -16,6 +16,8 @@
 
 ## Hardpoint's
 
+- [Laser Weapon][laser-weapon-component]
+
 
 [generator-component]: ./GeneratorComponent.md
 [engine-component]: ./EngineComponent.md
@@ -25,3 +27,4 @@
 [hull-reinforcement-component]: ./HullReinforcement.md
 [shield-generator-component]: ./ShieldGenerator.md
 [tractor-beam-component]: ./TractorBeam.md
+[laser-weapon-component]: ./LaserWeaponComponent.md

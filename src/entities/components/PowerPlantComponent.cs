@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -98,17 +99,21 @@ public partial class PowerPlantComponent : ConsumerComponent
             consumer.Enable();
             availablePower -= consumerConsumption;
         }
-        consumedEnergy = consumedEnergy > powerPlantProduction ? powerPlantProduction : consumedEnergy;
-        float usedPercentage = (float)(consumedEnergy / (float)powerPlantProduction);
 
 
         if (availablePower > 0)
         {
             foreach (var battery in shipBatteries)
             {
-                availablePower -= battery.Load(availablePower);
+                var loadedEnergy = battery.Load(availablePower);
+                availablePower -= loadedEnergy;
+                consumedEnergy += loadedEnergy;
             }
         }
+
+        
+        consumedEnergy = consumedEnergy > powerPlantProduction ? powerPlantProduction : consumedEnergy;
+        float usedPercentage = (float)(consumedEnergy / (float)powerPlantProduction);
 
         EmitSignal(SignalName.UsedPlantPowerChanged, usedPercentage);
         EmitSignal(SignalName.BatteryCapacityChanged, currentBatteryCapacity);

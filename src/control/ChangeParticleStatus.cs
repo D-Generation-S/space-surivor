@@ -11,7 +11,7 @@ public partial class ChangeParticleStatus : GpuParticles2D
     /// </summary>
     public void ActivateParticleEmitter()
     {
-        Emitting = true;
+        SetParticleEmitterState(true);
     }
 
     /// <summary>
@@ -19,7 +19,16 @@ public partial class ChangeParticleStatus : GpuParticles2D
     /// </summary>
     public void DisableParticleEmitter()
     {
-        Emitting = false;
+        SetParticleEmitterState(false);
+    }
+
+    /// <summary>
+    /// Method to set the state of the particle emitter
+    /// </summary>
+    /// <param name="newState">The new state to set</param>
+    public void SetParticleEmitterState(bool newState)
+    {
+        Emitting = newState;
     }
 
     /// <summary>

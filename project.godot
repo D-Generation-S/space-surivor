@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Space Survivor"
-config/version="0.0.4"
+config/version="0.0.5"
 config/tags=PackedStringArray("action", "learning")
 run/main_scene="res://scenes/maps/test_scene.tscn"
 config/use_custom_user_dir=true
@@ -118,7 +118,6 @@ fire={
 [internationalization]
 
 locale/translations=PackedStringArray("res://translation.en.translation", "res://translation.de.translation")
-locale/test="en"
 
 [layer_names]
 

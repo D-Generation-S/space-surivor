@@ -8,7 +8,7 @@ env:
   EXPORT_NAME: space-survivor
   PROJECT_PATH: ./
 
-  
+
 jobs:
   export-windows:
     name: Windows Export
@@ -20,10 +20,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
@@ -45,10 +41,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Linux Build
         run: |
           mkdir -v -p build/linux

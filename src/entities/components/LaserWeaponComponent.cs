@@ -9,7 +9,7 @@ public partial class LaserWeaponComponent : WeaponComponent
 
     public override void _Ready()
     {
-        BaseWeaponConfiguration(laserWeaponConfiguration);
+        SetBaseWeaponConfiguration(laserWeaponConfiguration);
         base._Ready();
     }
 

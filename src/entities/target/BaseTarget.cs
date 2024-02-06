@@ -1,6 +1,8 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Base class for targets
+/// </summary>
 public partial class BaseTarget : Node2D
 {   
     /// <summary>
@@ -15,6 +17,7 @@ public partial class BaseTarget : Node2D
     [Signal]
     public delegate void TargetCompletedEventHandler();
 
+    /// <inheritdoc/>
     public override void _Ready()
     {
         ToggleTargetVisibility(targetVisible);

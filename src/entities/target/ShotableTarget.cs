@@ -28,6 +28,10 @@ public partial class ShotableTarget : BaseTarget
     protected override void ToggleTargetVisibility(bool newState)
     {
         base.ToggleTargetVisibility(newState);
+        if (collisionShape2D is null)
+        {
+            return;
+        }
         collisionShape2D.SetDeferred("disabled",!newState);
     }
 

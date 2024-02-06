@@ -13,12 +13,9 @@ public partial class LaserWeaponComponent : WeaponComponent
         base._Ready();
     }
 
-    public override void FireWeapon()
+    protected override void WeaponWasFired()
     {
-        if (!CanFireWeapon())
-        {
-            return;
-        }
+        base.WeaponWasFired();
         var projectile = laserWeaponConfiguration.GetPackedScene().Instantiate<LaserProjectile>();
         projectile.FireProjectile(GetShip().Rotation, laserWeaponConfiguration.GetWeaponSpread(), GetParent<Node>().GetParent<Node2D>(), laserWeaponConfiguration);
         projectile.GlobalPosition = GetWeaponSpawnPoint().GlobalPosition;

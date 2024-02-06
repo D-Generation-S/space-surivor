@@ -1,8 +1,4 @@
 using Godot;
-using System;
-using System.Net.NetworkInformation;
-using System.Reflection;
-
 public partial class WeaponComponent : ConsumerComponent
 {
     [Export]
@@ -23,10 +19,18 @@ public partial class WeaponComponent : ConsumerComponent
     
     private WeaponConfiguration baseComponent;
 
+    private AudioManager audioManager;
+
     public override void _Ready()
     {
-        weaponSpawnPoint = ship.GetNode<Node2D>("%WeaponSpawn");
         base._Ready();
+        weaponSpawnPoint = ship.GetNode<Node2D>("%WeaponSpawn");
+        audioManager = new AudioManager(2, () => new AudioStreamPlayer2D
+        {
+            MaxDistance = 2000,
+            Bus = "Effects"
+        });
+        GetShip().CallDeferred("add_child", audioManager);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,23 +39,7 @@ public partial class WeaponComponent : ConsumerComponent
     {
         if (wasFired && Active())
         {
-            storedHeat += baseComponent.GetFiringHeat();     
-            
-            var fireEffect = baseComponent.GetFireEffect();   
-            if (fireEffect is not null)
-            {
-                var effectPlayer = new AudioStreamPlayer2D
-                {
-                    Stream = fireEffect,
-                    Autoplay = true,
-                    MaxDistance = 2000,
-                    GlobalPosition = GetShip().GlobalPosition
-                };
-                effectPlayer.Finished += () => {
-                    effectPlayer.QueueFree();
-                };
-                GetTree().Root.AddChild(effectPlayer);
-            }
+            WeaponWasFired();
         }
         wasFired = false;
 
@@ -83,12 +71,27 @@ public partial class WeaponComponent : ConsumerComponent
 
     public override int GetStoredHeat()
     {
+        if (!Active())
+        {
+            return 0;
+        }
         var returnHeat = storedHeat;
         storedHeat = 0;
         return returnHeat > 0 ? returnHeat : baseComponent.GetIdleHeat();
     }
 
-    public virtual void FireWeapon()
+    protected virtual void WeaponWasFired()
+    {
+        storedHeat += baseComponent.GetFiringHeat();     
+        
+        var fireEffect = baseComponent.GetFireEffect();   
+        if (fireEffect is not null)
+        {
+            audioManager.QueueSoundToPlay(fireEffect);
+        }
+    }
+
+    public void FireWeapon()
     {
         if (!CanFireWeapon())
         {

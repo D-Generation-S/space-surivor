@@ -48,7 +48,7 @@ public partial class LaserProjectile : Area2D
     {
         damage = configuration.GetProjectileDamage();
         this.firingEntity = firingEntity;
-        initialSpawnLocation = GlobalPosition;
+        initialSpawnLocation = firingEntity.GlobalPosition;
         Rotation = rotation;
         var random = Random.Shared.NextDouble();
         var direction = Random.Shared.NextDouble() - 0.5;

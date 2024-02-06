@@ -2,20 +2,44 @@ using Godot;
 using System;
 using System.Linq;
 
+/// <summary>
+/// Control script for a laser projectile
+/// </summary>
 public partial class LaserProjectile : Area2D
 {
-    private Vector2 initialSpawnLocation;
-
+    /// <summary>
+    /// THe maximal distance for a projectile to travel,
+    /// exceeding this will delete the projectile
+    /// </summary>
     [Export]
     private float maxDistance = 3500;
 
+    /// <summary>
+    /// The health component for the laser projectile
+    /// </summary>
     [Export]
     private HealthComponent healthComponent;
 
+    /// <summary>
+    /// The initial spawn location where this projectile was created at,
+    /// used to calculate the traveled distance
+    /// </summary>
+    private Vector2 initialSpawnLocation;
+
+    /// <summary>
+    /// The current velocity of the projectile
+    /// </summary>
     private Vector2 velocity;
 
+    /// <summary>
+    /// The entity which did fire this projectile, 
+    /// this is used to disable damage for that entity
+    /// </summary>
     private Node2D firingEntity;
 
+    /// <summary>
+    /// The damage of the projectile
+    /// </summary>
     private int damage;
  
     // Called when the node enters the scene tree for the first time.
@@ -23,6 +47,10 @@ public partial class LaserProjectile : Area2D
     {
     }
 
+    /// <summary>
+    /// Event if the project does enter a body2d
+    /// </summary>
+    /// <param name="body">The body which was entered</param>
     public void OnBodyEntered(Node2D body)
     {
         if (body == firingEntity)
@@ -34,6 +62,7 @@ public partial class LaserProjectile : Area2D
         QueueFree();
     }
 
+    /// <inheritdoc/>
     public override void _PhysicsProcess(double delta)
     {
         GlobalPosition += velocity * (float)delta;
@@ -43,7 +72,14 @@ public partial class LaserProjectile : Area2D
         }
     }
 
-    public void FireProjectile(float rotation, float spread, Node2D firingEntity, LaserWeaponConfiguration configuration)
+    /// <summary>
+    /// Method to fire this projectile
+    /// </summary>
+    /// <param name="rotation">The rotation to fire the projectile to</param>
+    /// <param name="spread">The spread of the projectile to use on spawn to alter rotation</param>
+    /// <param name="firingEntity">The entity which fired this projectile</param>
+    /// <param name="configuration">The configuration of the fired laser weapon</param>
+    public void FireProjectile(float rotation, Node2D firingEntity, LaserWeaponConfiguration configuration)
     {
         damage = configuration.GetProjectileDamage();
         this.firingEntity = firingEntity;
@@ -51,7 +87,7 @@ public partial class LaserProjectile : Area2D
         Rotation = rotation;
         var random = Random.Shared.NextDouble();
         var direction = Random.Shared.NextDouble() - 0.5;
-        var realSpread = spread * random;
+        var realSpread = configuration.GetWeaponSpread() * random;
         if (direction < 0)
         {
             realSpread *= -1;

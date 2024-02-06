@@ -19,6 +19,10 @@ public partial class WeaponConfiguration : BaseComponent
     [Export]
     private int consumptionFire;
 
+    [ExportGroup("Effect")]
+    [Export]
+    private AudioStreamMP3 fireEffect;
+
     public int GetIdleHeat()
     {
         return idleHeat;
@@ -37,5 +41,10 @@ public partial class WeaponConfiguration : BaseComponent
     public int GetFiringConsumption()
     {
         return consumptionFire + GetIdleConsumption();
+    }
+
+    public AudioStreamMP3 GetFireEffect()
+    {
+        return fireEffect;
     }
 }

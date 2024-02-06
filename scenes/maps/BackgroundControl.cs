@@ -33,6 +33,7 @@ public partial class BackgroundControl : Sprite2D
         shaderMaterial.SetShaderParameter("CLOUD3_COL", colorConfiguration.GetCloudColor3());
         shaderMaterial.SetShaderParameter("CLOUD4_COL", colorConfiguration.GetCloudColor4());
         shaderMaterial.SetShaderParameter("SPACE", colorConfiguration.GetSpaceColor());
+        shaderMaterial.SetShaderParameter("seed", (float)Math.Floor(Random.Shared.NextDouble() * (750 - 500 + 1) + 500));
         shaderMaterial.SetShaderParameter("zoomScale", zoomLevel);
 
         Visible = true;

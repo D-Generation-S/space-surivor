@@ -1,16 +1,17 @@
 using Godot;
 using System;
 using System.Net.NetworkInformation;
+using System.Reflection;
 
 public partial class WeaponComponent : ConsumerComponent
 {
     [Export]
-    private EntityMovement ship;
-
-    private Node2D weaponSpawnPoint;
+    private EntityMovement ship;    
 
     [Export]
     private int ticksBetweenFiring = 15;
+
+    private Node2D weaponSpawnPoint;
 
     private int currentFirePauseTick = 0;
 
@@ -34,9 +35,26 @@ public partial class WeaponComponent : ConsumerComponent
     {
         if (wasFired && Active())
         {
-            storedHeat += baseComponent.GetFiringHeat();
+            storedHeat += baseComponent.GetFiringHeat();     
+            
+            var fireEffect = baseComponent.GetFireEffect();   
+            if (fireEffect is not null)
+            {
+                var effectPlayer = new AudioStreamPlayer2D
+                {
+                    Stream = fireEffect,
+                    Autoplay = true,
+                    MaxDistance = 2000,
+                    GlobalPosition = GetShip().GlobalPosition
+                };
+                effectPlayer.Finished += () => {
+                    effectPlayer.QueueFree();
+                };
+                GetTree().Root.AddChild(effectPlayer);
+            }
         }
         wasFired = false;
+
         base._Process(delta);
     }
 

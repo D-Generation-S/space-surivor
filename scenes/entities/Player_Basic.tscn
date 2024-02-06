@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=40 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -29,6 +29,7 @@
 [ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/internal/battery/SmallNuclearBattery.tres" id="22_6xc5u"]
 [ext_resource type="Script" path="res://src/entities/components/LaserWeaponComponent.cs" id="23_0spkx"]
 [ext_resource type="Script" path="res://src/resources/LaserWeaponConfiguration.cs" id="25_0lx8a"]
+[ext_resource type="AudioStream" uid="uid://cfgyknifuvi5" path="res://assets/sounds/Laser_Shoot.mp3" id="25_ep6ul"]
 [ext_resource type="PackedScene" uid="uid://4q07w1fxrq3n" path="res://scenes/entities/LaserProjectile.tscn" id="25_tx1bj"]
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
 
@@ -42,6 +43,7 @@ idleHeat = 0
 heatByFire = 300
 consumptionIdle = 100
 consumptionFire = 250
+fireEffect = ExtResource("25_ep6ul")
 name = "Simple Blaster"
 description = ""
 slotSize = 1

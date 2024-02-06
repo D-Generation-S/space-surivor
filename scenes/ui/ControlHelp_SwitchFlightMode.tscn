@@ -49,7 +49,7 @@ theme = ExtResource("1_wd4bq")
 [node name="Headline" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
-text = "Strafe left and right"
+text = "HELP_CYCLE_FLIGHT_MODE_HEADLINE"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
@@ -57,27 +57,17 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_wd4bq")
 theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_bottom = 10
 
 [node name="Description" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 1
-text = "There are two flight modes to use.
-
-You could use raw input,
-this will give you full control of the ship.
-But you need to counter forces like
-rotation and acceleration yourself.
-
-As an alternative you could use the flight computer. 
-It will try to ensure that you stay on course
-by interpreting your inputs.
-If you stop with input commands it will try to stop your ship.
-
-You can switch those modes as you like while playing."
+text = "HELP_CYCLE_FLIGHT_MODE_DESCRIPTION"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="InputDescription" type="VBoxContainer" parent="Panel/VBoxContainer" node_paths=PackedStringArray("keyBoardControls", "controllerControls")]
 layout_mode = 2
@@ -91,7 +81,7 @@ layout_mode = 2
 
 [node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
 layout_mode = 2
-text = "Press"
+text = "DEFAULT_PRESS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -112,7 +102,7 @@ stretch_mode = 5
 
 [node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer"]
 layout_mode = 2
-text = "to cycle flight modes forward"
+text = "HELP_CYCLE_FLIGHT_MODE_FORWARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -121,7 +111,7 @@ layout_mode = 2
 
 [node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
 layout_mode = 2
-text = "Press"
+text = "DEFAULT_PRESS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -156,7 +146,7 @@ stretch_mode = 5
 
 [node name="StepMiddleDescription" type="Label" parent="Panel/VBoxContainer/InputDescription/HBoxContainer2"]
 layout_mode = 2
-text = "to cycle flight modes backwards"
+text = "HELP_CYCLE_FLIGHT_MODE_BACKWARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -169,19 +159,18 @@ theme = ExtResource("1_wd4bq")
 [node name="Previous" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
-text = "Previous
-"
+text = "BUTTON_PREVIOUS"
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
-text = "Replay Animation"
+text = "BUTTON_REPLAY_ANIMATION"
 
 [node name="Close" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_wd4bq")
-text = "Close"
+text = "BUTTON_CLOSE"
 script = ExtResource("3_q6c5e")
 getFocusIfVisible = true
 

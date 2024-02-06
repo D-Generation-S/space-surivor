@@ -35,6 +35,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -561.0
+offset_top = 218.0
+offset_right = -561.0
+offset_bottom = 218.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -70,7 +74,7 @@ theme = ExtResource("1_efc26")
 [node name="Headline" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = "Accelerate the Ship"
+text = "HELP_ACCELERATE_HEADLINE"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
@@ -127,7 +131,7 @@ controllerControls = [NodePath("ControllerButton")]
 
 [node name="StepStartDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
 layout_mode = 2
-text = "Press"
+text = "DEFAULT_PRESS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -149,7 +153,7 @@ stretch_mode = 5
 [node name="StepEndDescription" type="Label" parent="Panel/VBoxContainer/InputDescription"]
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = " to accelerate"
+text = "HELP_ACCELERATE_KEY"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -162,18 +166,17 @@ theme = ExtResource("1_efc26")
 visible = false
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = "Previous
-"
+text = "BUTTON_PREVIOUS"
 
 [node name="Replay" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = "Replay Animation"
+text = "BUTTON_REPLAY_ANIMATION"
 
 [node name="Next" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_efc26")
-text = "Next"
+text = "BUTTON_NEXT"
 script = ExtResource("5_kgnc5")
 getFocusIfVisible = true
 

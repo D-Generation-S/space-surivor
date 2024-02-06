@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=38 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="9_j7fmf"]
 [ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="10_cq0qe"]
 [ext_resource type="Script" path="res://src/flightComputer/RawFlightCommandInterpret.cs" id="10_i85cv"]
+[ext_resource type="Resource" uid="uid://chs7r5mieaisd" path="res://scenes/resources/input/FireWeapon.tres" id="12_mkths"]
 [ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="14_et7re"]
 [ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="16_t28t7"]
 [ext_resource type="Resource" uid="uid://dx3208x1fkhhl" path="res://scenes/resources/components/core/powerPlant/NuclearReactor.tres" id="16_yis07"]
@@ -26,7 +27,10 @@
 [ext_resource type="Resource" uid="uid://htqdua2xkjq3" path="res://scenes/resources/components/core/engines/IonEngine.tres" id="20_t8j5j"]
 [ext_resource type="Script" path="res://src/entities/components/BatteryComponent.cs" id="21_klf7x"]
 [ext_resource type="Resource" uid="uid://dhqljxttv22hv" path="res://scenes/resources/components/internal/battery/SmallNuclearBattery.tres" id="22_6xc5u"]
+[ext_resource type="Script" path="res://src/entities/components/LaserWeaponComponent.cs" id="23_0spkx"]
+[ext_resource type="Resource" uid="uid://q4vmjuybv14m" path="res://scenes/resources/components/hardpoints/laser/SimpleBlaster.tres" id="25_17b5p"]
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
+[ext_resource type="Script" path="res://src/entities/player/KillSwitch.cs" id="31_xt3y3"]
 
 [sub_resource type="Gradient" id="Gradient_oyg3n"]
 offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
@@ -89,17 +93,18 @@ nextFlightComputerMode = ExtResource("7_252av")
 previousFlightComputerMode = ExtResource("8_x5v8n")
 rotateLeft = ExtResource("7_hdevr")
 rotateRight = ExtResource("8_bkhpr")
+fireWeapons = ExtResource("12_mkths")
 
 [node name="FlightComputer" type="Node" parent="Components" groups=["player_component"]]
 script = ExtResource("9_j7fmf")
 
 [node name="FlyByWireControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_cq0qe")
-displayName = "Fly by wire"
+displayName = "RESOURCE_FLIGHT_COMPUTER_FLY_BY_WIRE"
 
 [node name="RawControl" type="Node" parent="Components/FlightComputer"]
 script = ExtResource("10_i85cv")
-displayName = "Uncoupled"
+displayName = "RESOURCE_FLIGHT_COMPUTER_RAW_INPUT"
 
 [node name="PowerPlant" type="Node" parent="Components" groups=["component"]]
 script = ExtResource("14_et7re")
@@ -116,6 +121,11 @@ engineConfiguration = ExtResource("20_t8j5j")
 [node name="BatteryComponent" type="Node" parent="Components"]
 script = ExtResource("21_klf7x")
 batteryConfiguration = ExtResource("22_6xc5u")
+
+[node name="WeaponComponent" type="Node" parent="Components" node_paths=PackedStringArray("ship")]
+script = ExtResource("23_0spkx")
+laserWeaponConfiguration = ExtResource("25_17b5p")
+ship = NodePath("../..")
 
 [node name="PlayerVisual" type="Sprite2D" parent="."]
 material = ExtResource("1_1ckmu")
@@ -138,5 +148,12 @@ process_material = SubResource("ParticleProcessMaterial_ojw4w")
 texture = ExtResource("27_7sqhj")
 lifetime = 15.0
 
-[connection signal="IdleForward" from="." to="PlayerEngineExhaust" method="DisableParticleEmitter"]
-[connection signal="PoweringForward" from="." to="PlayerEngineExhaust" method="ActivateParticleEmitter"]
+[node name="WeaponSpawn" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -32)
+
+[node name="KillSwitch" type="Node" parent="."]
+script = ExtResource("31_xt3y3")
+
+[connection signal="Died" from="Components/HealthComponent" to="KillSwitch" method="Died"]
+[connection signal="EngineFireState" from="Components/Engine" to="PlayerEngineExhaust" method="SetParticleEmitterState"]

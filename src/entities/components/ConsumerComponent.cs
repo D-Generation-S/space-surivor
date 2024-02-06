@@ -109,4 +109,13 @@ public partial class ConsumerComponent : Node
     {
         isActive = false;
     }
+
+    /// <summary>
+    /// Get the ticks per second
+    /// </summary>
+    /// <returns>The number of ticks in a second</returns>
+    protected int GetTicksPerSecond()
+    {
+        return ticksPerSecond;
+    }
 }

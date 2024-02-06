@@ -168,4 +168,29 @@ public partial class UserInterface : Control
     {
         flightMode.Text = playerFlightComputer.GetActiveComputerMode().GetDisplayName();
     }
+
+    /// <summary>
+    /// Show the interface
+    /// </summary>
+    public void ShowInterface()
+    {
+        ToggleInterface(true);
+    }
+
+    /// <summary>
+    /// Hide the interface
+    /// </summary>
+    public void HideInterface()
+    {
+        ToggleInterface(false);
+    }
+
+    /// <summary>
+    /// Toggle the visibility of this interface
+    /// </summary>
+    /// <param name="newState">The new interface state</param>
+    public void ToggleInterface(bool newState)
+    {
+        Visible = newState;
+    }
 }

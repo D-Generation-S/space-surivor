@@ -77,8 +77,6 @@ public partial class PowerPlantComponent : ConsumerComponent
             if (availablePower - consumerConsumption < 0)
             {
                 var powerPool = availablePower;
-                consumedEnergy += availablePower;
-                availablePower = 0;
                 var difference = consumerConsumption - powerPool;
                 if (currentBatteryCapacity < difference || maxBatteryUnload < difference)
                 {
@@ -91,6 +89,8 @@ public partial class PowerPlantComponent : ConsumerComponent
                     difference -= unloadedAmount;
                     difference = difference < 0? 0 : difference;
                 }
+                consumedEnergy += availablePower;
+                availablePower = 0;
                 consumer.Enable();
                 continue;
             }
@@ -98,17 +98,21 @@ public partial class PowerPlantComponent : ConsumerComponent
             consumer.Enable();
             availablePower -= consumerConsumption;
         }
-        consumedEnergy = consumedEnergy > powerPlantProduction ? powerPlantProduction : consumedEnergy;
-        float usedPercentage = (float)(consumedEnergy / (float)powerPlantProduction);
 
 
         if (availablePower > 0)
         {
             foreach (var battery in shipBatteries)
             {
-                availablePower -= battery.Load(availablePower);
+                var loadedEnergy = battery.Load(availablePower);
+                availablePower -= loadedEnergy;
+                consumedEnergy += loadedEnergy;
             }
         }
+
+        
+        consumedEnergy = consumedEnergy > powerPlantProduction ? powerPlantProduction : consumedEnergy;
+        float usedPercentage = (float)(consumedEnergy / (float)powerPlantProduction);
 
         EmitSignal(SignalName.UsedPlantPowerChanged, usedPercentage);
         EmitSignal(SignalName.BatteryCapacityChanged, currentBatteryCapacity);

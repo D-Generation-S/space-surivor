@@ -5,6 +5,9 @@ using Godot;
 /// </summary>
 public partial class EngineComponent : ConsumerComponent
 {
+    [Signal]
+    public delegate void EngineFireStateEventHandler(bool state);
+
     /// <summary>
     /// The engine configuration for this component
     /// </summary>
@@ -38,8 +41,10 @@ public partial class EngineComponent : ConsumerComponent
         if (!wasOn)
         {
             lastPowerConsumption = 0;
+            EmitSignal(SignalName.EngineFireState, false);
             return;
         }
+        EmitSignal(SignalName.EngineFireState, true);
         currentHeat += engineConfiguration.GetHeatConfiguration().GetHeatPerTick();
         lastPowerConsumption = engineConfiguration.GetConsumerConfiguration().GetConsumption();
         wasOn = false;

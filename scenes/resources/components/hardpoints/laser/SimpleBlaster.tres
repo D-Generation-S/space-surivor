@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LaserWeaponConfiguration" load_steps=4 format=3 uid="uid://q4vmjuybv14m"]
+
+[ext_resource type="AudioStream" uid="uid://cfgyknifuvi5" path="res://assets/sounds/Laser_Shoot.mp3" id="1_cpyfi"]
+[ext_resource type="PackedScene" uid="uid://4q07w1fxrq3n" path="res://scenes/entities/LaserProjectile.tscn" id="2_q7q42"]
+[ext_resource type="Script" path="res://src/resources/LaserWeaponConfiguration.cs" id="3_7qldx"]
+
+[resource]
+script = ExtResource("3_7qldx")
+laserWeaponScene = ExtResource("2_q7q42")
+weaponSpread = 0.05
+projectileSpeed = 550
+projectileDamage = 50
+idleHeat = 50
+heatByFire = 200
+consumptionIdle = 100
+consumptionFire = 50
+fireEffect = ExtResource("1_cpyfi")
+fireRateInTicks = 15
+name = "Simple Blaster"
+description = ""
+slotSize = 1
+componentSlot = 2

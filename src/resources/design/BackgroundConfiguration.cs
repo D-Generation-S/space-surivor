@@ -21,7 +21,7 @@ public partial class BackgroundConfiguration : Resource
     /// <summary>
     /// The maximum zoom scale for this background configuration
     /// </summary>
-    [Export(PropertyHint.Range, "5.0,20.0")]
+    [Export(PropertyHint.Range, "5.0,75.0")]
     private float maxZoomScale = 13;
 
     /// <summary>
@@ -39,7 +39,7 @@ public partial class BackgroundConfiguration : Resource
     /// <returns>The max zoom scale</returns>
     public float GetMaxZoomScale()
     {
-        return maxZoomScale <= minZoomScale ? minZoomScale + 1 : minZoomScale;
+        return maxZoomScale <= minZoomScale ? minZoomScale + 1 : maxZoomScale;
     }
 
     /// <summary>

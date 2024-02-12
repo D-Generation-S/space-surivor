@@ -56,12 +56,12 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
         {
             return direction;
         }
-        float targetTurnRate = Lerp(0, rotationMax, clamped) * direction;
+        float targetTurnRate = clamped.Lerp(0, rotationMax) * direction;
         float turnDifference = targetTurnRate - currentRotationVelocity;
 
         float percentage = Math.Clamp(Math.Abs(turnDifference / targetTurnRate), 0, 1);
         direction = turnDifference > 0 ? 1f : -1f;
-        return Lerp(0, 1, percentage) * direction;
+        return percentage.Lerp(0, 1) * direction;
     }
 
     /// <inheritdoc/>
@@ -93,18 +93,5 @@ public partial class FlyByWireCommandInterpret : FlightCommandInterpret
             commandedVelocity = new Vector2(newX, commandedVelocity.Y);
         }
         return base.InterpretBaseVelocity(commandedVelocity, currentVelocity, rotationVelocity, currentShipRotation);
-    }
-
-    /// <summary>
-    /// Method to lerp between two values
-    /// Note: This method should properly be moved to some math extension
-    /// </summary>
-    /// <param name="firstFloat">The first float value to lerp between</param>
-    /// <param name="secondFloat">The second float value to lerp between</param>
-    /// <param name="by">The value used for lerping, should be between 0 and 1</param>
-    /// <returns>The lerped value</returns>
-    float Lerp(float firstFloat, float secondFloat, float by)
-    {
-        return firstFloat * (1 - by) + secondFloat * by;
     }
 }

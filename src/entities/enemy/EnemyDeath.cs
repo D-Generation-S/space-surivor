@@ -3,6 +3,9 @@ using Godot;
 public partial class EnemyDeath : Node
 {
 	[Export]
+	private int pointsOnDeath;
+
+	[Export]
 	private PackedScene deathEffect;
 
 	public void Died()

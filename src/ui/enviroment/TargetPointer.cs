@@ -46,11 +46,7 @@ public partial class TargetPointer : Sprite2D
         distance = textRotator.GetChildren()
                               .OfType<Label>()
                               .FirstOrDefault();
-        player = GetTree().Root.GetChildren()
-                               .FirstOrDefault()
-                               .GetChildren()
-                               .OfType<EntityMovement>()
-                               .Where(node => node.IsInGroup("player"))
+        player = GetTree().Root.GetNodesInGroup<EntityMovement>("player", true)
                                .FirstOrDefault();
 
         player.TreeExiting += () => {

@@ -7,6 +7,12 @@ using Godot;
 public partial class BaseComponent : Resource
 {
     /// <summary>
+    /// Is this component useable by a player
+    /// </summary>
+    [Export]
+    private bool usableByPlayer = true;
+
+    /// <summary>
     /// The name of the component
     /// </summary>
     [Export]
@@ -35,6 +41,15 @@ public partial class BaseComponent : Resource
     /// </summary>
     [Export(PropertyHint.Enum, "Core, Internal, Hardpoint")]
     private int componentSlot;
+
+    /// <summary>
+    /// Is this component useable by a player
+    /// </summary>
+    /// <returns>True if can be used by a player</returns>
+    public bool IsUsableByPlayer()
+    {
+        return usableByPlayer;
+    }
 
     /// <summary>
     /// Get the name of this component

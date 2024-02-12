@@ -18,6 +18,13 @@ public partial class InputDependentControl : Control
     [Export]
     private Control[] controllerControls;
 
+    private SessionUserSettings globalSession;
+
+    public override void _Ready()
+    {
+        globalSession = GetTree().Root.GetNode<SessionUserSettings>("SessionUserSettings");
+    }
+
     public override void _Process(double delta)
     {
         if (!Visible)
@@ -25,7 +32,7 @@ public partial class InputDependentControl : Control
             return;
         }
         
-        SwitchControlVisibility(SessionUserSettings.Instance.InputDevice);
+        SwitchControlVisibility(globalSession.InputDevice);
         base._Process(delta);
     }
 

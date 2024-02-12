@@ -38,7 +38,7 @@ public static class NodeExtensions
         var nodesOnRootNode = rootNode.GetChildren().Where(childNode => childNode.IsInGroup(groupName)).ToList();
         if (recursive)
         {
-            foreach (var childNode in nodesOnRootNode)
+            foreach (var childNode in rootNode.GetChildren())
             {
                 nodesOnRootNode.AddRange(childNode.GetNodesInGroup<T>(groupName, recursive));
             }

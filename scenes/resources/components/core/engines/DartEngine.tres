@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EngineConfiguration" load_steps=6 format=3 uid="uid://bfk16j0rfsqvb"]
+
+[ext_resource type="Script" path="res://src/resources/ConsumerConfiguration.cs" id="1_cwfuv"]
+[ext_resource type="Script" path="res://src/resources/HeatConfiguration.cs" id="2_1xcff"]
+[ext_resource type="Script" path="res://src/resources/EngineConfiguration.cs" id="3_v40a3"]
+
+[sub_resource type="Resource" id="Resource_7b20o"]
+script = ExtResource("1_cwfuv")
+consumption = 300
+priority = 2
+
+[sub_resource type="Resource" id="Resource_6cb8s"]
+script = ExtResource("2_1xcff")
+heatPerTick = 200
+
+[resource]
+script = ExtResource("3_v40a3")
+engineAcceleration = Vector2(15, 10)
+engineRotation = 0.3
+consumerConfiguration = SubResource("Resource_7b20o")
+heatConfiguration = SubResource("Resource_6cb8s")
+usableByPlayer = false
+name = "Dart Engine"
+description = ""
+slotSize = 1
+componentSlot = 0

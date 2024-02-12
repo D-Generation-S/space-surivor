@@ -1,20 +1,12 @@
+using Godot;
+
+
 /// <summary>
 /// Singelton class to hold the user settings for the current session
 /// This contains information like the used input device
 /// </summary>
-public class SessionUserSettings
+public partial class SessionUserSettings : Node
 {
-
-    /// <summary>
-    /// The private singelton instance of this class
-    /// </summary>
-    private static SessionUserSettings instance;
-
-    /// <summary>
-    /// Get the singelton instance
-    /// </summary>
-    public static SessionUserSettings Instance => instance ?? (instance = new SessionUserSettings());
-
     /// <summary>
     /// The currently used input device
     /// </summary>

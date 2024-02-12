@@ -111,9 +111,10 @@ public partial class EntityMovement : CharacterBody2D
         rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
         Rotate(rotationVelocity);
 
-        if (MoveAndSlide())
+        var collision = MoveAndCollide(Velocity * (float)delta);
+        if (collision is not null)
         {
-            EmitSignal(SignalName.EntityDidCollide, this);
+            EmitSignal(SignalName.EntityDidCollide, collision.GetCollider() as EntityMovement);
         }
         if (Math.Abs(rotationVelocity) > maxRotationVelocity)
         {

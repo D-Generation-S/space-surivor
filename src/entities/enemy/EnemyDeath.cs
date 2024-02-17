@@ -6,10 +6,10 @@ using Godot;
 public partial class EnemyDeath : Node
 {
 	/// <summary>
-	/// The exp given to the player if this enemy dies
+	/// The ai data of this enemy
 	/// </summary>
 	[Export]
-	private int expOnDeath;
+	private AiData aiData;
 
 	/// <summary>
 	/// The effect to play if this enemy dies

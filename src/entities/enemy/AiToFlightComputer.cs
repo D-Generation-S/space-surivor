@@ -2,19 +2,22 @@ using System;
 using Godot;
 
 
+/// <summary>
+/// Class to translate ai behavior to the flight computer
+/// </summary>
 public partial class AiToFlightComputer : Node
 {	
-	[Export]
-	private EngineComponent engineComponent;
-
+	/// <summary>
+	/// The flight computer of this ai entity
+	/// </summary>
 	[Export]
 	private FlightComputer flightComputer;
 
+	/// <summary>
+	/// The entity controlled by this bridge
+	/// </summary>
 	[Export]
 	private EntityMovement entityMovement;
-
-	[Export(PropertyHint.Range, "-360, 360")]
-	private float RotationFixInDegree = 0;
 
 	/// <summary>
     /// The allowed difference between target and real rotation, this prevents some osculation

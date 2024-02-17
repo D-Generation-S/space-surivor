@@ -1,24 +1,25 @@
-[gd_scene load_steps=25 format=3 uid="uid://cx5j7rsgk2e3"]
+[gd_scene load_steps=26 format=3 uid="uid://cx5j7rsgk2e3"]
 
-[ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="1_eoold"]
-[ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_m8c4j"]
-[ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="2_e6505"]
-[ext_resource type="Script" path="res://src/entities/enemy/AiToFlightComputer.cs" id="2_fib18"]
-[ext_resource type="Script" path="res://src/stateMachine/StateMachine.cs" id="2_q72qp"]
-[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/ChaseState.cs" id="3_anlua"]
-[ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="3_j8i2e"]
-[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/IdleState.cs" id="4_3j278"]
-[ext_resource type="Script" path="res://src/entities/components/EngineComponent.cs" id="4_8mpvw"]
-[ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="5_hn22u"]
-[ext_resource type="Resource" uid="uid://bfk16j0rfsqvb" path="res://scenes/resources/components/core/engines/DartEngine.tres" id="6_a2lvr"]
-[ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="6_b2utn"]
-[ext_resource type="Texture2D" uid="uid://dhsegknjvyvyb" path="res://assets/sprites/ship_B.png" id="7_w3ceh"]
-[ext_resource type="Texture2D" uid="uid://dnljx0inb6uw7" path="res://assets/sprites/star_tiny.png" id="8_lta47"]
-[ext_resource type="Resource" uid="uid://cvsh2smy5wfjo" path="res://scenes/resources/components/core/powerPlant/CheatPlant.tres" id="8_vnpqf"]
-[ext_resource type="Resource" uid="uid://cf3ar5xryltqc" path="res://scenes/resources/components/core/coolingUnit/CheatCooling.tres" id="10_164y0"]
-[ext_resource type="Script" path="res://src/entities/enemy/CollisionDamage.cs" id="16_kfi7c"]
-[ext_resource type="Script" path="res://src/control/ChangeParticleStatus.cs" id="17_d1ebg"]
-[ext_resource type="Script" path="res://src/entities/enemy/EnemyDeath.cs" id="18_6077k"]
+[ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_ef3df"]
+[ext_resource type="Script" path="res://src/entities/enemy/AiToFlightComputer.cs" id="2_nfus2"]
+[ext_resource type="Script" path="res://src/entities/enemy/AiData.cs" id="3_n26dv"]
+[ext_resource type="Script" path="res://src/stateMachine/StateMachine.cs" id="4_ieacm"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/ChaseState.cs" id="5_ug5yl"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/IdleState.cs" id="6_r2nnj"]
+[ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="7_xrff5"]
+[ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="8_ek513"]
+[ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="9_boq3s"]
+[ext_resource type="Script" path="res://src/entities/components/EngineComponent.cs" id="10_f2n72"]
+[ext_resource type="Resource" uid="uid://bfk16j0rfsqvb" path="res://scenes/resources/components/core/engines/DartEngine.tres" id="11_2katy"]
+[ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="12_o76m5"]
+[ext_resource type="Resource" uid="uid://cvsh2smy5wfjo" path="res://scenes/resources/components/core/powerPlant/CheatPlant.tres" id="13_kt4ua"]
+[ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="14_sxrw2"]
+[ext_resource type="Resource" uid="uid://cf3ar5xryltqc" path="res://scenes/resources/components/core/coolingUnit/CheatCooling.tres" id="15_5fdsv"]
+[ext_resource type="Texture2D" uid="uid://dhsegknjvyvyb" path="res://assets/sprites/ship_B.png" id="16_2gknp"]
+[ext_resource type="Script" path="res://src/entities/enemy/CollisionDamage.cs" id="17_fxlvg"]
+[ext_resource type="Texture2D" uid="uid://dnljx0inb6uw7" path="res://assets/sprites/star_tiny.png" id="18_m5nlq"]
+[ext_resource type="Script" path="res://src/control/ChangeParticleStatus.cs" id="19_lh4s5"]
+[ext_resource type="Script" path="res://src/entities/enemy/EnemyDeath.cs" id="20_ynmhk"]
 
 [sub_resource type="Gradient" id="Gradient_vtrax"]
 colors = PackedColorArray(0.964706, 0.952941, 0.933333, 1, 1, 0.729412, 0, 1)
@@ -47,60 +48,63 @@ color_ramp = SubResource("GradientTexture1D_frqve")
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 2
 motion_mode = 1
-script = ExtResource("1_m8c4j")
+script = ExtResource("1_ef3df")
 maxForward = 8.0
 maxStrafe = 6.0
 
 [node name="AiToFlightComputer" type="Node" parent="." node_paths=PackedStringArray("engineComponent", "flightComputer", "entityMovement")]
-script = ExtResource("2_fib18")
+script = ExtResource("2_nfus2")
 engineComponent = NodePath("../Components/EngineComponent")
 flightComputer = NodePath("../Components/FlightComputer")
 entityMovement = NodePath("..")
 RotationFixInDegree = 90.0
 
+[node name="AiData" type="Node" parent="."]
+script = ExtResource("3_n26dv")
+
 [node name="AiNode" type="Node" parent="." node_paths=PackedStringArray("initialState")]
-script = ExtResource("2_q72qp")
+script = ExtResource("4_ieacm")
 initialState = NodePath("Idle")
 
 [node name="Chase" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer")]
-script = ExtResource("3_anlua")
+script = ExtResource("5_ug5yl")
 aiToFlightComputer = NodePath("../../AiToFlightComputer")
 
 [node name="Idle" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer")]
-script = ExtResource("4_3j278")
+script = ExtResource("6_r2nnj")
 aiToFlightComputer = NodePath("../../AiToFlightComputer")
 
 [node name="Components" type="Node" parent="."]
 unique_name_in_owner = true
 
 [node name="HealthComponent" type="Node" parent="Components"]
-script = ExtResource("1_eoold")
+script = ExtResource("7_xrff5")
 maxHealth = 75
 
 [node name="FlightComputer" type="Node" parent="Components"]
-script = ExtResource("2_e6505")
+script = ExtResource("8_ek513")
 
 [node name="FlyByWireMode" type="Node" parent="Components/FlightComputer"]
-script = ExtResource("3_j8i2e")
+script = ExtResource("9_boq3s")
 
 [node name="EngineComponent" type="Node" parent="Components"]
-script = ExtResource("4_8mpvw")
-engineConfiguration = ExtResource("6_a2lvr")
+script = ExtResource("10_f2n72")
+engineConfiguration = ExtResource("11_2katy")
 
 [node name="PowerPlantComponent" type="Node" parent="Components"]
-script = ExtResource("5_hn22u")
-plantConfiguration = ExtResource("8_vnpqf")
+script = ExtResource("12_o76m5")
+plantConfiguration = ExtResource("13_kt4ua")
 
 [node name="CoolingUnit" type="Node" parent="Components"]
-script = ExtResource("6_b2utn")
-coolingUnitConfiguration = ExtResource("10_164y0")
+script = ExtResource("14_sxrw2")
+coolingUnitConfiguration = ExtResource("15_5fdsv")
 
 [node name="Visuals" type="Sprite2D" parent="."]
-texture = ExtResource("7_w3ceh")
+texture = ExtResource("16_2gknp")
 
 [node name="Collision" type="CollisionPolygon2D" parent="." node_paths=PackedStringArray("healthComponent")]
 polygon = PackedVector2Array(0, -16, 8, 8, -8, 8)
-script = ExtResource("16_kfi7c")
+script = ExtResource("17_fxlvg")
 baseCollisionDamage = 5
 selfCollideDamage = 50000
 healthComponent = NodePath("../Components/HealthComponent")
@@ -111,11 +115,11 @@ position = Vector2(0, 15)
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_8prn0")
-texture = ExtResource("8_lta47")
-script = ExtResource("17_d1ebg")
+texture = ExtResource("18_m5nlq")
+script = ExtResource("19_lh4s5")
 
 [node name="KillSwitch" type="Node" parent="."]
-script = ExtResource("18_6077k")
+script = ExtResource("20_ynmhk")
 
 [connection signal="EntityDidCollide" from="." to="Collision" method="HitCharacter"]
 [connection signal="Died" from="Components/HealthComponent" to="KillSwitch" method="Died"]

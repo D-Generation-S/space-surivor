@@ -18,6 +18,9 @@ public partial class InputDependentControl : Control
     [Export]
     private Control[] controllerControls;
 
+    /// <summary>
+    /// The global user sessoin settings
+    /// </summary>
     private SessionUserSettings globalSession;
 
     public override void _Ready()

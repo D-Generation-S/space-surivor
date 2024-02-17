@@ -52,15 +52,14 @@ script = ExtResource("1_ef3df")
 maxForward = 8.0
 maxStrafe = 6.0
 
-[node name="AiToFlightComputer" type="Node" parent="." node_paths=PackedStringArray("engineComponent", "flightComputer", "entityMovement")]
+[node name="AiToFlightComputer" type="Node" parent="." node_paths=PackedStringArray("flightComputer", "entityMovement")]
 script = ExtResource("2_nfus2")
-engineComponent = NodePath("../Components/EngineComponent")
 flightComputer = NodePath("../Components/FlightComputer")
 entityMovement = NodePath("..")
-RotationFixInDegree = 90.0
 
 [node name="AiData" type="Node" parent="."]
 script = ExtResource("3_n26dv")
+expOnDeath = 5
 
 [node name="AiNode" type="Node" parent="." node_paths=PackedStringArray("initialState")]
 script = ExtResource("4_ieacm")
@@ -106,7 +105,7 @@ texture = ExtResource("16_2gknp")
 polygon = PackedVector2Array(0, -16, 8, 8, -8, 8)
 script = ExtResource("17_fxlvg")
 baseCollisionDamage = 5
-selfCollideDamage = 50000
+damageToTakeOnCollision = 5000
 healthComponent = NodePath("../Components/HealthComponent")
 
 [node name="EngineExhaust" type="GPUParticles2D" parent="."]
@@ -118,8 +117,9 @@ process_material = SubResource("ParticleProcessMaterial_8prn0")
 texture = ExtResource("18_m5nlq")
 script = ExtResource("19_lh4s5")
 
-[node name="KillSwitch" type="Node" parent="."]
+[node name="KillSwitch" type="Node" parent="." node_paths=PackedStringArray("aiData")]
 script = ExtResource("20_ynmhk")
+aiData = NodePath("../AiData")
 
 [connection signal="EntityDidCollide" from="." to="Collision" method="HitCharacter"]
 [connection signal="Died" from="Components/HealthComponent" to="KillSwitch" method="Died"]

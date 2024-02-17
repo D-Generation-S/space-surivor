@@ -1,15 +1,26 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+/// <summary>
+/// Class for a state machine, using the state object
+/// </summary>
 public partial class StateMachine : Node
 {
+    /// <summary>
+    /// The initial state this machine is using
+    /// </summary>
     [Export]
     private State initialState;
 
+    /// <summary>
+    /// All states stored in this machine, where the key is the state name
+    /// </summary>
     private Dictionary<string, State> states;
 
+    /// <summary>
+    /// The currently active state for this machine
+    /// </summary>
     private State currentState;
 
     public override void _Ready()
@@ -30,6 +41,11 @@ public partial class StateMachine : Node
 
     }
 
+    /// <summary>
+    /// If a transition was made, this will change the state if needed
+    /// </summary>
+    /// <param name="caller">The state which called for the transition</param>
+    /// <param name="newStateName">The new state to change to</param>
     private void OnStateTransitioned(State caller, string newStateName)
     {
         newStateName = newStateName.ToLower();

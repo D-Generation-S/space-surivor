@@ -2,7 +2,7 @@ using Godot;
 
 
 /// <summary>
-/// Singelton class to hold the user settings for the current session
+/// Global godot autoload class to hold the user settings for the current session
 /// This contains information like the used input device
 /// </summary>
 public partial class SessionUserSettings : Node

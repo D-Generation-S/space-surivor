@@ -72,7 +72,7 @@ public partial class EngineComponent : ConsumerComponent
         return lastPowerConsumption;
     }
 
-/// <inheritdoc/>
+    /// <inheritdoc/>
     public override int GetPriority()
     {
         return engineConfiguration.GetConsumerConfiguration().GetPriority();

@@ -1,12 +1,15 @@
-using Godot;
-
+/// <summary>
+/// Ai behavior to hunt down the player and try to collide with him
+/// </summary>
 public partial class ChaseState : AiBehaviorState
 {
+    /// <inheritdoc />
     public override void Enter()
     {
  
     }
-
+    
+    /// <inheritdoc />
     public override void Update(double delta)
     {
         var player = GetPlayer();

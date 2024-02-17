@@ -13,6 +13,7 @@ maxBatteryCapacity = 2000
 heatConfigurationIfLoading = SubResource("Resource_0t3gw")
 maxLoadAmount = 50
 maxUnloadAmount = 50
+usableByPlayer = true
 name = "Small Nuclear Battery"
 description = ""
 slotSize = 1

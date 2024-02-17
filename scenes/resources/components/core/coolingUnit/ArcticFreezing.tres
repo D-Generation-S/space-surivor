@@ -13,6 +13,7 @@ script = ExtResource("1_esk8t")
 consumerConfiguration = SubResource("Resource_4opmn")
 heatAbsorptionPerTick = 200
 heatCapacity = 5000
+usableByPlayer = true
 name = "Arctig freezing"
 description = ""
 slotSize = 1

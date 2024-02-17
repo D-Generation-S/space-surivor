@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=28 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -18,7 +18,6 @@
 [ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
 [ext_resource type="Script" path="res://src/ui/overlay/CheckForPlayer.cs" id="15_kfttb"]
 [ext_resource type="PackedScene" uid="uid://dn36o12p8t34c" path="res://scenes/entities/shotable_target.tscn" id="18_8kmv6"]
-[ext_resource type="PackedScene" uid="uid://cx5j7rsgk2e3" path="res://scenes/entities/DartEnemy.tscn" id="19_570ya"]
 [ext_resource type="Script" path="res://src/entities/target/MultiTarget.cs" id="20_1vspa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqy8u"]
@@ -65,6 +64,7 @@ script = ExtResource("1_hj8tq")
 screenshotConfiguration = ExtResource("2_ycvoj")
 
 [node name="Background" type="Sprite2D" parent="." node_paths=PackedStringArray("bindTarget")]
+visible = false
 material = SubResource("ShaderMaterial_xqy8u")
 scale = Vector2(1920, 1920)
 texture = SubResource("CanvasTexture_bum7s")
@@ -328,15 +328,6 @@ position = Vector2(1904, -144)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vsba0")
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("19_570ya")]
-position = Vector2(-784, 1056)
-
-[node name="CharacterBody2D2" parent="." instance=ExtResource("19_570ya")]
-position = Vector2(-768, 464)
-
-[node name="CharacterBody2D3" parent="." instance=ExtResource("19_570ya")]
-position = Vector2(560, 504)
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
 [connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]

@@ -138,6 +138,7 @@ material = ExtResource("1_1ckmu")
 texture = ExtResource("1_5ux5h")
 
 [node name="PlayerCollision" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(0, -15, 23, 8, 16, 16, 0, 7, -16, 15, -22, 8)
 
 [node name="PlayerEngineExhaust" type="GPUParticles2D" parent="."]

@@ -22,7 +22,7 @@ public partial class GetFocus : Button
         if (getFocusIfVisible)
         {
             VisibilityChanged += () => {
-                if (Visible)
+                if (IsVisibleInTree())
                 {
                     GetFocusNow();
                 }

@@ -7,6 +7,12 @@ using Godot;
 public partial class DisplayHelpScript : Control
 {
     /// <summary>
+    /// Signal if the last help entry was reached
+    /// </summary>
+    [Signal]
+    public delegate void LastEntryReachedEventHandler();
+
+    /// <summary>
     /// All the help screens available
     /// </summary>
     [Export]
@@ -64,6 +70,7 @@ public partial class DisplayHelpScript : Control
     public void CloseHelpPanels()
     {
         helpScenes[currentlyShownWindow].HidingPanel();
+        EmitSignal(SignalName.LastEntryReached);
         index = -1;
     }
 }

@@ -30,7 +30,7 @@ _data = {
 "MoveForward": SubResource("Animation_xwskf")
 }
 
-[node name="Control" type="Control" node_paths=PackedStringArray("animationPlayer")]
+[node name="Control" type="Control" node_paths=PackedStringArray("preSelectedButton", "animationPlayer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +44,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_efc26")
 script = ExtResource("2_jvnvi")
+preSelectedButton = NodePath("Panel/VBoxContainer/HBoxContainer/Next")
 animationPlayer = NodePath("Panel/VBoxContainer/MarginContainer/AnimationControl/Animation/Sprite2D/AnimationPlayer")
 
 [node name="Panel" type="Panel" parent="."]

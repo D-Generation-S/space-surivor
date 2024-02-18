@@ -6,6 +6,12 @@ using Godot;
 public partial class ShowOrHideNode : Control
 {
     /// <summary>
+    /// The button to focus on if control is shown again
+    /// </summary>
+    [Export]
+    private Button focusButton;
+
+    /// <summary>
     /// The initial state of the node
     /// </summary>
     [Export]
@@ -23,8 +29,7 @@ public partial class ShowOrHideNode : Control
     public void ShowControl()
     {
         SetDeferred("visible", true);
-        GetParent<Control>().SetDeferred("mouse_filter", 0);		
-        
+        GetParent<Control>().SetDeferred("mouse_filter", 0);
     }
 
     /// <summary>

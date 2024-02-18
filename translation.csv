@@ -5,6 +5,8 @@ BUTTON_REPLAY_ANIMATION;Replay animation;Animation erneut abspielen
 BUTTON_PREVIOUS;Previous;Vorheriges
 BUTTON_HELP;Help;Hilfe
 BUTTON_CLOSE;Close;Schließen
+BUTTON_MENU;Menu;Menü
+BUTTON_CLOSE_MENU;Close Menu;Menü Schließen
 HELP_ACCELERATE_HEADLINE;Accelerate the ship;Das Schiff beschleunigen
 HELP_ACCELERATE_KEY;to accelerate;um zu beschleunigen
 HELP_DECELERATE_HEADLINE;Decelerate the ship;Das Schiff abbremsen

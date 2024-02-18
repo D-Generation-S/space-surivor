@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://36325f71xlcy"]
+
+[ext_resource type="Script" path="res://src/ui/overlay/PauseMenu.cs" id="1_dd5m1"]
+[ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="1_ka552"]
+[ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="2_jw0h0"]
+[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="2_wgwrt"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_dd5m1")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.5
+offset_top = -43.0
+offset_right = 119.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HelpScreen" parent="PanelContainer/MarginContainer" instance=ExtResource("1_ka552")]
+layout_mode = 2
+
+[node name="Menu" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Help" type="Button" parent="PanelContainer/MarginContainer/Menu"]
+layout_mode = 2
+text = "BUTTON_HELP"
+script = ExtResource("2_wgwrt")
+getFocusIfVisible = true
+
+[node name="CloseMenu" type="Button" parent="PanelContainer/MarginContainer/Menu"]
+layout_mode = 2
+text = "BUTTON_CLOSE_MENU"
+
+[node name="Close" type="Button" parent="PanelContainer/MarginContainer/Menu"]
+layout_mode = 2
+text = "BUTTON_CLOSE"
+script = ExtResource("2_jw0h0")
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/Menu/Help" to="PanelContainer/MarginContainer/HelpScreen" method="NextHelpText"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/Menu/CloseMenu" to="." method="HideMenu"]

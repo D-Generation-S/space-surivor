@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=26 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -11,11 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://ch0m7yj50l7tm" path="res://scenes/entities/target.tscn" id="4_pmjjq"]
 [ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="4_q4agf"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="5_b4j62"]
-[ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="6_3radj"]
 [ext_resource type="Texture2D" uid="uid://bj2s4odke61un" path="res://assets/sprites/input/keyboard/keyboard_f1_outline.png" id="7_h7bbt"]
 [ext_resource type="Theme" uid="uid://cnonbbd6mtrf4" path="res://assets/ui/UiTheme.tres" id="7_mqv5f"]
 [ext_resource type="Texture2D" uid="uid://dktoxp5en5bhn" path="res://assets/sprites/input/Controller/xbox_button_view_outline.png" id="8_uwlun"]
 [ext_resource type="Script" path="res://src/ui/overlay/InputDeviceControlledControl.cs" id="9_yadgb"]
+[ext_resource type="PackedScene" uid="uid://36325f71xlcy" path="res://scenes/ui/PauseMenu.tscn" id="15_51xcc"]
 [ext_resource type="Script" path="res://src/ui/overlay/CheckForPlayer.cs" id="15_kfttb"]
 [ext_resource type="PackedScene" uid="uid://dn36o12p8t34c" path="res://scenes/entities/shotable_target.tscn" id="18_8kmv6"]
 [ext_resource type="Script" path="res://src/entities/target/MultiTarget.cs" id="20_1vspa"]
@@ -36,13 +36,6 @@ shader_parameter/prob = 0.98
 shader_parameter/seed = 500.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_bum7s"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_ubee6"]
-device = -1
-keycode = 4194332
-
-[sub_resource type="Shortcut" id="Shortcut_vua6o"]
-events = [SubResource("InputEventKey_ubee6")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8pv6x"]
 device = -1
@@ -79,63 +72,39 @@ script = ExtResource("9_yadgb")
 [node name="Player" parent="." instance=ExtResource("1_i8hdf")]
 position = Vector2(80, 832)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UserInterface" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("nodes")]
-anchors_preset = 15
+[node name="MenuButton" type="Button" parent="UserInterface"]
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("2_vdu3p")
-nodes = [NodePath("Expander2"), NodePath("Expander3"), NodePath("Expander4"), NodePath("Expander"), NodePath("Panel")]
-
-[node name="UserInterface" parent="CanvasLayer/VBoxContainer" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
-layout_mode = 2
-player = NodePath("../../../Player")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Help" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme = ExtResource("7_mqv5f")
-shortcut = SubResource("Shortcut_vua6o")
-text = "BUTTON_HELP"
-
-[node name="Close" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
+offset_left = -159.0
+offset_bottom = 26.0
+grow_horizontal = 0
 theme = ExtResource("7_mqv5f")
 shortcut = SubResource("Shortcut_3u1nn")
-text = "BUTTON_CLOSE"
-script = ExtResource("5_b4j62")
+text = "BUTTON_MENU"
 
-[node name="Expander2" type="Control" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
+[node name="Panel" type="Panel" parent="UserInterface" node_paths=PackedStringArray("nodes")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -212.0
+offset_right = 960.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 3
+script = ExtResource("2_vdu3p")
+nodes = [NodePath(".")]
 
-[node name="Expander3" type="Control" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Expander4" type="Control" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Expander" type="Control" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Timer" type="Timer" parent="CanvasLayer/VBoxContainer/Panel"]
+[node name="Timer" type="Timer" parent="UserInterface/Panel"]
 wait_time = 10.0
 autostart = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,31 +112,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="UserInterface/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
 text = "INTRO_TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="StartDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+[node name="StartDescription" type="Label" parent="UserInterface/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
 text = "DEFAULT_PRESS"
 
-[node name="Keyboard" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+[node name="Keyboard" type="TextureRect" parent="UserInterface/Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("7_h7bbt")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Controller" type="TextureRect" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+[node name="Controller" type="TextureRect" parent="UserInterface/Panel/VBoxContainer/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -175,12 +144,21 @@ texture = ExtResource("8_uwlun")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndDescription" type="Label" parent="CanvasLayer/VBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+[node name="EndDescription" type="Label" parent="UserInterface/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
 text = "HELP_ADDITIONAL"
 
-[node name="FinishBox" type="Control" parent="CanvasLayer"]
+[node name="UserInterface" parent="UserInterface" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1920.0
+grow_horizontal = 1
+grow_vertical = 1
+player = NodePath("../../Player")
+
+[node name="FinishBox" type="Control" parent="UserInterface"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,7 +168,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Complete Panel" type="Panel" parent="CanvasLayer/FinishBox"]
+[node name="Complete Panel" type="Panel" parent="UserInterface/FinishBox"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -205,7 +183,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_q4agf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/FinishBox/Complete Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,7 +191,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="UserInterface/FinishBox/Complete Panel/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
@@ -221,11 +199,11 @@ text = "DEMO_FINISHED"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/FinishBox/Complete Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Close" type="Button" parent="CanvasLayer/FinishBox/Complete Panel/VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="UserInterface/FinishBox/Complete Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -234,7 +212,7 @@ text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 getFocusIfVisible = true
 
-[node name="DeadBox" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+[node name="DeadBox" type="Control" parent="UserInterface" node_paths=PackedStringArray("player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -246,7 +224,7 @@ size_flags_vertical = 3
 script = ExtResource("15_kfttb")
 player = NodePath("../../Player")
 
-[node name="Complete Panel" type="Panel" parent="CanvasLayer/DeadBox"]
+[node name="Complete Panel" type="Panel" parent="UserInterface/DeadBox"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -261,7 +239,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_q4agf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DeadBox/Complete Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -269,7 +247,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="UserInterface/DeadBox/Complete Panel/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("7_mqv5f")
@@ -277,11 +255,11 @@ text = "DEMO_FINISHED_DIED"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/DeadBox/Complete Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Close" type="Button" parent="CanvasLayer/DeadBox/Complete Panel/VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="UserInterface/DeadBox/Complete Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -290,7 +268,8 @@ text = "BUTTON_CLOSE"
 script = ExtResource("5_b4j62")
 getFocusIfVisible = true
 
-[node name="HelpScreen" parent="CanvasLayer" instance=ExtResource("6_3radj")]
+[node name="PauseMenu" parent="." instance=ExtResource("15_51xcc")]
+visible = false
 
 [node name="Targets" type="Node" parent="."]
 
@@ -329,16 +308,16 @@ position = Vector2(1904, -144)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vsba0")
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Help" to="CanvasLayer/HelpScreen" method="NextHelpText"]
-[connection signal="timeout" from="CanvasLayer/VBoxContainer/Panel/Timer" to="CanvasLayer/VBoxContainer" method="CloseUi"]
-[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/VBoxContainer/UserInterface" method="HideInterface"]
-[connection signal="PlayerIsGone" from="CanvasLayer/DeadBox" to="CanvasLayer/DeadBox/Complete Panel" method="ShowControl"]
+[connection signal="pressed" from="UserInterface/MenuButton" to="PauseMenu" method="ShowMenu"]
+[connection signal="timeout" from="UserInterface/Panel/Timer" to="UserInterface/Panel" method="CloseUi"]
+[connection signal="PlayerIsGone" from="UserInterface/DeadBox" to="UserInterface/UserInterface" method="HideInterface"]
+[connection signal="PlayerIsGone" from="UserInterface/DeadBox" to="UserInterface/DeadBox/Complete Panel" method="ShowControl"]
 [connection signal="TargetCompleted" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
 [connection signal="TargetCompleted" from="Targets/SeventhTarget" to="Targets/MultipleTargets" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="CanvasLayer/FinishBox/Complete Panel" method="ShowControl"]
+[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="UserInterface/FinishBox/Complete Panel" method="ShowControl"]
 [connection signal="TargetCompleted" from="Targets/FirstShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
 [connection signal="TargetCompleted" from="Targets/SecondShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
 [connection signal="TargetCompleted" from="Targets/ThirdShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]

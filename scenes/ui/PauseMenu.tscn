@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://src/ui/overlay/PauseMenu.cs" id="1_dd5m1"]
 [ext_resource type="PackedScene" uid="uid://bkyopd6of3531" path="res://scenes/ui/HelpScreen.tscn" id="1_ka552"]
 [ext_resource type="Script" path="res://src/ui/closing/CloseGame.cs" id="2_jw0h0"]
-[ext_resource type="Script" path="res://src/ui/button/GetFocus.cs" id="2_wgwrt"]
+[ext_resource type="Script" path="res://src/ui/animation/ShowOrHideNode.cs" id="3_0cyhe"]
 
-[node name="PauseMenu" type="CanvasLayer"]
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("focusButton")]
 process_mode = 3
 script = ExtResource("1_dd5m1")
+focusButton = NodePath("PanelContainer/MarginContainer/Menu/Help")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 8
@@ -32,23 +33,30 @@ theme_override_constants/margin_bottom = 20
 [node name="HelpScreen" parent="PanelContainer/MarginContainer" instance=ExtResource("1_ka552")]
 layout_mode = 2
 
-[node name="Menu" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="Menu" type="VBoxContainer" parent="PanelContainer/MarginContainer" node_paths=PackedStringArray("focusButton")]
 layout_mode = 2
+script = ExtResource("3_0cyhe")
+focusButton = NodePath("Help")
+initialState = true
 
 [node name="Help" type="Button" parent="PanelContainer/MarginContainer/Menu"]
 layout_mode = 2
 text = "BUTTON_HELP"
-script = ExtResource("2_wgwrt")
-getFocusIfVisible = true
 
 [node name="CloseMenu" type="Button" parent="PanelContainer/MarginContainer/Menu"]
 layout_mode = 2
 text = "BUTTON_CLOSE_MENU"
 
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/Menu"]
+layout_mode = 2
+
 [node name="Close" type="Button" parent="PanelContainer/MarginContainer/Menu"]
 layout_mode = 2
-text = "BUTTON_CLOSE"
+text = "BUTTON_CLOSE_GAME"
 script = ExtResource("2_jw0h0")
 
+[connection signal="LastEntryReached" from="PanelContainer/MarginContainer/HelpScreen" to="." method="ShowMenu"]
+[connection signal="LastEntryReached" from="PanelContainer/MarginContainer/HelpScreen" to="PanelContainer/MarginContainer/Menu" method="ShowControl"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/Menu/Help" to="PanelContainer/MarginContainer/HelpScreen" method="NextHelpText"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/Menu/Help" to="PanelContainer/MarginContainer/Menu" method="HideControl"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/Menu/CloseMenu" to="." method="HideMenu"]

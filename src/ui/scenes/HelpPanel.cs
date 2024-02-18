@@ -25,6 +25,12 @@ public partial class HelpPanel : Control
     public delegate void CloseEventHandler();
 
     /// <summary>
+    /// The button which should grab the initial focus
+    /// </summary>
+    [Export]
+    private Button preSelectedButton;
+
+    /// <summary>
     /// The animation player of the help panel
     /// </summary>
     [Export]
@@ -60,6 +66,10 @@ public partial class HelpPanel : Control
     public void ShowingPanel()
     {
         SetDeferred("visible", true);
+        if (preSelectedButton is not null)
+        {
+            preSelectedButton.GrabFocus();
+        }
         animationPlayer?.ReplayAnimation();
     }
 

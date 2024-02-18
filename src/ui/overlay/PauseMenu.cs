@@ -5,6 +5,9 @@ using Godot;
 /// </summary>
 public partial class PauseMenu : CanvasLayer
 {
+	[Export]
+	private Button focusButton;
+
 	/// <summary>
 	/// Method to display the pause menu
 	/// </summary>
@@ -12,6 +15,10 @@ public partial class PauseMenu : CanvasLayer
 	{
 		Visible = true;
 		GetTree().Paused = true;
+		if (focusButton is not null)
+		{
+			focusButton.GrabFocus();
+		}
 	}
 
 	/// <summary>

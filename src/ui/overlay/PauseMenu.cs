@@ -5,6 +5,9 @@ using Godot;
 /// </summary>
 public partial class PauseMenu : CanvasLayer
 {
+	/// <summary>
+	/// The button to focus on if control is shown again
+	/// </summary>
 	[Export]
 	private Button focusButton;
 

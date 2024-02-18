@@ -6,6 +6,9 @@ using Godot;
 /// </summary>
 public partial class DisplayHelpScript : Control
 {
+    /// <summary>
+    /// Signal if the last help entry was reached
+    /// </summary>
     [Signal]
     public delegate void LastEntryReachedEventHandler();
 

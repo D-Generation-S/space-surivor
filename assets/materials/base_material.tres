@@ -5,3 +5,4 @@
 [resource]
 shader = ExtResource("1_mx14d")
 shader_parameter/BaseColor = Color(1, 1, 1, 1)
+shader_parameter/Mix_Weight = Vector3(0.25, 0.25, 0.25)

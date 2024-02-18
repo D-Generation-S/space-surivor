@@ -14,6 +14,7 @@ size = Vector2(32, 32)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4nbgf"]
 shader = ExtResource("2_grjra")
 shader_parameter/BaseColor = Color(1, 0, 0, 1)
+shader_parameter/Mix_Weight = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="Animation" id="Animation_r6ytc"]
 resource_name = "Pulse"

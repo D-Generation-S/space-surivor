@@ -107,13 +107,14 @@ public partial class EntityMovement : CharacterBody2D
             return;
         }
         Velocity += GetVelocityInput();
-        rotationVelocity += rotationInput * DegreeToRad(engine.GetRotationSpeed());
+        rotationVelocity += rotationInput * engine.GetRotationSpeed().DegreeToRadians();
         rotationVelocity = Math.Abs(rotationVelocity) < cancelRotationBelow ? 0 : rotationVelocity;
         Rotate(rotationVelocity);
 
-        if (MoveAndSlide())
+        var collision = MoveAndCollide(Velocity * (float)delta);
+        if (collision is not null)
         {
-            EmitSignal(SignalName.EntityDidCollide, this);
+            EmitSignal(SignalName.EntityDidCollide, collision.GetCollider() as EntityMovement);
         }
         if (Math.Abs(rotationVelocity) > maxRotationVelocity)
         {
@@ -174,17 +175,6 @@ public partial class EntityMovement : CharacterBody2D
         Vector2 strafeLeftDirection = Vector2.Left.Rotated(Rotation);
         var transformation = new Transform2D(strafeLeftDirection, forwardFlightDirection, Vector2.Zero);
         return transformation.BasisXformInv(localVelocity) * -1;
-    }
-
-    /// <summary>
-    /// Convert degree to rad
-    /// Note: This could be a math extension method
-    /// </summary>
-    /// <param name="degree">The degree value to convert</param>
-    /// <returns>The radian value of the input degree</returns>
-    private float DegreeToRad(float degree)
-    {
-        return (float)(degree * (Math.PI / 180));
     }
 
     /// <summary>

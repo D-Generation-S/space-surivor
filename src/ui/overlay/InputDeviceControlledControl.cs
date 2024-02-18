@@ -11,9 +11,16 @@ public partial class InputDeviceControlledControl : Node
     [Signal]
     public delegate void InputChangedEventHandler();
 
+    private SessionUserSettings globalSession;
+
+    public override void _Ready()
+    {
+        globalSession = GetTree().Root.GetNode<SessionUserSettings>("SessionUserSettings");
+    }
+
     public override void _Input(InputEvent inputEvent)
     {
-        SessionUserSettings.Instance.InputDevice = inputEvent is InputEventJoypadButton || inputEvent is InputEventJoypadMotion ? InputDevice.Controller : InputDevice.Keyboard;
+        globalSession.InputDevice = inputEvent is InputEventJoypadButton || inputEvent is InputEventJoypadMotion ? InputDevice.Controller : InputDevice.Keyboard;
         EmitSignal(SignalName.InputChanged);
         base._Input(inputEvent);
     }

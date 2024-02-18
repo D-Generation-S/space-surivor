@@ -19,6 +19,10 @@ config/custom_user_dir_name="space-survivor"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SessionUserSettings="*res://src/global/SessionUserSettings.cs"
+
 [display]
 
 window/size/viewport_width=1920

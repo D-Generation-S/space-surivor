@@ -10,8 +10,11 @@ size = Vector2(5.31726, 15.0069)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iyula"]
 shader = ExtResource("3_a183j")
 shader_parameter/BaseColor = Color(1, 0, 0, 1)
+shader_parameter/Mix_Weight = Vector3(0.25, 0.25, 0.25)
 
 [node name="LaserProjectile" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_tddld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

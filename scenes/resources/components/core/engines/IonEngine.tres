@@ -19,6 +19,7 @@ engineAcceleration = Vector2(10, 5)
 engineRotation = 0.2
 consumerConfiguration = SubResource("Resource_t6iro")
 heatConfiguration = SubResource("Resource_37jk5")
+usableByPlayer = true
 name = "Ion Engine"
 description = ""
 slotSize = 1

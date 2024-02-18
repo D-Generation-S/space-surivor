@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=40 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
@@ -32,25 +32,31 @@
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
 [ext_resource type="Script" path="res://src/entities/player/KillSwitch.cs" id="31_xt3y3"]
 
-[sub_resource type="Gradient" id="Gradient_oyg3n"]
-offsets = PackedFloat32Array(0, 0.147541, 0.860656, 1)
-colors = PackedColorArray(1, 0, 0, 1, 0.962947, 0.332288, 0.0398216, 1, 0.91663, 0.747649, 0.0895985, 1, 0.91663, 0.747649, 0.0895985, 1)
+[sub_resource type="Gradient" id="Gradient_3t8dv"]
+colors = PackedColorArray(0.964706, 0.952941, 0.933333, 1, 1, 0.729412, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_bcehv"]
-gradient = SubResource("Gradient_oyg3n")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_himfb"]
+gradient = SubResource("Gradient_3t8dv")
+
+[sub_resource type="Curve" id="Curve_lvnv6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.957143, 0.318681), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bgcwb"]
+curve = SubResource("Curve_lvnv6")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6lwlb"]
 particle_flag_disable_z = true
 angle_min = -5.0
 angle_max = 5.0
 direction = Vector3(0, 1, 0)
-spread = 25.0
+spread = 15.0
 initial_velocity_min = 100.0
 initial_velocity_max = 250.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.1
-scale_max = 0.5
-color_initial_ramp = SubResource("GradientTexture1D_bcehv")
+scale_min = 0.2
+scale_curve = SubResource("CurveTexture_bgcwb")
+color_ramp = SubResource("GradientTexture1D_himfb")
 
 [sub_resource type="Curve" id="Curve_0kyxg"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.987952, 0), 0.0, 0.0, 0, 0]

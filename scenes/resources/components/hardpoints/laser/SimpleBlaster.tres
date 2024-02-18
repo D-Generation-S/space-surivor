@@ -16,6 +16,7 @@ consumptionIdle = 100
 consumptionFire = 50
 fireEffect = ExtResource("1_cpyfi")
 fireRateInTicks = 15
+usableByPlayer = true
 name = "Simple Blaster"
 description = ""
 slotSize = 1

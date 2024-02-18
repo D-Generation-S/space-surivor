@@ -3,7 +3,7 @@ using Godot;
 /// <summary>
 /// Close multiple UI Nodes
 /// </summary>
-public partial class MultiCloseUi : VBoxContainer
+public partial class MultiCloseUi : Control
 {
     /// <summary>
     /// The nodes to close
@@ -18,6 +18,11 @@ public partial class MultiCloseUi : VBoxContainer
     {
         foreach(var node in nodes)
         {
+            if (node == this)
+            {
+                QueueFree();
+                continue;
+            }
             CallDeferred("remove_child", node);
         }
     }

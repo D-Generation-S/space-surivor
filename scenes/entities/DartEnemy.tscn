@@ -61,9 +61,8 @@ entityMovement = NodePath("..")
 script = ExtResource("3_n26dv")
 expOnDeath = 5
 
-[node name="AiNode" type="Node" parent="." node_paths=PackedStringArray("initialState")]
+[node name="AiNode" type="Node" parent="."]
 script = ExtResource("4_ieacm")
-initialState = NodePath("Idle")
 
 [node name="Chase" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer")]
 script = ExtResource("5_ug5yl")

@@ -122,11 +122,15 @@ fire={
 [internationalization]
 
 locale/translations=PackedStringArray("res://translation.en.translation", "res://translation.de.translation")
+locale/test="en"
 
 [layer_names]
 
+2d_render/layer_11="Layer 11"
 2d_physics/layer_1="Layer1"
 2d_physics/layer_2="Layer2"
+2d_physics/layer_11="Experience"
+2d_physics/layer_12="ExperienceDetect"
 
 [rendering]
 

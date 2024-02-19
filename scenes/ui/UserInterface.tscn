@@ -217,3 +217,31 @@ theme = ExtResource("2_omw7v")
 theme_override_styles/background = SubResource("StyleBoxFlat_5xbl3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_b58gq")
 show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="ExperienceWord" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "EXPERIENCE"
+
+[node name="ExperienceCount" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="ExperienceBar" type="ProgressBar" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2

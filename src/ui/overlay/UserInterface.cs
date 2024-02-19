@@ -58,6 +58,11 @@ public partial class UserInterface : Control
     /// </summary>
     private PowerPlantComponent powerPlant;
 
+    private Label experienceCount;
+    private ProgressBar experienceBar;
+
+    private SessionUserSettings sessionUserSettings;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -66,6 +71,11 @@ public partial class UserInterface : Control
         powerConsumption = GetNode<ProgressBar>("%PowerUsageBar");
         battery = GetNode<ProgressBar>("%BatteryLevelBar");
         flightMode = GetNode<Label>("%CurrentFlightMode");
+        experienceBar = GetNode<ProgressBar>("%ExperienceBar");
+        experienceCount = GetNode<Label>("%ExperienceCount");
+        sessionUserSettings = GetTree().Root.GetNode<SessionUserSettings>("SessionUserSettings");
+
+        experienceCount.Text = "0";
 
         var playerComponents = player.GetNode("./Components").GetChildren();
 
@@ -98,6 +108,7 @@ public partial class UserInterface : Control
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        experienceCount.Text = sessionUserSettings.GetGameSessionData().GetExperience().ToString();
     }
     
     /// <summary>

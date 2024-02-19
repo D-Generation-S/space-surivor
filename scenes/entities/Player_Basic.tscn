@@ -1,10 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://4j3uynt6ruyd"]
+[gd_scene load_steps=42 format=3 uid="uid://4j3uynt6ruyd"]
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
 [ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_85b7m"]
 [ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="2_dlx6e"]
 [ext_resource type="Script" path="res://src/control/PlayerInputController.cs" id="2_lxc1a"]
+[ext_resource type="Script" path="res://src/entities/player/ExperienceCollectionArea.cs" id="2_puwsp"]
 [ext_resource type="Resource" uid="uid://c2h3qfh5n3dq" path="res://scenes/resources/input/Accelerate.tres" id="3_7142o"]
 [ext_resource type="Texture2D" uid="uid://hisbcixp03dt" path="res://assets/sprites/star_small.png" id="3_knjwj"]
 [ext_resource type="Resource" uid="uid://d1mktk4vl5273" path="res://scenes/resources/input/Decelerate.tres" id="4_uxwfd"]
@@ -31,6 +32,8 @@
 [ext_resource type="Resource" uid="uid://q4vmjuybv14m" path="res://scenes/resources/components/hardpoints/laser/SimpleBlaster.tres" id="25_17b5p"]
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
 [ext_resource type="Script" path="res://src/entities/player/KillSwitch.cs" id="31_xt3y3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2mndm"]
 
 [sub_resource type="Gradient" id="Gradient_3t8dv"]
 colors = PackedColorArray(0.964706, 0.952941, 0.933333, 1, 1, 0.729412, 0, 1)
@@ -76,9 +79,21 @@ scale_max = 0.3
 alpha_curve = SubResource("CurveTexture_i20cx")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 1025
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_85b7m")
+
+[node name="CollectionArea" type="Area2D" parent="."]
+position = Vector2(0, -1)
+collision_layer = 0
+collision_mask = 2048
+script = ExtResource("2_puwsp")
+magnetArea = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
+scale = Vector2(15, 15)
+shape = SubResource("CircleShape2D_2mndm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

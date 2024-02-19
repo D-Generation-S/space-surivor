@@ -150,12 +150,6 @@ theme = ExtResource("7_mqv5f")
 text = "HELP_ADDITIONAL"
 
 [node name="UserInterface" parent="UserInterface" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1920.0
-grow_horizontal = 1
-grow_vertical = 1
 player = NodePath("../../Player")
 
 [node name="FinishBox" type="Control" parent="UserInterface"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c4wtvfpp0y2ey"]
+[gd_scene load_steps=26 format=3 uid="uid://c4wtvfpp0y2ey"]
 
 [ext_resource type="Script" path="res://src/ui/ScreenshotScript.cs" id="1_hj8tq"]
 [ext_resource type="PackedScene" uid="uid://4j3uynt6ruyd" path="res://scenes/entities/Player_Basic.tscn" id="1_i8hdf"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" path="res://src/ui/overlay/CheckForPlayer.cs" id="15_kfttb"]
 [ext_resource type="PackedScene" uid="uid://dn36o12p8t34c" path="res://scenes/entities/shotable_target.tscn" id="18_8kmv6"]
 [ext_resource type="Script" path="res://src/entities/target/MultiTarget.cs" id="20_1vspa"]
-[ext_resource type="PackedScene" uid="uid://cx5j7rsgk2e3" path="res://scenes/entities/DartEnemy.tscn" id="20_v2u7p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqy8u"]
 shader = ExtResource("3_l0dui")
@@ -302,18 +301,6 @@ position = Vector2(1904, -144)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vsba0")
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("20_v2u7p")]
-position = Vector2(32, 552)
-
-[node name="DartEnemy" parent="." instance=ExtResource("20_v2u7p")]
-position = Vector2(-24, 544)
-
-[node name="DartEnemy2" parent="." instance=ExtResource("20_v2u7p")]
-position = Vector2(120, 552)
-
-[node name="DartEnemy3" parent="." instance=ExtResource("20_v2u7p")]
-position = Vector2(-112, 528)
 
 [connection signal="ExperienceIncreased" from="Player" to="UserInterface/UserInterface" method="ExperienceChanged"]
 [connection signal="NextLevelRequiredExperienceChanged" from="Player" to="UserInterface/UserInterface" method="RequiredExperienceChanged"]

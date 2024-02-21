@@ -12,25 +12,12 @@ public partial class SessionUserSettings : Node
     /// </summary>
     public InputDevice InputDevice;
 
-    private GameSessionData gameSessionData;
-
     /// <summary>
     /// Private constructor to prevent additional instance creation
     /// </summary>
     private SessionUserSettings()
     {
         InputDevice = InputDevice.Unknown;
-    }
-
-    public void StartGameSession()
-    {
-        gameSessionData = new GameSessionData();
-    }
-
-    public GameSessionData GetGameSessionData()
-    {
-        gameSessionData ??= new GameSessionData();
-        return gameSessionData;
     }
 }
 

@@ -39,7 +39,7 @@ public partial class CollisionDamage : Node
 		{
 			return;
 		}
-		healthComponent.Damage(damageToTakeOnCollision);
-		components.GetChildren().OfType<HealthComponent>().FirstOrDefault()?.Damage(baseCollisionDamage);
+		healthComponent.Damage(damageToTakeOnCollision, DamageType.Collision);
+		components.GetChildren().OfType<HealthComponent>().FirstOrDefault()?.Damage(baseCollisionDamage, DamageType.Collision);
 	}
 }

@@ -58,7 +58,7 @@ public partial class LaserProjectile : Area2D
             return;
         }
         var health = body.GetNode("%Components").GetChildren().OfType<HealthComponent>().FirstOrDefault();
-        health.Damage(damage);
+        health.Damage(damage, DamageType.Projectile);
         QueueFree();
     }
 

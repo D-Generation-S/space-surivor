@@ -4,8 +4,13 @@ using Godot;
 /// <summary>
 /// Idle ai state, simple wandering around
 /// </summary>
-public partial class IdleState : AiBehaviorState
+public partial class IdleState : State
 {
+    [Export]
+    private string aiToFlightComputerKey;
+
+	[Export]
+    private State checkState;
 
 	/// <summary>
 	/// The wandering direction
@@ -24,6 +29,9 @@ public partial class IdleState : AiBehaviorState
 	{
 		moveDirection = new Vector2(Random.Shared.Next(-1, 1), Random.Shared.Next(-1, 1)).Normalized();
 		wanderTime = Random.Shared.Next(5, 10);
+		var aiToFlightComputer = blackboard.GetData<AiToFlightComputer>(aiToFlightComputerKey);
+		aiToFlightComputer.SetGlobalVelocity(moveDirection);		
+		aiToFlightComputer.SetSpeed(1);
 	}
 
 	/// <inheritdoc />
@@ -35,20 +43,17 @@ public partial class IdleState : AiBehaviorState
 	/// <inheritdoc />
     public override void Update(double delta)
     {
-		if (GetPlayer() is not null)
-		{
-			EmitSignal(SignalName.Transitioned, this, nameof(ChaseState));
-			return;
-		}
         if (wanderTime > 0)
 		{
 			wanderTime -= (float)delta;
 			return;
 		}
-		var parent = GetParentMoveable();
+
 		RandomizeWander();
-		GetFlightComputerBridge().SetGlobalVelocity(moveDirection);
-		GetFlightComputerBridge().SetSpeed(1);
+		if (checkState is not null)
+		{
+			EmitSignal(SignalName.Transitioned, this, checkState.GetType().Name);
+		}
 		
     }
 

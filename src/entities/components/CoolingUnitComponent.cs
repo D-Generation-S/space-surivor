@@ -74,7 +74,7 @@ public partial class CoolingUnitComponent : ConsumerComponent
         if (storedHeat > coolingUnitConfiguration.GetHeatCapacity())
         {
             var damage = storedHeat - coolingUnitConfiguration.GetHeatCapacity();
-            healthComponent.Damage(Math.Min(damage, maxHeatDamage));
+            healthComponent.Damage(Math.Min(damage, maxHeatDamage), DamageType.Heat);
         }
 
         EmitSignal(SignalName.StoredHeatChanged, storedHeat);

@@ -61,8 +61,6 @@ public partial class UserInterface : Control
     private Label experienceCount;
     private ProgressBar experienceBar;
 
-    private SessionUserSettings sessionUserSettings;
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -73,7 +71,6 @@ public partial class UserInterface : Control
         flightMode = GetNode<Label>("%CurrentFlightMode");
         experienceBar = GetNode<ProgressBar>("%ExperienceBar");
         experienceCount = GetNode<Label>("%ExperienceCount");
-        sessionUserSettings = GetTree().Root.GetNode<SessionUserSettings>("SessionUserSettings");
 
         experienceCount.Text = "0";
 
@@ -103,12 +100,6 @@ public partial class UserInterface : Control
         UpdateHeat();
 
         UpdateFlightMode();
-    }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-        experienceCount.Text = sessionUserSettings.GetGameSessionData().GetExperience().ToString();
     }
     
     /// <summary>
@@ -178,6 +169,23 @@ public partial class UserInterface : Control
     public void UpdateFlightMode()
     {
         flightMode.Text = playerFlightComputer.GetActiveComputerMode().GetDisplayName();
+    }
+
+    public void RequiredExperienceChanged(int newRequiredExperienceAmount)
+    {
+        experienceBar ??= GetNode<ProgressBar>("%ExperienceBar");
+        experienceBar.MaxValue = newRequiredExperienceAmount;
+    }
+
+    public void ExperienceChanged(int newExperienceAmount)
+    {
+        experienceBar.Value = newExperienceAmount;
+        experienceCount.Text = newExperienceAmount.ToString();
+    }
+
+    public void LevelChanged(int newLevel)
+    {
+
     }
 
     /// <summary>

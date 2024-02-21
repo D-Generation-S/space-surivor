@@ -2,12 +2,11 @@
 
 [ext_resource type="Material" uid="uid://dsnt0lgov2k2u" path="res://assets/materials/base_material.tres" id="1_1ckmu"]
 [ext_resource type="Texture2D" uid="uid://d1w5jvw4snspb" path="res://assets/sprites/ship_D.png" id="1_5ux5h"]
-[ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_85b7m"]
-[ext_resource type="Script" path="res://src/entities/player/LevelCurve.cs" id="2_02c8v"]
+[ext_resource type="Script" path="res://src/entities/player/PlayerEntity.cs" id="1_iofhg"]
 [ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="2_dlx6e"]
 [ext_resource type="Script" path="res://src/control/PlayerInputController.cs" id="2_lxc1a"]
-[ext_resource type="Script" path="res://src/entities/player/ExperienceCollectionArea.cs" id="2_puwsp"]
 [ext_resource type="Resource" uid="uid://c2h3qfh5n3dq" path="res://scenes/resources/input/Accelerate.tres" id="3_7142o"]
+[ext_resource type="Script" path="res://src/entities/player/CollectionArea.cs" id="3_h6kp4"]
 [ext_resource type="Texture2D" uid="uid://hisbcixp03dt" path="res://assets/sprites/star_small.png" id="3_knjwj"]
 [ext_resource type="Resource" uid="uid://d1mktk4vl5273" path="res://scenes/resources/input/Decelerate.tres" id="4_uxwfd"]
 [ext_resource type="Resource" uid="uid://b5wn5p3ch6fvx" path="res://scenes/resources/input/StrafeLeft.tres" id="5_2dowe"]
@@ -22,6 +21,8 @@
 [ext_resource type="Script" path="res://src/flightComputer/RawFlightCommandInterpret.cs" id="10_i85cv"]
 [ext_resource type="Resource" uid="uid://chs7r5mieaisd" path="res://scenes/resources/input/FireWeapon.tres" id="12_mkths"]
 [ext_resource type="Script" path="res://src/entities/components/PowerPlantComponent.cs" id="14_et7re"]
+[ext_resource type="Script" path="res://src/entities/player/MagnetComponent.cs" id="15_5n4vx"]
+[ext_resource type="Resource" uid="uid://dpvpskjum77a5" path="res://scenes/resources/components/internal/magnets/SimpleElectricMagnet.tres" id="16_cpvtq"]
 [ext_resource type="Script" path="res://src/entities/components/CoolingUnitComponent.cs" id="16_t28t7"]
 [ext_resource type="Resource" uid="uid://dx3208x1fkhhl" path="res://scenes/resources/components/core/powerPlant/NuclearReactor.tres" id="16_yis07"]
 [ext_resource type="Script" path="res://src/entities/components/EngineComponent.cs" id="17_wkxei"]
@@ -34,11 +35,8 @@
 [ext_resource type="Texture2D" uid="uid://cbmqe70w0o62i" path="res://assets/sprites/meteor_small.png" id="27_7sqhj"]
 [ext_resource type="Script" path="res://src/entities/player/KillSwitch.cs" id="31_xt3y3"]
 
-[sub_resource type="Curve" id="Curve_ldngg"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2mndm"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_0fnk0"]
+radius = 225.142
 
 [sub_resource type="Gradient" id="Gradient_3t8dv"]
 colors = PackedColorArray(0.964706, 0.952941, 0.933333, 1, 1, 0.729412, 0, 1)
@@ -87,22 +85,15 @@ alpha_curve = SubResource("CurveTexture_i20cx")
 collision_layer = 1025
 motion_mode = 1
 slide_on_ceiling = false
-script = ExtResource("1_85b7m")
-
-[node name="LevelCurve" type="Node" parent="."]
-script = ExtResource("2_02c8v")
-levelCurve = SubResource("Curve_ldngg")
+script = ExtResource("1_iofhg")
 
 [node name="CollectionArea" type="Area2D" parent="."]
-position = Vector2(0, -1)
 collision_layer = 0
 collision_mask = 2048
-script = ExtResource("2_puwsp")
-magnetArea = 15.0
+script = ExtResource("3_h6kp4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
-scale = Vector2(15, 15)
-shape = SubResource("CircleShape2D_2mndm")
+shape = SubResource("CircleShape2D_0fnk0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -124,6 +115,11 @@ previousFlightComputerMode = ExtResource("8_x5v8n")
 rotateLeft = ExtResource("7_hdevr")
 rotateRight = ExtResource("8_bkhpr")
 fireWeapons = ExtResource("12_mkths")
+
+[node name="MagnetComponent" type="Node" parent="Components" node_paths=PackedStringArray("collectionShape")]
+script = ExtResource("15_5n4vx")
+configuration = ExtResource("16_cpvtq")
+collectionShape = NodePath("../../CollectionArea")
 
 [node name="FlightComputer" type="Node" parent="Components" groups=["player_component"]]
 script = ExtResource("9_j7fmf")
@@ -162,7 +158,6 @@ material = ExtResource("1_1ckmu")
 texture = ExtResource("1_5ux5h")
 
 [node name="PlayerCollision" type="CollisionPolygon2D" parent="."]
-visible = false
 polygon = PackedVector2Array(0, -15, 23, 8, 16, 16, 0, 7, -16, 15, -22, 8)
 
 [node name="PlayerEngineExhaust" type="GPUParticles2D" parent="."]

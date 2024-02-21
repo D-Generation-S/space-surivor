@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bawpucfa4dn86"]
+[gd_scene load_steps=22 format=3 uid="uid://bawpucfa4dn86"]
 
 [ext_resource type="Texture2D" uid="uid://cqlwuuawdepxk" path="res://assets/sprites/ui/uipackSpace_vector.svg" id="1_gvu2p"]
 [ext_resource type="Script" path="res://src/ui/overlay/UserInterface.cs" id="1_shlqk"]
@@ -84,6 +84,9 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg3o4"]
+bg_color = Color(0.509804, 0.52549, 0.0156863, 1)
 
 [node name="UserInterface" type="Control"]
 layout_mode = 3
@@ -229,6 +232,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -245,3 +249,4 @@ text = "0"
 [node name="ExperienceBar" type="ProgressBar" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_dg3o4")

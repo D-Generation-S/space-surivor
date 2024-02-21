@@ -1,11 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://cx5j7rsgk2e3"]
+[gd_scene load_steps=28 format=3 uid="uid://cx5j7rsgk2e3"]
 
-[ext_resource type="Script" path="res://src/movement/EntityMovement.cs" id="1_ef3df"]
+[ext_resource type="Script" path="res://src/entities/enemy/EnemyEntity.cs" id="1_3tqkh"]
 [ext_resource type="Script" path="res://src/entities/enemy/AiToFlightComputer.cs" id="2_nfus2"]
-[ext_resource type="Script" path="res://src/entities/enemy/AiData.cs" id="3_n26dv"]
 [ext_resource type="Script" path="res://src/stateMachine/StateMachine.cs" id="4_ieacm"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/EnemyAiSetupState.cs" id="5_f6wy6"]
 [ext_resource type="Script" path="res://src/stateMachine/aiBehavior/ChaseState.cs" id="5_ug5yl"]
 [ext_resource type="Script" path="res://src/stateMachine/aiBehavior/IdleState.cs" id="6_r2nnj"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/SearchClosestItemType.cs" id="6_rxghk"]
 [ext_resource type="Script" path="res://src/entities/components/HealthComponent.cs" id="7_xrff5"]
 [ext_resource type="Script" path="res://src/flightComputer/FlightComputer.cs" id="8_ek513"]
 [ext_resource type="Script" path="res://src/flightComputer/FlyByWireCommandInterpret.cs" id="9_boq3s"]
@@ -20,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dnljx0inb6uw7" path="res://assets/sprites/star_tiny.png" id="18_m5nlq"]
 [ext_resource type="Script" path="res://src/control/ChangeParticleStatus.cs" id="19_lh4s5"]
 [ext_resource type="Script" path="res://src/entities/enemy/EnemyDeath.cs" id="20_ynmhk"]
+[ext_resource type="PackedScene" uid="uid://crs8yiqwgikph" path="res://scenes/entities/experience_point.tscn" id="22_dks8l"]
 
 [sub_resource type="Gradient" id="Gradient_vtrax"]
 colors = PackedColorArray(0.964706, 0.952941, 0.933333, 1, 1, 0.729412, 0, 1)
@@ -45,32 +47,48 @@ scale_min = 0.5
 scale_curve = SubResource("CurveTexture_xudtv")
 color_ramp = SubResource("GradientTexture1D_frqve")
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-collision_layer = 2
+[node name="DartEnemy" type="CharacterBody2D"]
+collision_layer = 32768
 motion_mode = 1
-script = ExtResource("1_ef3df")
+script = ExtResource("1_3tqkh")
 maxForward = 8.0
 maxStrafe = 6.0
 
 [node name="AiToFlightComputer" type="Node" parent="." node_paths=PackedStringArray("flightComputer", "entityMovement")]
+unique_name_in_owner = true
 script = ExtResource("2_nfus2")
 flightComputer = NodePath("../Components/FlightComputer")
 entityMovement = NodePath("..")
 
-[node name="AiData" type="Node" parent="."]
-script = ExtResource("3_n26dv")
-expOnDeath = 5
-
-[node name="AiNode" type="Node" parent="."]
+[node name="AiNode" type="Node" parent="." node_paths=PackedStringArray("initialState")]
 script = ExtResource("4_ieacm")
+initialState = NodePath("EnemyAiSetupState")
+featuresBlackboard = true
 
-[node name="Chase" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer")]
+[node name="EnemyAiSetupState" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer", "nextState")]
+script = ExtResource("5_f6wy6")
+aiToFlightComputer = NodePath("../../AiToFlightComputer")
+nextState = NodePath("../SearchPlayerState")
+
+[node name="SearchPlayerState" type="Node" parent="AiNode" node_paths=PackedStringArray("referenceNode", "nextState", "pauseState")]
+script = ExtResource("6_rxghk")
+blackboardKeyName = "player_entity"
+groupName = "player"
+referenceNode = NodePath("../..")
+nextState = NodePath("../Chase")
+pauseState = NodePath("../Idle")
+
+[node name="Chase" type="Node" parent="AiNode" node_paths=PackedStringArray("nextState", "errorState")]
 script = ExtResource("5_ug5yl")
-aiToFlightComputer = NodePath("../../AiToFlightComputer")
+chasedObjectBlackboardKey = "player_entity"
+aiToFlightComputerKey = "aiToFlightComputer"
+nextState = NodePath(".")
+errorState = NodePath("../SearchPlayerState")
 
-[node name="Idle" type="Node" parent="AiNode" node_paths=PackedStringArray("aiToFlightComputer")]
+[node name="Idle" type="Node" parent="AiNode" node_paths=PackedStringArray("checkState")]
 script = ExtResource("6_r2nnj")
-aiToFlightComputer = NodePath("../../AiToFlightComputer")
+aiToFlightComputerKey = "aiToFlightComputer"
+checkState = NodePath("../SearchPlayerState")
 
 [node name="Components" type="Node" parent="."]
 unique_name_in_owner = true
@@ -116,9 +134,10 @@ process_material = SubResource("ParticleProcessMaterial_8prn0")
 texture = ExtResource("18_m5nlq")
 script = ExtResource("19_lh4s5")
 
-[node name="KillSwitch" type="Node" parent="." node_paths=PackedStringArray("aiData")]
+[node name="KillSwitch" type="Node" parent="." node_paths=PackedStringArray("enemyData")]
 script = ExtResource("20_ynmhk")
-aiData = NodePath("../AiData")
+enemyData = NodePath("..")
+expOrb = ExtResource("22_dks8l")
 
 [connection signal="EntityDidCollide" from="." to="Collision" method="HitCharacter"]
 [connection signal="Died" from="Components/HealthComponent" to="KillSwitch" method="Died"]

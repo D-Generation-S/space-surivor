@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -14,6 +15,12 @@ public partial class StateMachine : Node
     private State initialState;
 
     /// <summary>
+    /// Does this state machine does have a blackboard
+    /// </summary>
+    [Export]
+    private bool featuresBlackboard = false;
+
+    /// <summary>
     /// All states stored in this machine, where the key is the state name
     /// </summary>
     private Dictionary<string, State> states;
@@ -23,20 +30,30 @@ public partial class StateMachine : Node
     /// </summary>
     private State currentState;
 
+    /// <summary>
+    /// The blackboard to use
+    /// </summary>
+    private Blackboard blackboard;
+
     public override void _Ready()
     {
         states = new Dictionary<string, State>();
+        if (featuresBlackboard)
+        {
+            blackboard = new Blackboard();
+        }
         foreach(var state in  GetChildren().OfType<State>()
                                           .ToList())
         {
             states.Add(state.GetType().Name.ToString().ToLower(), state);
             state.Transitioned += OnStateTransitioned;
+            state.Init(blackboard);
         }
 
         if (initialState is not null)
         {
-            initialState.Enter();
             currentState = initialState;
+            initialState.Enter();
         }
 
     }
@@ -70,11 +87,11 @@ public partial class StateMachine : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        
         if (currentState is null)
         {
             return;
         }
         currentState.PhysicUpdate(delta);
+        Debug.WriteLine(currentState.Name);
     }
 }

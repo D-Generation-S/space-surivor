@@ -131,6 +131,7 @@ locale/test="en"
 2d_physics/layer_2="Layer2"
 2d_physics/layer_11="Experience"
 2d_physics/layer_12="ExperienceDetect"
+2d_physics/layer_16="Enemies"
 
 [rendering]
 

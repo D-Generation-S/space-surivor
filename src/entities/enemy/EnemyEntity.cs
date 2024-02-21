@@ -11,6 +11,10 @@ public partial class EnemyEntity : EntityMovement
 	[Export]
 	private int experienceOnDeath = 1;
 
+	/// <summary>
+	/// The method to get the experience this enemy does grant if killed
+	/// </summary>
+	/// <returns>The experience points to grant</returns>
 	public int GetExperienceToGrant()
 	{
 		return experienceOnDeath;

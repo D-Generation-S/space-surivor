@@ -78,6 +78,9 @@ public partial class HealthComponent : Node
     }
 }
 
+/// <summary>
+/// The types of damage which can be dealt
+/// </summary>
 [Flags]
 public enum DamageType
 {

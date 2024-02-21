@@ -18,12 +18,16 @@ public partial class EnemyDeath : Node
 	[Export]
 	private PackedScene deathEffect;
 
+	/// <summary>
+	/// The experience orb to spawn if this enemy dies
+	/// </summary>
 	[Export]
 	private PackedScene expOrb;
 
 	private bool waitingForExpSpawn;
 	/// <summary>
 	/// Triggerable method to handle the death of this enemy
+	/// <param name="damageType">The damage type which triggered the death</param>
 	/// </summary>
 	public void Died(DamageType damageType)
 	{
@@ -43,7 +47,6 @@ public partial class EnemyDeath : Node
 			spawnOrb.SetExperiencePoints(enemyData.GetExperienceToGrant());
 			spawnOrb.GlobalPosition = enemyData.GlobalPosition;
 			GetTree().Root.GetNodesInGroup<Node>("game_screen").FirstOrDefault()?.AddChild(spawnOrb);
-			//GetTree().Root.GetNodesInGroup<Node>("game_screen").FirstOrDefault()?.SetDeferred("add_child", spawnOrb);
 		}
 		GetParent().QueueFree();
 	}

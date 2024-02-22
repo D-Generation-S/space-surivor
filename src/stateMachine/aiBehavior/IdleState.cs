@@ -6,9 +6,16 @@ using Godot;
 /// </summary>
 public partial class IdleState : State
 {
+    /// <summary>
+    /// The flight computer key to get the ai to flight computer translator
+    /// </summary>
     [Export]
     private string aiToFlightComputerKey;
 
+    /// <summary>
+    /// The state to check between being idle for another task to do,
+    /// this can be something like search something to track
+    /// </summary>
     [Export]
     private State checkState;
 
@@ -54,7 +61,6 @@ public partial class IdleState : State
         {
             EmitSignal(SignalName.Transitioned, this, checkState.GetType().Name);
         }
-        
     }
 
 }

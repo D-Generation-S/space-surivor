@@ -13,12 +13,12 @@ public partial class TickGenerator : Node
     /// <summary>
     /// How many ticks per second should be simulated
     /// </summary>
-    private int ticksPerSecond = 10;
+    private int ticksPerSecond = 60;
 
     /// <summary>
     /// The tick mark to be used with the delta time
     /// </summary>
-    private double tickMark => ticksPerSecond / 60;
+    private double tickMark => (60f - ticksPerSecond) / 60f;
 
     /// <summary>
     /// The current tick number

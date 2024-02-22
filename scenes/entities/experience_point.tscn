@@ -55,16 +55,16 @@ script = ExtResource("5_0nyoj")
 searchArea = NodePath("../../SearchArea")
 searchGroup = "experience"
 nextState = NodePath("../HoverToItem")
-closest_item = "closest_item"
-parent_item = "parent_node"
+closestItem = "closest_item"
+parentItem = "parent"
 
-[node name="HoverToItem" type="Node" parent="StateMachine" node_paths=PackedStringArray("searchState", "stopState", "controlledBody")]
+[node name="HoverToItem" type="Node" parent="StateMachine" node_paths=PackedStringArray("searchState", "stopState")]
 script = ExtResource("6_m2s4i")
 searchState = NodePath("../SearchCloseItemState")
 stopState = NodePath("../StopState")
-controlledBody = NodePath("../..")
 movementSpeed = 150.0
 closestItem = "closest_item"
+parentItemKey = "parent"
 
 [node name="StopState" type="Node" parent="StateMachine" node_paths=PackedStringArray("controlledBody", "nextState")]
 script = ExtResource("7_7qkjb")

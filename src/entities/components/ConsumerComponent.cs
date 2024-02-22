@@ -46,10 +46,7 @@ public partial class ConsumerComponent : Node
     /// Method used for ticks produced by the tick settings
     /// </summary>
     /// <param name="tickNumber">The number of the current tick</param>
-    public virtual void ConsumerTick(int tickNumber)
-    {
-
-    }
+    public virtual void ConsumerTick(int tickNumber) { }
 
     /// <summary>
     /// Get the power consumption of this component

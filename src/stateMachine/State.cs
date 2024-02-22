@@ -14,6 +14,20 @@ public partial class State : Node
     public delegate void TransitionedEventHandler(State caller, string newStateName);
 
     /// <summary>
+    /// The blackboard to use
+    /// </summary>
+    protected Blackboard blackboard;
+
+    /// <summary>
+    /// The node was loaded for the first time
+    /// <param name="blackboard">The blackboard if any featured</param>
+    /// </summary>
+    public virtual void Init(Blackboard blackboard)
+    {
+        this.blackboard = blackboard;
+    }
+
+    /// <summary>
     /// Called if this state is entered 
     /// </summary>
     public virtual void Enter() {}

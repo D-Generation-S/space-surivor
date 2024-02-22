@@ -49,6 +49,7 @@ public partial class CoolingUnitComponent : ConsumerComponent
     /// <inheritdoc/>
     public override void _Ready()
     {
+        base._Ready();
         storedHeat = 0;
         healthComponent = GetParent().GetChildren().OfType<HealthComponent>().FirstOrDefault();
         if (healthComponent is null)
@@ -74,7 +75,7 @@ public partial class CoolingUnitComponent : ConsumerComponent
         if (storedHeat > coolingUnitConfiguration.GetHeatCapacity())
         {
             var damage = storedHeat - coolingUnitConfiguration.GetHeatCapacity();
-            healthComponent.Damage(Math.Min(damage, maxHeatDamage));
+            healthComponent.Damage(Math.Min(damage, maxHeatDamage), DamageType.Heat);
         }
 
         EmitSignal(SignalName.StoredHeatChanged, storedHeat);

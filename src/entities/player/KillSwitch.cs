@@ -9,7 +9,7 @@ public partial class KillSwitch : Node
     /// <summary>
     /// Trigger if the player died
     /// </summary>
-    public void Died()
+    public void Died(DamageType damageType)
     {
         var camera = GetParent().GetChildren().OfType<Camera2D>().FirstOrDefault();
         if (camera is not null)

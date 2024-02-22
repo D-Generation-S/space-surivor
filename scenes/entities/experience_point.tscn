@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=3 uid="uid://crs8yiqwgikph"]
+
+[ext_resource type="Script" path="res://src/entities/experience/ExperiencePoint.cs" id="1_p2eil"]
+[ext_resource type="Shader" uid="uid://ba7k66bsrr0gt" path="res://assets/shaders/color_change_shader.tres" id="2_6al05"]
+[ext_resource type="Texture2D" uid="uid://b3yyqtm2psnqg" path="res://assets/sprites/meteor_squareDetailedSmall.png" id="3_igc8a"]
+[ext_resource type="Script" path="res://src/stateMachine/StateMachine.cs" id="4_dn7a7"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/SearchCloseItemState.cs" id="5_0nyoj"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/HoverToItem.cs" id="6_m2s4i"]
+[ext_resource type="Script" path="res://src/stateMachine/aiBehavior/StopState.cs" id="7_7qkjb"]
+
+[sub_resource type="Curve" id="Curve_2t0j4"]
+min_value = 1.0
+max_value = 5.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.136, 1), 0.0, 0.0, 0, 0, Vector2(0.504, 4.08389), 0.0, 0.0, 0, 0, Vector2(1, 5), -1.96666, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_daxou"]
+radius = 5.8345
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85lmr"]
+shader = ExtResource("2_6al05")
+shader_parameter/BaseColor = Color(1, 1, 0, 1)
+shader_parameter/Mix_Weight = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ktobi"]
+radius = 192.0
+
+[node name="ExperiencePoint" type="CharacterBody2D" node_paths=PackedStringArray("debugLabel") groups=["experience"]]
+scale = Vector2(1.02837, 0.989978)
+collision_layer = 2048
+collision_mask = 3072
+motion_mode = 1
+script = ExtResource("1_p2eil")
+debugLabel = NodePath("DebugValueLabel")
+areaBoostCurve = SubResource("Curve_2t0j4")
+
+[node name="GainExperienceCollision" type="CollisionShape2D" parent="."]
+light_mask = 1024
+visibility_layer = 1024
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_daxou")
+
+[node name="Visuals" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_85lmr")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_igc8a")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
+script = ExtResource("4_dn7a7")
+initialState = NodePath("SearchCloseItemState")
+featuresBlackboard = true
+
+[node name="SearchCloseItemState" type="Node" parent="StateMachine" node_paths=PackedStringArray("searchArea", "nextState")]
+script = ExtResource("5_0nyoj")
+searchArea = NodePath("../../SearchArea")
+searchGroup = "experience"
+nextState = NodePath("../HoverToItem")
+closestItem = "closest_item"
+parentItem = "parent"
+
+[node name="HoverToItem" type="Node" parent="StateMachine" node_paths=PackedStringArray("searchState", "stopState")]
+script = ExtResource("6_m2s4i")
+searchState = NodePath("../SearchCloseItemState")
+stopState = NodePath("../StopState")
+movementSpeed = 150.0
+closestItem = "closest_item"
+parentItemKey = "parent"
+
+[node name="StopState" type="Node" parent="StateMachine" node_paths=PackedStringArray("controlledBody", "nextState")]
+script = ExtResource("7_7qkjb")
+controlledBody = NodePath("../..")
+nextState = NodePath("../SearchCloseItemState")
+
+[node name="SearchArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.972413, 1.01012)
+collision_layer = 0
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchArea"]
+shape = SubResource("CircleShape2D_ktobi")
+
+[node name="DebugValueLabel" type="Label" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -35.0
+offset_right = 20.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="AttractorChanged" from="." to="StateMachine/SearchCloseItemState" method="SetFollowItem"]

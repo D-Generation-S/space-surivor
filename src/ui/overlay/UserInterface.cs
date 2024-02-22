@@ -58,6 +58,16 @@ public partial class UserInterface : Control
     /// </summary>
     private PowerPlantComponent powerPlant;
 
+    /// <summary>
+    /// The label used to display the current experience points
+    /// </summary>
+    private Label experienceCount;
+
+    /// <summary>
+    /// The experience bar used to display the progress to the next level
+    /// </summary>
+    private ProgressBar experienceBar;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -66,6 +76,10 @@ public partial class UserInterface : Control
         powerConsumption = GetNode<ProgressBar>("%PowerUsageBar");
         battery = GetNode<ProgressBar>("%BatteryLevelBar");
         flightMode = GetNode<Label>("%CurrentFlightMode");
+        experienceBar = GetNode<ProgressBar>("%ExperienceBar");
+        experienceCount = GetNode<Label>("%ExperienceCount");
+
+        experienceCount.Text = "0";
 
         var playerComponents = player.GetNode("./Components").GetChildren();
 
@@ -93,11 +107,6 @@ public partial class UserInterface : Control
         UpdateHeat();
 
         UpdateFlightMode();
-    }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
     }
     
     /// <summary>
@@ -167,6 +176,35 @@ public partial class UserInterface : Control
     public void UpdateFlightMode()
     {
         flightMode.Text = playerFlightComputer.GetActiveComputerMode().GetDisplayName();
+    }
+
+    /// <summary>
+    /// Method to change the experience required to get to the next level
+    /// </summary>
+    /// <param name="newRequiredExperienceAmount">The new amount of experience required to level up>/param>
+    public void RequiredExperienceChanged(int newRequiredExperienceAmount)
+    {
+        experienceBar ??= GetNode<ProgressBar>("%ExperienceBar");
+        experienceBar.MaxValue = newRequiredExperienceAmount;
+    }
+
+    /// <summary>
+    /// The amount of experience the player got has changed
+    /// </summary>
+    /// <param name="newExperienceAmount">The new amount of experience for the player</param>
+    public void ExperienceChanged(int newExperienceAmount)
+    {
+        experienceBar.Value = newExperienceAmount;
+        experienceCount.Text = newExperienceAmount.ToString();
+    }
+
+    /// <summary>
+    /// The level of the player did change
+    /// </summary>
+    /// <param name="newLevel">The new level of the player</param>
+    public void LevelChanged(int newLevel)
+    {
+
     }
 
     /// <summary>

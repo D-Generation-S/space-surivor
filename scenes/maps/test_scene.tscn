@@ -52,7 +52,7 @@ events = [SubResource("InputEventKey_8pv6x"), SubResource("InputEventJoypadButto
 background_mode = 3
 glow_enabled = true
 
-[node name="TestScene" type="Node2D"]
+[node name="TestScene" type="Node2D" groups=["game_screen"]]
 script = ExtResource("1_hj8tq")
 screenshotConfiguration = ExtResource("2_ycvoj")
 
@@ -70,7 +70,7 @@ unique_name_in_owner = true
 script = ExtResource("9_yadgb")
 
 [node name="Player" parent="." instance=ExtResource("1_i8hdf")]
-position = Vector2(80, 832)
+position = Vector2(80, 864)
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
 
@@ -150,12 +150,6 @@ theme = ExtResource("7_mqv5f")
 text = "HELP_ADDITIONAL"
 
 [node name="UserInterface" parent="UserInterface" node_paths=PackedStringArray("player") instance=ExtResource("3_dp45m")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1920.0
-grow_horizontal = 1
-grow_vertical = 1
 player = NodePath("../../Player")
 
 [node name="FinishBox" type="Control" parent="UserInterface"]
@@ -308,17 +302,7 @@ position = Vector2(1904, -144)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vsba0")
 
+[connection signal="ExperienceIncreased" from="Player" to="UserInterface/UserInterface" method="ExperienceChanged"]
+[connection signal="NextLevelRequiredExperienceChanged" from="Player" to="UserInterface/UserInterface" method="RequiredExperienceChanged"]
 [connection signal="pressed" from="UserInterface/MenuButton" to="PauseMenu" method="ShowMenu"]
 [connection signal="timeout" from="UserInterface/Panel/Timer" to="UserInterface/Panel" method="CloseUi"]
-[connection signal="PlayerIsGone" from="UserInterface/DeadBox" to="UserInterface/UserInterface" method="HideInterface"]
-[connection signal="PlayerIsGone" from="UserInterface/DeadBox" to="UserInterface/DeadBox/Complete Panel" method="ShowControl"]
-[connection signal="TargetCompleted" from="Targets/InitialTarget" to="Targets/SecondTarget" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/SecondTarget" to="Targets/ThirdTarget" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/ThirdTarget" to="Targets/SixthTarget" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/SixthTarget" to="Targets/SeventhTarget" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/SeventhTarget" to="Targets/MultipleTargets" method="MakeTargetVisible"]
-[connection signal="TargetCompleted" from="Targets/MultipleTargets" to="UserInterface/FinishBox/Complete Panel" method="ShowControl"]
-[connection signal="TargetCompleted" from="Targets/FirstShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
-[connection signal="TargetCompleted" from="Targets/SecondShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
-[connection signal="TargetCompleted" from="Targets/ThirdShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]
-[connection signal="TargetCompleted" from="Targets/FourthShotableTarget" to="Targets/MultipleTargets" method="TargetWasCompleted"]

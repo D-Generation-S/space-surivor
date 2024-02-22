@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 /// <summary>
@@ -9,7 +10,7 @@ public partial class HealthComponent : Node
     /// Did the ship die
     /// </summary>
     [Signal]
-    public delegate void DiedEventHandler();
+    public delegate void DiedEventHandler(DamageType lastDamageType);
 
     /// <summary>
     /// Did the ship take damage
@@ -38,6 +39,7 @@ public partial class HealthComponent : Node
 
     public override void _Ready()
     {
+        base._Ready();
         currentHealth = maxHealth;
         base._Ready();
         EmitSignal(SignalName.MaxHealthChanged, maxHealth);
@@ -48,18 +50,18 @@ public partial class HealthComponent : Node
     /// Method to damage the ship health component
     /// </summary>
     /// <param name="amount">The damage amount</param>
-    public void Damage(int amount)
+    public void Damage(int amount, DamageType damageType)
     {
         currentHealth -= amount;
         EmitSignal(SignalName.TookDamage, currentHealth);
         if (currentHealth <= 0)
         {
-            EmitSignal(SignalName.Died);
+            EmitSignal(SignalName.Died, (int)damageType);
         }
     }
 
     /// <summary>
-    /// Get the max health of this ship
+    /// Get the max health of this shipqq
     /// </summary>
     /// <returns>The max health</returns>
     public int GetMaxHealth()
@@ -75,4 +77,16 @@ public partial class HealthComponent : Node
     {
         return currentHealth;
     }
+}
+
+/// <summary>
+/// The types of damage which can be dealt
+/// </summary>
+[Flags]
+public enum DamageType
+{
+    Projectile,
+    Collision,
+    Heat
+
 }

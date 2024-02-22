@@ -1,5 +1,8 @@
 using Godot;
 
+/// <summary>
+/// A singelton class to generate ticks for the game
+/// </summary>
 public partial class TickGenerator : Node
 {
     [Signal]

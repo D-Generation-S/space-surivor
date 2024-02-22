@@ -49,6 +49,7 @@ public partial class CoolingUnitComponent : ConsumerComponent
     /// <inheritdoc/>
     public override void _Ready()
     {
+        base._Ready();
         storedHeat = 0;
         healthComponent = GetParent().GetChildren().OfType<HealthComponent>().FirstOrDefault();
         if (healthComponent is null)

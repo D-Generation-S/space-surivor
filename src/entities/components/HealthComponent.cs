@@ -39,6 +39,7 @@ public partial class HealthComponent : Node
 
     public override void _Ready()
     {
+        base._Ready();
         currentHealth = maxHealth;
         base._Ready();
         EmitSignal(SignalName.MaxHealthChanged, maxHealth);

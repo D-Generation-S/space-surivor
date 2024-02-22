@@ -11,35 +11,9 @@ public partial class ConsumerComponent : Node
     /// </summary>
     private bool isActive = false;
 
-    /// <summary>
-    /// Number used to calculate the tick leftover
-    /// </summary>
-    private double deltaLeftOver = 0f;
-
-    /// <summary>
-    /// How many ticks per second should be simulated
-    /// </summary>
-    private int ticksPerSecond = 10;
-
-    /// <summary>
-    /// The tick mark to be used with the delta time
-    /// </summary>
-    private double tickMark => ticksPerSecond / 60;
-
-    /// <summary>
-    /// The current tick number
-    /// </summary>
-    private int tickNumber = 0;
-
-    public override void _Process(double delta)
+    public override void _Ready()
     {
-        deltaLeftOver += delta;
-        if (deltaLeftOver > tickMark)
-        {
-            deltaLeftOver -= tickMark;
-            ConsumerTick(tickNumber);
-            tickNumber++;
-        }
+        GetTree().Root.GetNode<TickGenerator>("TickGenerator").GameTick += ConsumerTick;
     }
 
     /// <summary>
@@ -105,14 +79,5 @@ public partial class ConsumerComponent : Node
     public void Disable()
     {
         isActive = false;
-    }
-
-    /// <summary>
-    /// Get the ticks per second
-    /// </summary>
-    /// <returns>The number of ticks in a second</returns>
-    protected int GetTicksPerSecond()
-    {
-        return ticksPerSecond;
     }
 }

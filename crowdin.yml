@@ -1,5 +1,5 @@
 files:
-  - source: translation_source.csv
+  - source: /translation/translation_source.csv
     translation: /translation.csv
     multilingual: 1
     first_line_contains_header: 1

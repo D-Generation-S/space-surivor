@@ -1,34 +1,34 @@
-key;en;de
-DEFAULT_PRESS;Press;Drücke
-BUTTON_NEXT;Next;Weiter
-BUTTON_REPLAY_ANIMATION;Replay animation;Animation erneut abspielen
-BUTTON_PREVIOUS;Previous;Vorheriges
-BUTTON_HELP;Help;Hilfe
-BUTTON_CLOSE;Close;Schließen
-BUTTON_CLOSE_GAME;Close Game;Spiel Beenden
-BUTTON_CLOSE_MENU;Close Menu;Menü Schließen
-BUTTON_MENU;Menu;Menü
-HELP_ACCELERATE_HEADLINE;Accelerate the ship;Das Schiff beschleunigen
-HELP_ACCELERATE_KEY;to accelerate;um zu beschleunigen
-HELP_DECELERATE_HEADLINE;Decelerate the ship;Das Schiff abbremsen
-HELP_DECELERATE_KEY;to decelerate;um abzubremsen
-HELP_ROTATE_HEADLINE;Rotate left and right;Nach links und rechts drehen
-HELP_ROTATE_LEFT;to rotate left;um nach links zu drehen
-HELP_ROTATE_RIGHT;to rotate right;um nach rechts zu drehen
-HELP_STRAFE_HEADLINE;Strafe left and right;Nach links und rechts bewegen
-HELP_STRAFE_LEFT;to strafe left;um sich nach links zu bewegen
-HELP_STRAFE_RIGHT;to strafe right;um sich nach rechts zu bewegen
-HELP_CYCLE_FLIGHT_MODE_HEADLINE;Change flight mode;Flugmodus ändern
-HELP_CYCLE_FLIGHT_MODE_DESCRIPTION;There are two flight modes to use.\n\nYou could use raw input, this will give you full control of the ship. But you need to counter forces like rotation and acceleration yourself.\n\nAs an alternative you could use the flight computer. It will try to ensure that you stay on course by interpreting your inputs. If you stop with input commands it will try to stop your ship.\n\nYou can switch those modes as you like while playing.;Es stehen zwei Flugmodi zur Verfügung.\n\n,Sie können die Roheingabe verwenden, damit haben Sie die volle Kontrolle über das Schiff. Aber Sie müssen Kräfte wie Rotation und Beschleunigung selbst ausgleichen.\n\n Als Alternative können Sie den Flugcomputer verwenden. Er wird versuchen sicherzustellen, dass Sie auf Kurs bleiben indem er deine Eingaben interpretiert. Wenn du mit den Eingabebefehlen aufhörst, wird er versuchen, dein Schiff zu stoppen.\n\nSie können diese Modi während des Spiels nach Belieben umschalten.
-HELP_CYCLE_FLIGHT_MODE_FORWARD;to cycle flight modes forward;um flugmodus weiter zu schalten
-HELP_CYCLE_FLIGHT_MODE_BACKWARD;to cycle flight modes backwards;um flugmodus zurück zu schalten
-HELP_ADDITIONAL;to get additional help;um weitere hilfe zu erhalten
-INTRO_TEXT;Fly through the crosses.\n\nFor this training level you won't be able to leave this screen.\nTo see the controls, press the help button in the top right corner.;Fliege durch die Kreuze.\n\nUm die Steuerung zu sehen,\n drücken Sie die Hilfe-Taste in der oberen rechten Ecke.
-HELP_FIRE_WEAPON_HEALINE;Fire Weapon; Waffe Abfeuern
-HELP_FIRE_WEAPON_DESCRIPTION;Firing your weapons will try to fire all your active hardpoints at once to the front direction of your ship;Wenn du deine Waffen abfeuerst werden alle verfügbaren waffen, welche momentan aktiv sind abgefeuert. Die Waffen werden dabei vor dem Schiff abgefeuert.
-HELP_FIRE_WEAPON_FIRE;to fire the weapons;um deine Waffen abzufeuern
-RESOURCE_FLIGHT_COMPUTER_FLY_BY_WIRE;Fly By Wire;
-RESOURCE_FLIGHT_COMPUTER_RAW_INPUT;Uncoupled;
-DEMO_FINISHED;You did fly through the last target. Thank you for playing.\n\nPlease leave a comment, what you think about the flight model; Du hast das letzte Ziel durchflogen. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst
-DEMO_FINISHED_DIED;You where killed by heat, better watch out.\nThank you for playing.\n\nPlease leave a comment, what you think about the flight model; Du bist durch überhitzung gestorben,\n passe nächstes mal besser auf. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst
-EXPERIENCE;Experience;Erfahrung
+"key";"source";"Context"
+"DEFAULT_PRESS";"Press";"Drücke"
+"BUTTON_NEXT";"Next";"Weiter"
+"BUTTON_REPLAY_ANIMATION";"Replay animation";"Animation erneut abspielen"
+"BUTTON_PREVIOUS";"BUTTON_PREVIOUS";"Vorheriges"
+"BUTTON_HELP";"Help";"Hilfe"
+"BUTTON_CLOSE";"Close";"Schließen"
+"BUTTON_CLOSE_GAME";"Close Game";"Spiel Beenden"
+"BUTTON_CLOSE_MENU";"Close Menu";"Menü Schließen"
+"BUTTON_MENU";"Menu";"Menü"
+"HELP_ACCELERATE_HEADLINE";"Accelerate the ship";"Das Schiff beschleunigen"
+"HELP_ACCELERATE_KEY";"to accelerate";"um zu beschleunigen"
+"HELP_DECELERATE_HEADLINE";"Decelerate the ship";"Das Schiff abbremsen"
+"HELP_DECELERATE_KEY";"to decelerate";"um abzubremsen"
+"HELP_ROTATE_HEADLINE";"Rotate left and right";"Nach links und rechts drehen"
+"HELP_ROTATE_LEFT";"to rotate left";"um nach links zu drehen"
+"HELP_ROTATE_RIGHT";"to rotate right";"um nach rechts zu drehen"
+"HELP_STRAFE_HEADLINE";"Strafe left and right";"Nach links und rechts bewegen"
+"HELP_STRAFE_LEFT";"to strafe left";"um sich nach links zu bewegen"
+"HELP_STRAFE_RIGHT";"to strafe right";"um sich nach rechts zu bewegen"
+"HELP_CYCLE_FLIGHT_MODE_HEADLINE";"Change flight mode";"Flugmodus ändern"
+"HELP_CYCLE_FLIGHT_MODE_DESCRIPTION";"There are two flight modes to use.\n\nYou could use raw input, this will give you full control of the ship. But you need to counter forces like rotation and acceleration yourself.\n\nAs an alternative you could use the flight computer. It will try to ensure that you stay on course by interpreting your inputs. If you stop with input commands it will try to stop your ship.\n\nYou can switch those modes as you like while playing.";"Es stehen zwei Flugmodi zur Verfügung.\n\n,Sie können die Roheingabe verwenden, damit haben Sie die volle Kontrolle über das Schiff. Aber Sie müssen Kräfte wie Rotation und Beschleunigung selbst ausgleichen.\n\n Als Alternative können Sie den Flugcomputer verwenden. Er wird versuchen sicherzustellen, dass Sie auf Kurs bleiben indem er deine Eingaben interpretiert. Wenn du mit den Eingabebefehlen aufhörst, wird er versuchen, dein Schiff zu stoppen.\n\nSie können diese Modi während des Spiels nach Belieben umschalten."
+"HELP_CYCLE_FLIGHT_MODE_FORWARD";"to cycle flight modes forward";"um flugmodus weiter zu schalten"
+"HELP_CYCLE_FLIGHT_MODE_BACKWARD";"to cycle flight modes backwards";"um flugmodus zurück zu schalten"
+"HELP_ADDITIONAL";"to get additional help";"um weitere hilfe zu erhalten"
+"INTRO_TEXT";"Fly through the crosses.\n\nFor this training level you won't be able to leave this screen.\nTo see the controls, press the help button in the top right corner.";"Fliege durch die Kreuze.\n\nUm die Steuerung zu sehen,\n drücken Sie die Hilfe-Taste in der oberen rechten Ecke."
+"HELP_FIRE_WEAPON_HEALINE";"Fire Weapon";" Waffe Abfeuern"
+"HELP_FIRE_WEAPON_DESCRIPTION";"Firing your weapons will try to fire all your active hardpoints at once to the front direction of your ship";"Wenn du deine Waffen abfeuerst werden alle verfügbaren waffen, welche momentan aktiv sind abgefeuert. Die Waffen werden dabei vor dem Schiff abgefeuert."
+"HELP_FIRE_WEAPON_FIRE";"to fire the weapons";"um deine Waffen abzufeuern"
+"RESOURCE_FLIGHT_COMPUTER_FLY_BY_WIRE";"Fly By Wire";"Fly By Wire"
+"RESOURCE_FLIGHT_COMPUTER_RAW_INPUT";"Uncoupled";"Uncoupled"
+"DEMO_FINISHED";"You did fly through the last target. Thank you for playing.\n\nPlease leave a comment, what you think about the flight model";" Du hast das letzte Ziel durchflogen. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst"
+"DEMO_FINISHED_DIED";"You where killed by heat, better watch out.\nThank you for playing.\n\nPlease leave a comment, what you think about the flight model";" Du bist durch überhitzung gestorben,\n passe nächstes mal besser auf. Danke fürs Spielen.\n\nBitte hinterlasse einen Kommentar, was du über das Flugmodell denkst"
+"EXPERIENCE";"Experience";"Erfahrung"
